@@ -2,27 +2,69 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
-             x:Class="seniorCapstone.MainPage">
+             x:Class="seniorCapstone.MainPage"
+			 Padding="10"
+			 Title="EvenStreamin">
 
 	<ContentPage.BindingContext>
 		<ViewModel:MainViewModel/>
 	</ContentPage.BindingContext>
 
-	<StackLayout>
-        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-            <Label Text="Welcome to Xamarin.Forms!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-        </Frame>
-        <Label Text="Start developing now" FontSize="Title" Padding="30,10,30,10"/>
-        <Label FontSize="16" Padding="30,24,30,0">
-            <Label.FormattedText>
-                <FormattedString>
-                    <FormattedString.Spans>
-                        <Span Text="Learn more at "/>
-                        <Span Text="https://aka.ms/xamarin-quickstart" FontAttributes="Bold"/>
-                    </FormattedString.Spans>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
-    </StackLayout>
+	<!--  
+	<ContentPage.ToolbarItems>
+		<ToolbarItem 
+			Text="Home"
+			Priority="0"
+			Order="Secondary"
+			Clicked="Toolbar_Home"/>
+		<ToolbarItem 
+			Text="Field List"
+			Priority="1"
+			Order="Secondary"
+			Clicked="Toolbar_FieldList"/>
+		<ToolbarItem 
+			Text="Add Field"
+			Priority="1"
+			Order="Secondary"
+			Clicked="Toolbar_AddField"/>
+		<ToolbarItem 
+			Text="Run Pivot"
+			Priority="1"
+			Order="Secondary"
+			Clicked="Toolbar_RunPivot"/>
+		<ToolbarItem 
+			Text="Account"
+			Priority="1"
+			Order="Secondary"
+			Clicked="Toolbar_Account"/>
+	</ContentPage.ToolbarItems>
+-->
+	
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*" />
+			<RowDefinition Height="3*" />
+			<RowDefinition Height="3*" />
+		</Grid.RowDefinitions>
+		
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="5*" />
+			<ColumnDefinition Width="5*" />
+		</Grid.ColumnDefinitions>
 
+		<Button x:Name="Updates" 
+				BackgroundColor="CornflowerBlue" Grid.Column="0" Grid.Row="0" CornerRadius="10" Grid.ColumnSpan="2"/>
+		<Button x:Name="FieldListView" Text="Field List"
+				Command="{Binding ChangePageCommand}" 
+				BackgroundColor="LawnGreen" Grid.Column="0" Grid.Row="1" CornerRadius="10"/>
+		<Button x:Name="AddFieldView" Command="{Binding ChangePageCommand}" 
+				BackgroundColor="Purple" Grid.Column="1" Grid.Row="1" CornerRadius="10"/>
+		<Button x:Name="RunPivotView" Command="{Binding ChangePageCommand}" 
+				BackgroundColor="IndianRed" Grid.Column="0" Grid.Row="2" CornerRadius="10"/>
+		<Button x:Name="AccountView" Command="{Binding ChangePageCommand}" 
+				BackgroundColor="DarkOliveGreen" Grid.Column="1" Grid.Row="2" CornerRadius="10"/>
+	</Grid>
+
+	<!-- CommandParameter="{Binding Source={x:Reference FieldListView}, Path=Name}"-->
+	
 </ContentPage>

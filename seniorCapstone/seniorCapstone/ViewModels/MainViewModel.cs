@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
 {
@@ -14,10 +16,34 @@ namespace seniorCapstone.ViewModels
 		// Variables
 		public event PropertyChangedEventHandler PropertyChanged;
 
+
+		// Properties
+		public ICommand ChangePageCommand { get; }
+
+
+
+		/// <summary>
+		/// Constructor method
+		/// </summary>
+		public MainViewModel ()
+		{
+			ChangePageCommand = new Command (ChangePage);
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>
 		public void OnPropertyChanged ()
+		{
+
+		}
+
+
+		/// <summary>
+		/// When the buttons are pressed, the name of the button will be passed, 
+		/// and will correspond with a view.
+		/// </summary>
+		public void ChangePage ()
 		{
 
 		}
