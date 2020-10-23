@@ -10,61 +10,58 @@
 		<ViewModel:MainViewModel/>
 	</ContentPage.BindingContext>
 
-	<!--  
 	<ContentPage.ToolbarItems>
-		<ToolbarItem 
-			Text="Home"
-			Priority="0"
-			Order="Secondary"
-			Clicked="Toolbar_Home"/>
 		<ToolbarItem 
 			Text="Field List"
 			Priority="1"
 			Order="Secondary"
-			Clicked="Toolbar_FieldList"/>
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="FieldListPage"/>
 		<ToolbarItem 
 			Text="Add Field"
 			Priority="1"
 			Order="Secondary"
-			Clicked="Toolbar_AddField"/>
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AddFieldPage"/>
 		<ToolbarItem 
 			Text="Run Pivot"
 			Priority="1"
 			Order="Secondary"
-			Clicked="Toolbar_RunPivot"/>
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="RunPivotPage"/>
 		<ToolbarItem 
 			Text="Account"
 			Priority="1"
 			Order="Secondary"
-			Clicked="Toolbar_Account"/>
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AccountPage"/>
 	</ContentPage.ToolbarItems>
--->
-	
+
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="3*" />
 			<RowDefinition Height="3*" />
 			<RowDefinition Height="3*" />
 		</Grid.RowDefinitions>
-		
+
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="5*" />
 			<ColumnDefinition Width="5*" />
 		</Grid.ColumnDefinitions>
 
-		<Button x:Name="Updates" 
-				BackgroundColor="CornflowerBlue" Grid.Column="0" Grid.Row="0" CornerRadius="10" Grid.ColumnSpan="2"/>
-		<Button x:Name="FieldListView" Text="Field List"
-				Command="{Binding ChangePageCommand}" 
+		<BoxView BackgroundColor="CornflowerBlue" Grid.Column="0" Grid.Row="0" CornerRadius="10" Grid.ColumnSpan="2"/>
+		<Button x:Name="FieldListPage" Text="Field List"
+				Command="{Binding ChangePageCommand}" CommandParameter="FieldListPage"
 				BackgroundColor="LawnGreen" Grid.Column="0" Grid.Row="1" CornerRadius="10"/>
-		<Button x:Name="AddFieldView" Command="{Binding ChangePageCommand}" 
+		<Button x:Name="AddFieldPage" Text="Add Field"
+				Command="{Binding ChangePageCommand}" CommandParameter="AddFieldPage"
 				BackgroundColor="Purple" Grid.Column="1" Grid.Row="1" CornerRadius="10"/>
-		<Button x:Name="RunPivotView" Command="{Binding ChangePageCommand}" 
+		<Button x:Name="RunPivotPage" Text="Run A Pivot"
+				Command="{Binding ChangePageCommand}" CommandParameter="RunPivotPage"
 				BackgroundColor="IndianRed" Grid.Column="0" Grid.Row="2" CornerRadius="10"/>
-		<Button x:Name="AccountView" Command="{Binding ChangePageCommand}" 
+		<Button x:Name="AccountPage" Text="Account"
+				Command="{Binding ChangePageCommand}" CommandParameter="AccountPage"
 				BackgroundColor="DarkOliveGreen" Grid.Column="1" Grid.Row="2" CornerRadius="10"/>
 	</Grid>
 
-	<!-- CommandParameter="{Binding Source={x:Reference FieldListView}, Path=Name}"-->
-	
 </ContentPage>

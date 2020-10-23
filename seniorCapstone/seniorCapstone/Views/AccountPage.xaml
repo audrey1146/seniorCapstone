@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
+             x:Class="seniorCapstone.Views.AccountPage"
+			 Padding="10"
+			 Title="EvenStreamin">
+
+	<ContentPage.BindingContext>
+		<ViewModel:MainViewModel/>
+	</ContentPage.BindingContext>
+
+<!--
+	<ContentPage.ToolbarItems>
+		<ToolbarItem 
+			Text="Home"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="MainPage"/>
+		<ToolbarItem 
+			Text="Field List"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="FieldListPage"/>
+		<ToolbarItem 
+			Text="Add Field"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AddFieldPage"/>
+		<ToolbarItem 
+			Text="Run Pivot"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="RunPivotPage"/>
+	</ContentPage.ToolbarItems>
+-->
+	
+	<ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Your Account!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

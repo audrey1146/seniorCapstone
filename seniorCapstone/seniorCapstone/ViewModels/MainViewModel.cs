@@ -1,7 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿/****************************************************************************
+ * File			MainViewModel.cs
+ * Author		Audrey Lincoln
+ * Date			10/22/2020
+ * Purpose		Home Page of the mobile application
+ ****************************************************************************/
+
+using seniorCapstone.Interfaces;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -11,15 +15,10 @@ namespace seniorCapstone.ViewModels
 	/// Viewmodel class that implements the properties and commands for the
 	/// main page of the app.
 	/// </summary>
-	public class MainViewModel : INotifyPropertyChanged
+	public class MainViewModel: IPageNav
 	{
-		// Variables
-		public event PropertyChangedEventHandler PropertyChanged;
-
-
 		// Properties
 		public ICommand ChangePageCommand { get; }
-
 
 
 		/// <summary>
@@ -27,15 +26,7 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public MainViewModel ()
 		{
-			ChangePageCommand = new Command (ChangePage);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void OnPropertyChanged ()
-		{
-
+			ChangePageCommand = new Command<string> (ChangePage);
 		}
 
 
@@ -43,7 +34,7 @@ namespace seniorCapstone.ViewModels
 		/// When the buttons are pressed, the name of the button will be passed, 
 		/// and will correspond with a view.
 		/// </summary>
-		public void ChangePage ()
+		public void ChangePage (string PageName)
 		{
 
 		}
