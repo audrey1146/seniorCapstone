@@ -8,10 +8,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
 {
-	public class AccountViewModel
+	public class AccountViewModel : PageNavViewModel
 	{
+
+		/// <summary>
+		/// Constructor method
+		/// </summary>
+		public AccountViewModel()
+		{
+			base.ChangePageCommand = new Command<string>(base.ChangePage);
+		}
 	}
 }

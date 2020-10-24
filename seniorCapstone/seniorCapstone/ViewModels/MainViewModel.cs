@@ -5,7 +5,7 @@
  * Purpose		Home Page of the mobile application
  ****************************************************************************/
 
-using seniorCapstone.Interfaces;
+using seniorCapstone.Views;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -15,10 +15,8 @@ namespace seniorCapstone.ViewModels
 	/// Viewmodel class that implements the properties and commands for the
 	/// main page of the app.
 	/// </summary>
-	public class MainViewModel: IPageNav
+	public class MainViewModel : PageNavViewModel
 	{
-		// Properties
-		public ICommand ChangePageCommand { get; }
 
 
 		/// <summary>
@@ -26,17 +24,7 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public MainViewModel ()
 		{
-			ChangePageCommand = new Command<string> (ChangePage);
-		}
-
-
-		/// <summary>
-		/// When the buttons are pressed, the name of the button will be passed, 
-		/// and will correspond with a view.
-		/// </summary>
-		public void ChangePage (string PageName)
-		{
-
+			base.ChangePageCommand = new Command<string>(base.ChangePage);
 		}
 	}
 }

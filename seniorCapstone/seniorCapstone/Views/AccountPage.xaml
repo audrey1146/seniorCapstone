@@ -7,10 +7,9 @@
 			 Title="EvenStreamin">
 
 	<ContentPage.BindingContext>
-		<ViewModel:MainViewModel/>
+		<ViewModel:AccountViewModel/>
 	</ContentPage.BindingContext>
 
-<!--
 	<ContentPage.ToolbarItems>
 		<ToolbarItem 
 			Text="Home"
@@ -37,8 +36,7 @@
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="RunPivotPage"/>
 	</ContentPage.ToolbarItems>
--->
-	
+
 	<ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to Your Account!"
