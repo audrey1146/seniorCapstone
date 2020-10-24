@@ -14,9 +14,8 @@ namespace seniorCapstone.ViewModels
 {
 	public class AccountViewModel : PageNavViewModel
 	{
-
 		/// <summary>
-		/// Constructor method
+		/// 
 		/// </summary>
 		public AccountViewModel()
 		{

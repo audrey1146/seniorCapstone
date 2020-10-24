@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
+             x:Class="seniorCapstone.Views.RegistrationPage"
+			 Padding="10"
+			 Title="EvenStreamin">
+
+	<ContentPage.Content>
+        <StackLayout Margin="20, 20, 20, 0">
+			
+			<Entry x:Name="username" 
+				   Placeholder="User Name"/>
+			<Entry x:Name="firstname" 
+				   Placeholder="Firs tName"/>
+			<Entry x:Name="lastname" 
+				   Placeholder="Last Name"/>
+			<Entry x:Name="email" 
+				   Placeholder="Email"/>
+
+			<Button Text="Register" 
+					x:Name="RegisterButton"
+					Clicked="RegisterButton_Clicked"/>
+
+
+			<Button Text="Cancel"
+					x:Name="CancelButton"
+					Clicked="CancelButton_Clicked"/>
+
+
+		</StackLayout>
+    </ContentPage.Content>
+</ContentPage>

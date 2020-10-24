@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.IO;
 
 namespace seniorCapstone.Droid
 {
@@ -19,9 +20,16 @@ namespace seniorCapstone.Droid
 
             base.OnCreate(savedInstanceState);
 
+            // Platform Specific DB Path
+            string dbFileName = "EvenStreamin_db.db3";
+            string dbFileLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            string dbFullPath = Path.Combine(dbFileLocation, dbFileName);
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+
+            // Using Overloaded Constructor
+            LoadApplication(new App(dbFullPath));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

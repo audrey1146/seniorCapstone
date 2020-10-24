@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Foundation;
@@ -22,8 +23,15 @@ namespace seniorCapstone.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            // Platform Specific DB Path
+            string dbFileName = "EvenStreamin_db.db3";
+            string dbFileLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library");
+            string dbFullPath = Path.Combine(dbFileLocation, dbFileName);
+
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+
+            // Use overloaded contructor
+            LoadApplication(new App(dbFullPath));
 
             return base.FinishedLaunching(app, options);
         }
