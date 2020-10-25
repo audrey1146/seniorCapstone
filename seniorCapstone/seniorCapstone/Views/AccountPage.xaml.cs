@@ -1,9 +1,6 @@
-﻿using System;
+﻿using seniorCapstone.Tables;
+using SQLite;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +12,19 @@ namespace seniorCapstone.Views
 		public AccountPage()
 		{
 			InitializeComponent();
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+
+			// Reading from Database
+			using (SQLiteConnection dbConnection = new SQLiteConnection(App.DatabasePath))
+			{
+				dbConnection.CreateTable<UserTable>();
+
+				
+			}
 		}
 	}
 }

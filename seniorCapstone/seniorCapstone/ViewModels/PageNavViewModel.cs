@@ -1,17 +1,12 @@
 ﻿using seniorCapstone.Views;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
 {
-	public abstract class PageNavViewModel : ContentPage
+	public abstract class PageNavViewModel
 	{
 		// Properties
-		public ICommand ChangePageCommand 
-		{ 
-			get;
-			set;
-		}
+		public ICommand ChangePageCommand { get; set; }
 
 		/// <summary>
 		/// When the buttons are pressed, the name of the button will be passed, 

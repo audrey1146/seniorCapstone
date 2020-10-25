@@ -8,11 +8,14 @@
 
 	<ContentPage.Content>
         <StackLayout Margin="20, 20, 20, 0">
-			
+
+			<Label x:Name="messageLabel" />
 			<Entry x:Name="username" 
 				   Placeholder="User Name"/>
+			<Entry x:Name="password" 
+				   Placeholder="Password" IsPassword="True"/>
 			<Entry x:Name="firstname" 
-				   Placeholder="Firs tName"/>
+				   Placeholder="First Name"/>
 			<Entry x:Name="lastname" 
 				   Placeholder="Last Name"/>
 			<Entry x:Name="email" 

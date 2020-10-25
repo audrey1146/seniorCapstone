@@ -17,8 +17,6 @@ namespace seniorCapstone.ViewModels
 	/// </summary>
 	public class MainViewModel : PageNavViewModel
 	{
-
-
 		/// <summary>
 		/// Constructor method
 		/// </summary>

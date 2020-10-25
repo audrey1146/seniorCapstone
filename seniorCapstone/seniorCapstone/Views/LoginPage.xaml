@@ -12,14 +12,15 @@
 
 	<ContentPage.Content>
 		<StackLayout Margin="20, 20, 20, 0">
-			<Entry Placeholder="UserName"/>
-			<Entry Placeholder="Password" IsPassword="True"/>
-			<Button Text="Login" 
-					Command="{Binding }">
-			</Button>
-			<Button Text="Register" 
-					Command="{Binding }">
-			</Button>
+			
+			<Label x:Name="messageLabel" />
+			<Label Text="Username" />
+			<Entry x:Name="usernameEntry" Placeholder="UserName" />
+			<Label Text="Password" />
+			<Entry x:Name="passwordEntry" IsPassword="true" />
+			<Button Text="Login" Clicked="LoginButton_Clicked" />
+			<Button Text="Register" Clicked="RegistrationButton_Clicked" />
+			
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

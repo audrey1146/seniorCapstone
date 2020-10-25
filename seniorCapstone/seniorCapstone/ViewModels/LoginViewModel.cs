@@ -1,10 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
 {
-	class LoginViewModel
+	public class LoginViewModel
 	{
+
+
+		public LoginViewModel()
+		{
+			
+		}
+
+
 	}
 }

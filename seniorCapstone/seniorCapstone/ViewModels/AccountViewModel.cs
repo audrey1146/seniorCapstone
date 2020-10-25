@@ -21,5 +21,7 @@ namespace seniorCapstone.ViewModels
 		{
 			base.ChangePageCommand = new Command<string>(base.ChangePage);
 		}
+
+
 	}
 }

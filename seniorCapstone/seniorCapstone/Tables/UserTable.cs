@@ -17,6 +17,9 @@ namespace seniorCapstone.Tables
         [Column("UserName")]
         public string UserName { get; set; }
 
+        [Column("Password")]
+        public string Password { get; set; }
+
         [Column("FirstName")]
         public string FirstName { get; set; }
 
