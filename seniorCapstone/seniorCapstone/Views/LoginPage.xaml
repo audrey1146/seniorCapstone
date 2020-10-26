@@ -17,6 +17,7 @@
 				Style="{DynamicResource BackgroundImage}" />
 			<Image
                 Source="Logo"
+				IsVisible="True"
 				Style="{DynamicResource LogoImage}" />
 
 			<StackLayout
@@ -29,7 +30,8 @@
 					Orientation="Vertical"
                     Spacing="10"
                     HorizontalOptions="FillAndExpand">
-					<Label x:Name="messageLabel" />
+					<Label x:Name="messageLabel" 
+						   TextColor="#961B1B" />
 					<Frame 
 						Style="{DynamicResource EntryFrames}">
 						<Entry x:Name="usernameEntry"
