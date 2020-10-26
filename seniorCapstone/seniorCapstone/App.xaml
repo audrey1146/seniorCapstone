@@ -60,7 +60,7 @@
 				<Setter Property="TextColor"					Value="Black"/>
 				<Setter Property="HorizontalOptions"			Value="FillAndExpand"/>
 				<Setter Property="Margin"						Value="5,10"/>
-				<Setter Property="FontSize"						Value="Subtitle"/>
+				<Setter Property="FontSize"						Value="Body"/>
 			</Style>
 
 

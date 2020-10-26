@@ -27,7 +27,7 @@
 
 				<Frame 
 					Style="{DynamicResource EntryFrames}" 
-					Padding="0">
+					Padding="0" BackgroundColor="#E59CC5BF">
 					<Entry x:Name="username"
 							Placeholder="Username"
 							Style="{DynamicResource Entries}"/>
@@ -35,7 +35,7 @@
 
 				<Frame 
 					Style="{DynamicResource EntryFrames}" 
-					Padding="0">
+					Padding="0" BackgroundColor="#E59CC5BF">
 					<Entry x:Name="password"
 							Placeholder="Password"
 							IsPassword="True" 
@@ -44,7 +44,7 @@
 
 				<Frame 
 					Style="{DynamicResource EntryFrames}" 
-					Padding="0">
+					Padding="0" BackgroundColor="#E59CC5BF">
 					<Entry x:Name="firstname"
 							Placeholder="First Name"
 							Style="{DynamicResource Entries}"/>
@@ -52,7 +52,7 @@
 
 				<Frame 
 					Style="{DynamicResource EntryFrames}" 
-					Padding="0">
+					Padding="0" BackgroundColor="#E59CC5BF">
 					<Entry x:Name="lastname"
 							Placeholder="Last Name" 
 							Style="{DynamicResource Entries}"/>
@@ -60,7 +60,7 @@
 
 				<Frame 
 					Style="{DynamicResource EntryFrames}" 
-					Padding="0">
+					Padding="0" BackgroundColor="#E59CC5BF">
 					<Entry x:Name="email"
 							Placeholder="Email"
 							Style="{DynamicResource Entries}"/>

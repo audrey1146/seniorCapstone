@@ -143,10 +143,19 @@
     <BundleResource Include="Resources\LoginScreen.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\RegistrationScreen.png" />
+    <BundleResource Include="Resources\AccountScreen.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\AccountScreen.png" />
+    <BundleResource Include="Resources\RunPivot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Account.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FieldList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RegistrationScreen.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\AddField.png" />
