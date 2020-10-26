@@ -11,7 +11,7 @@
 			<Image
                 Source="RegistrationScreen" 
 				Style="{DynamicResource BackgroundImage}" />
-			<Image
+			<ImageButton
                 Source="Logo"
 				Style="{DynamicResource LogoImage}" />
 			
@@ -30,7 +30,6 @@
 					Padding="0">
 					<Entry x:Name="username"
 							Placeholder="Username"
-						    HorizontalOptions="StartAndExpand" 
 							Style="{DynamicResource Entries}"/>
 				</Frame>
 
@@ -40,7 +39,6 @@
 					<Entry x:Name="password"
 							Placeholder="Password"
 							IsPassword="True" 
-						    HorizontalOptions="StartAndExpand" 
 							Style="{DynamicResource Entries}"/>
 				</Frame>
 
@@ -49,7 +47,6 @@
 					Padding="0">
 					<Entry x:Name="firstname"
 							Placeholder="First Name"
-						    HorizontalOptions="StartAndExpand" 
 							Style="{DynamicResource Entries}"/>
 				</Frame>
 
@@ -57,8 +54,7 @@
 					Style="{DynamicResource EntryFrames}" 
 					Padding="0">
 					<Entry x:Name="lastname"
-							Placeholder="Last Name"
-						    HorizontalOptions="StartAndExpand" 
+							Placeholder="Last Name" 
 							Style="{DynamicResource Entries}"/>
 				</Frame>
 
@@ -67,7 +63,6 @@
 					Padding="0">
 					<Entry x:Name="email"
 							Placeholder="Email"
-						    HorizontalOptions="StartAndExpand" 
 							Style="{DynamicResource Entries}"/>
 				</Frame>
 

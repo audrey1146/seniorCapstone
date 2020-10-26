@@ -7,10 +7,9 @@
     <Application.Resources>
 
 		<ResourceDictionary>
-			<Style x:Key="LogoImage" TargetType="Image">
+			<Style x:Key="LogoImage" TargetType="ImageButton">
 				<Setter Property="BackgroundColor"				Value="Transparent"/>
-				<Setter Property="Opacity"						Value="0"/>
-				<Setter Property="TranslationY"					Value="-40"/>
+				<!--<Setter Property="TranslationY"					Value="-40"/>-->
 				<Setter Property="WidthRequest"					Value="80"/>
 				<Setter Property="HeightRequest"				Value="80"/>
 				<Setter Property="VerticalOptions"				Value="CenterAndExpand"/>
@@ -38,7 +37,7 @@
 				<Setter Property="FontAttributes"				Value="Bold"/>
 				<Setter Property="TextColor"					Value="Black"/>
 				<Setter Property="PlaceholderColor"				Value="Black"/>
-				<Setter Property="HorizontalOptions"			Value="CenterAndExpand"/>
+				<Setter Property="HorizontalOptions"			Value="FillAndExpand"/>
 			</Style>
 
 			<Style x:Key="LoginButtons" TargetType="Button">
@@ -48,10 +47,18 @@
 				<Setter Property="CornerRadius"					Value="10"/>
 			</Style>
 
+
+			<Style x:Key="Account" TargetType="Frame">
+				<Setter Property="Padding"						Value="0,5"/>
+				<Setter Property="BackgroundColor"				Value="#80E1D3D3"/>
+				<Setter Property="Opacity"						Value="0.5"/>
+				<Setter Property="CornerRadius"					Value="10"/>
+			</Style>
+
 			<Style x:Key="AccountInfo" TargetType="Label">
 				<Setter Property="FontAttributes"				Value="Bold"/>
 				<Setter Property="TextColor"					Value="Black"/>
-				<Setter Property="HorizontalOptions"			Value="CenterAndExpand"/>
+				<Setter Property="HorizontalOptions"			Value="FillAndExpand"/>
 				<Setter Property="Margin"						Value="5,10"/>
 				<Setter Property="FontSize"						Value="Subtitle"/>
 			</Style>

@@ -38,9 +38,9 @@ namespace seniorCapstone.Views
 				else
 				{
 					username.Text = currentUser[0].UserName;
-					username.Text = currentUser[0].FirstName;
-					username.Text = currentUser[0].LastName;
-					username.Text = currentUser[0].Email;
+					firstname.Text = currentUser[0].FirstName;
+					lastname.Text = currentUser[0].LastName;
+					email.Text = currentUser[0].Email;
 				}
 			}
 		}

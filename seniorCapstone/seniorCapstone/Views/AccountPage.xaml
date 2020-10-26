@@ -40,63 +40,63 @@
 
 	<ContentPage.Content>
 		<AbsoluteLayout>
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
+			<Image
+				Source="AccountScreen"
+				AbsoluteLayout.LayoutBounds="0, 0, 1, .4" 
+				AbsoluteLayout.LayoutFlags="All"
+				Style="{DynamicResource BackgroundImage}" >
+			</Image>
 
-				<Image Grid.Row="0" 
-					Source="AccountScreen"
-					Style="{DynamicResource BackgroundImage}" />
+			<StackLayout 
+				AbsoluteLayout.LayoutBounds="0.6, 0.6, 1, .2" 
+				AbsoluteLayout.LayoutFlags="All"
+				Spacing="20"
+				VerticalOptions="Start">
+				
+			<!-- Could add grid info in one row of number of fields / number running / something else ? -->
 
-				<StackLayout Grid.Row="1" 
-					VerticalOptions="CenterAndExpand" >
-					<!-- Could add grid info in one row of number of fields / number running / something else ? -->
-
-					<Frame 
-						Style="{DynamicResource EntryFrames}">
-						<Label x:Name="username"
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					BackgroundColor="#7AA6B1">
+					<Label x:Name="username"
 							Text="Username"
-							HorizontalOptions="StartAndExpand"
 							Style="{DynamicResource AccountInfo}" />
-					</Frame>
+				</Frame>
 
-					<Frame 
-						Style="{DynamicResource EntryFrames}" >
-						<Label x:Name="firstname"
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					BackgroundColor="#7AA6B1">
+					<Label x:Name="firstname"
 							Text="First Name"
-						    HorizontalOptions="StartAndExpand" 
 							Style="{DynamicResource AccountInfo}"/>
-					</Frame>
+				</Frame>
 
-					<Frame 
-						Style="{DynamicResource EntryFrames}" >
-						<Label x:Name="lastname"
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					BackgroundColor="#7AA6B1">
+					<Label x:Name="lastname"
 							Text="Last Name"
-						    HorizontalOptions="StartAndExpand" 
 							Style="{DynamicResource AccountInfo}"/>
-					</Frame>
+				</Frame>
 
-					<Frame 
-						Style="{DynamicResource EntryFrames}" >
-						<Label x:Name="email"
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					BackgroundColor="#7AA6B1">
+					<Label x:Name="email"
 							Text="Email"
-						    HorizontalOptions="StartAndExpand" 
 							Style="{DynamicResource AccountInfo}"/>
-					</Frame>
+				</Frame>
 
-					<!-- Use this if you want to allow the user to edit their account
-					<Button Grid.Row="0" Grid.Column="1"
-							Margin="20,20,20,0"
-							Clicked="RegisterButton_Clicked"
-							Text="Register"
-							BackgroundColor="#617C29"
-							Style="{DynamicResource LoginButtons}">
-					</Button>
-					-->
-				</StackLayout>
-			</Grid>
+				<!-- Use this if you want to allow the user to edit their account
+				<Button Grid.Row="0" Grid.Column="1"
+					Margin="20,20,20,0"
+					Clicked="RegisterButton_Clicked"
+					Text="Register"
+					BackgroundColor="#617C29"
+					Style="{DynamicResource LoginButtons}">
+				</Button>
+				-->
+			</StackLayout>
 		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>
