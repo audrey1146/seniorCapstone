@@ -17,10 +17,14 @@ namespace seniorCapstone
 		public App()
 		{
 			InitializeComponent();
-
-			//MainPage = new MainPage();
-			// Wrap MainPage with Navigation Page
-			MainPage = new NavigationPage (new MainPage ()); 
+			if (!IsUserLoggedIn)
+			{
+				MainPage = new NavigationPage(new LoginPage());
+			}
+			else
+			{
+				MainPage = new NavigationPage(new MainPage());
+			}
 		}
 
 		public App(string DBPath)
@@ -28,7 +32,6 @@ namespace seniorCapstone
 			InitializeComponent();
 
 			DatabasePath = DBPath;
-			MainPage = new NavigationPage(new MainPage());
 			if (!IsUserLoggedIn)
 			{
 				MainPage = new NavigationPage(new LoginPage());

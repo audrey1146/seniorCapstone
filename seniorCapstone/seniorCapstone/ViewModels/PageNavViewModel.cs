@@ -1,5 +1,6 @@
 ﻿using seniorCapstone.Views;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
 {
@@ -17,10 +18,10 @@ namespace seniorCapstone.ViewModels
 			switch (PageName)
 			{
 				case "MainPage":
-					await Xamarin.Forms.Application.Current.MainPage.Navigation.PopToRootAsync();
+					await Application.Current.MainPage.Navigation.PopToRootAsync();
 					break;
 				case "AccountPage":
-					await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new AccountPage());
+					await Application.Current.MainPage.Navigation.PushAsync(new AccountPage());
 					break;
 				
 			}
@@ -28,11 +29,11 @@ namespace seniorCapstone.ViewModels
 	}
 }
 /*case "FieldListPage":
-	await Xamarin.Forms.Application.Current.MainPage.Navigation.PushAsync(new FieldListPage());
+	await Application.Current.MainPage.Navigation.PushAsync(new FieldListPage());
 	break;
 case "AddFieldPage":
-	await Xamarin.Forms.Application.Current.MainPage.Navigation.PushModalAsync(new AddFieldPage());
+	await Application.Current.MainPage.Navigation.PushModalAsync(new AddFieldPage());
 	break;
 case "RunPivotPage":
-	await Xamarin.Forms.Application.Current.MainPage.Navigation.PushModalAsync(new RunPivotPage());
+	await Application.Current.MainPage.Navigation.PushModalAsync(new RunPivotPage());
 	break;*/

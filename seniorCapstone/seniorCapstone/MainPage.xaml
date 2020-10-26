@@ -49,19 +49,29 @@
 			<ColumnDefinition Width="5*" />
 		</Grid.ColumnDefinitions>
 
-		<BoxView BackgroundColor="CornflowerBlue" Grid.Column="0" Grid.Row="0" CornerRadius="10" Grid.ColumnSpan="2"/>
+		<Frame x:Name="FieldUpdates" 
+			Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+			BackgroundColor="#969EAD"
+			CornerRadius="10">
+			<Label
+				Text="Updates" 
+				TextColor="#000000" 
+				FontSize="Title">
+			</Label>
+		</Frame>
+		
 		<Button x:Name="FieldListPage" Text="Field List"
-				Command="{Binding ChangePageCommand}" CommandParameter="FieldListPage"
-				BackgroundColor="LawnGreen" Grid.Column="0" Grid.Row="1" CornerRadius="10"/>
+			Command="{Binding ChangePageCommand}" CommandParameter="FieldListPage"
+			BackgroundColor="#6D9546" Grid.Column="0" Grid.Row="1" CornerRadius="10"/>
 		<Button x:Name="AddFieldPage" Text="Add Field"
-				Command="{Binding ChangePageCommand}" CommandParameter="AddFieldPage"
-				BackgroundColor="Purple" Grid.Column="1" Grid.Row="1" CornerRadius="10"/>
+			Command="{Binding ChangePageCommand}" CommandParameter="AddFieldPage"
+			BackgroundColor="#855885" Grid.Column="1" Grid.Row="1" CornerRadius="10"/>
 		<Button x:Name="RunPivotPage" Text="Run A Pivot"
-				Command="{Binding ChangePageCommand}" CommandParameter="RunPivotPage"
-				BackgroundColor="IndianRed" Grid.Column="0" Grid.Row="2" CornerRadius="10"/>
+			Command="{Binding ChangePageCommand}" CommandParameter="RunPivotPage"
+			BackgroundColor="IndianRed" Grid.Column="0" Grid.Row="2" CornerRadius="10"/>
 		<Button x:Name="AccountPage" Text="Account"
-				Command="{Binding ChangePageCommand}" CommandParameter="AccountPage"
-				BackgroundColor="DarkOliveGreen" Grid.Column="1" Grid.Row="2" CornerRadius="10"/>
+			Command="{Binding ChangePageCommand}" CommandParameter="AccountPage"
+			BackgroundColor="#426988" Grid.Column="1" Grid.Row="2" CornerRadius="10"/>
 	</Grid>
 
 </ContentPage>

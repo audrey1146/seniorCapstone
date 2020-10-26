@@ -3,34 +3,99 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.RegistrationPage"
-			 Padding="10"
-			 Title="EvenStreamin">
+			 Title="EvenStreamin"
+			 NavigationPage.HasNavigationBar="False">
 
 	<ContentPage.Content>
-        <StackLayout Margin="20, 20, 20, 0">
+		<AbsoluteLayout>
+			<Image
+                Source="RegistrationScreen" 
+				Style="{DynamicResource BackgroundImage}" />
+			<Image
+                Source="Logo"
+				Style="{DynamicResource LogoImage}" />
+			
+			
+			<StackLayout 
+				Margin="10,30,10,30"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                Spacing="20"
+                VerticalOptions="EndAndExpand">
 
-			<Label x:Name="messageLabel" />
-			<Entry x:Name="username" 
-				   Placeholder="User Name"/>
-			<Entry x:Name="password" 
-				   Placeholder="Password" IsPassword="True"/>
-			<Entry x:Name="firstname" 
-				   Placeholder="First Name"/>
-			<Entry x:Name="lastname" 
-				   Placeholder="Last Name"/>
-			<Entry x:Name="email" 
-				   Placeholder="Email"/>
+				<Label x:Name="messageLabel" />
 
-			<Button Text="Register" 
-					x:Name="RegisterButton"
-					Clicked="RegisterButton_Clicked"/>
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					Padding="0">
+					<Entry x:Name="username"
+							Placeholder="Username"
+						    HorizontalOptions="StartAndExpand" 
+							Style="{DynamicResource Entries}"/>
+				</Frame>
 
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					Padding="0">
+					<Entry x:Name="password"
+							Placeholder="Password"
+							IsPassword="True" 
+						    HorizontalOptions="StartAndExpand" 
+							Style="{DynamicResource Entries}"/>
+				</Frame>
 
-			<Button Text="Cancel"
-					x:Name="CancelButton"
-					Clicked="CancelButton_Clicked"/>
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					Padding="0">
+					<Entry x:Name="firstname"
+							Placeholder="First Name"
+						    HorizontalOptions="StartAndExpand" 
+							Style="{DynamicResource Entries}"/>
+				</Frame>
 
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					Padding="0">
+					<Entry x:Name="lastname"
+							Placeholder="Last Name"
+						    HorizontalOptions="StartAndExpand" 
+							Style="{DynamicResource Entries}"/>
+				</Frame>
 
-		</StackLayout>
-    </ContentPage.Content>
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					Padding="0">
+					<Entry x:Name="email"
+							Placeholder="Email"
+						    HorizontalOptions="StartAndExpand" 
+							Style="{DynamicResource Entries}"/>
+				</Frame>
+
+				<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*" />
+						<ColumnDefinition Width="5*" />
+					</Grid.ColumnDefinitions>
+
+					<Button Grid.Row="0" Grid.Column="0"
+							Margin="20,20,20,0"
+							Clicked="CancelButton_Clicked"
+							Text="Cancel"
+							BackgroundColor="#7C2C29"
+							Style="{DynamicResource LoginButtons}" >
+					</Button>
+					<Button Grid.Row="0" Grid.Column="1"
+							Margin="20,20,20,0"
+							Clicked="RegisterButton_Clicked"
+							Text="Register"
+							BackgroundColor="#617C29"
+							Style="{DynamicResource LoginButtons}">
+					</Button>
+				</Grid>
+			</StackLayout>
+		</AbsoluteLayout>
+	</ContentPage.Content>
 </ContentPage>

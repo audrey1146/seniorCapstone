@@ -3,24 +3,69 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.LoginPage"
-			 Padding="10"
-			 Title="EvenStreamin">
+			 NavigationPage.HasNavigationBar="False">
 
 	<ContentPage.BindingContext>
 		<ViewModel:LoginViewModel/>
 	</ContentPage.BindingContext>
 
+
 	<ContentPage.Content>
-		<StackLayout Margin="20, 20, 20, 0">
-			
-			<Label x:Name="messageLabel" />
-			<Label Text="Username" />
-			<Entry x:Name="usernameEntry" Placeholder="UserName" />
-			<Label Text="Password" />
-			<Entry x:Name="passwordEntry" IsPassword="true" />
-			<Button Text="Login" Clicked="LoginButton_Clicked" />
-			<Button Text="Register" Clicked="RegistrationButton_Clicked" />
-			
-		</StackLayout>
+		<AbsoluteLayout>
+			<Image
+                Source="LoginScreen" 
+				Style="{DynamicResource BackgroundImage}" />
+			<Image
+                Source="Logo"
+				Style="{DynamicResource LogoImage}" />
+
+			<StackLayout
+				Margin="10,30,10,30"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                Spacing="20"
+                VerticalOptions="EndAndExpand">
+				<StackLayout
+					Orientation="Vertical"
+                    Spacing="10"
+                    HorizontalOptions="FillAndExpand">
+					<Label x:Name="messageLabel" />
+					<Frame 
+						Style="{DynamicResource EntryFrames}">
+						<Entry x:Name="usernameEntry"
+							Placeholder="Username"
+							Style="{DynamicResource Entries}" />
+					</Frame>
+					<Frame 
+						Style="{DynamicResource EntryFrames}" >
+						<Entry x:Name="passwordEntry" IsPassword="true"
+							Placeholder="Password"
+                            Style="{DynamicResource Entries}"/>
+					</Frame>
+					<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="5*" />
+							<ColumnDefinition Width="5*" />
+						</Grid.ColumnDefinitions>
+
+						<Button Grid.Row="0" Grid.Column="0"
+							Margin="0,20,0,0"
+							Clicked="LoginButton_Clicked"
+							Text="login"
+							Style="{DynamicResource LoginButtons}">
+						</Button>
+						<Button Grid.Row="0" Grid.Column="1"
+							Margin="0,20,0,0"
+							Clicked="RegistrationButton_Clicked"
+							Text="Register"
+							Style="{DynamicResource LoginButtons}">
+						</Button>
+					</Grid>
+				</StackLayout>
+			</StackLayout>
+		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>

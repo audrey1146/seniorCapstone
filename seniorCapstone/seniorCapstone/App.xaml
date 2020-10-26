@@ -2,7 +2,65 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="seniorCapstone.App">
+	
+	
     <Application.Resources>
 
+		<ResourceDictionary>
+			<Style x:Key="LogoImage" TargetType="Image">
+				<Setter Property="BackgroundColor"				Value="Transparent"/>
+				<Setter Property="Opacity"						Value="0"/>
+				<Setter Property="TranslationY"					Value="-40"/>
+				<Setter Property="WidthRequest"					Value="80"/>
+				<Setter Property="HeightRequest"				Value="80"/>
+				<Setter Property="VerticalOptions"				Value="CenterAndExpand"/>
+				<Setter Property="HorizontalOptions"			Value="CenterAndExpand"/>
+				<Setter Property="AbsoluteLayout.LayoutFlags"	Value="All"/>
+				<Setter Property="AbsoluteLayout.LayoutBounds"	Value="0,0,1,.2"/>
+			</Style>
+
+			<Style x:Key="BackgroundImage" TargetType="Image">
+				<Setter Property="AbsoluteLayout.LayoutFlags"	Value="All"/>
+				<Setter Property="AbsoluteLayout.LayoutBounds"	Value="0,0,1,1"/>
+				<Setter Property="Aspect"						Value="AspectFill"/>
+				<Setter Property="Opacity"						Value="0.9"/>
+			</Style>
+			
+			<Style x:Key="EntryFrames" TargetType="Frame">
+				<Setter Property="Padding"						Value="0,5"/>
+				<Setter Property="BackgroundColor"				Value="#80E1D3D3"/>
+				<Setter Property="Opacity"						Value="0.5"/>
+				<Setter Property="CornerRadius"					Value="10"/>
+			</Style>
+			
+			
+			<Style x:Key="Entries" TargetType="Entry">
+				<Setter Property="FontAttributes"				Value="Bold"/>
+				<Setter Property="TextColor"					Value="Black"/>
+				<Setter Property="PlaceholderColor"				Value="Black"/>
+				<Setter Property="HorizontalOptions"			Value="CenterAndExpand"/>
+			</Style>
+
+			<Style x:Key="LoginButtons" TargetType="Button">
+				<Setter Property="BackgroundColor"				Value="#896647"/>
+				<Setter Property="FontAttributes"				Value="Bold"/>
+				<Setter Property="TextColor"					Value="White"/>
+				<Setter Property="CornerRadius"					Value="10"/>
+			</Style>
+
+			<Style x:Key="AccountInfo" TargetType="Label">
+				<Setter Property="FontAttributes"				Value="Bold"/>
+				<Setter Property="TextColor"					Value="Black"/>
+				<Setter Property="HorizontalOptions"			Value="CenterAndExpand"/>
+				<Setter Property="Margin"						Value="5,10"/>
+				<Setter Property="FontSize"						Value="Subtitle"/>
+			</Style>
+
+
+		</ResourceDictionary>
+		
+		
     </Application.Resources>
+	
+	
 </Application>

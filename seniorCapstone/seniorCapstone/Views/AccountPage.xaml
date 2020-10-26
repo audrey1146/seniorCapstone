@@ -37,11 +37,66 @@
 			CommandParameter="RunPivotPage"/>
 	</ContentPage.ToolbarItems>
 
+
 	<ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Your Account!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+		<AbsoluteLayout>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<Image Grid.Row="0" 
+					Source="AccountScreen"
+					Style="{DynamicResource BackgroundImage}" />
+
+				<StackLayout Grid.Row="1" 
+					VerticalOptions="CenterAndExpand" >
+					<!-- Could add grid info in one row of number of fields / number running / something else ? -->
+
+					<Frame 
+						Style="{DynamicResource EntryFrames}">
+						<Label x:Name="username"
+							Text="Username"
+							HorizontalOptions="StartAndExpand"
+							Style="{DynamicResource AccountInfo}" />
+					</Frame>
+
+					<Frame 
+						Style="{DynamicResource EntryFrames}" >
+						<Label x:Name="firstname"
+							Text="First Name"
+						    HorizontalOptions="StartAndExpand" 
+							Style="{DynamicResource AccountInfo}"/>
+					</Frame>
+
+					<Frame 
+						Style="{DynamicResource EntryFrames}" >
+						<Label x:Name="lastname"
+							Text="Last Name"
+						    HorizontalOptions="StartAndExpand" 
+							Style="{DynamicResource AccountInfo}"/>
+					</Frame>
+
+					<Frame 
+						Style="{DynamicResource EntryFrames}" >
+						<Label x:Name="email"
+							Text="Email"
+						    HorizontalOptions="StartAndExpand" 
+							Style="{DynamicResource AccountInfo}"/>
+					</Frame>
+
+					<!-- Use this if you want to allow the user to edit their account
+					<Button Grid.Row="0" Grid.Column="1"
+							Margin="20,20,20,0"
+							Clicked="RegisterButton_Clicked"
+							Text="Register"
+							BackgroundColor="#617C29"
+							Style="{DynamicResource LoginButtons}">
+					</Button>
+					-->
+				</StackLayout>
+			</Grid>
+		</AbsoluteLayout>
+	</ContentPage.Content>
 </ContentPage>

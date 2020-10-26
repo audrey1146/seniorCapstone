@@ -136,4 +136,16 @@
       <Name>seniorCapstone</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\LoginScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RegistrationScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AccountScreen.png" />
+  </ItemGroup>
 </Project>

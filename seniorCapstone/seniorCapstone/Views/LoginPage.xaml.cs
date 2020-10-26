@@ -14,13 +14,14 @@ namespace seniorCapstone.Views
 			InitializeComponent();
 		}
 
+
 		/// <summary>
 		/// When the login button is pressed, the input credntials must be checked.
 		/// If they are correct, then login as the user, else display an alert
 		/// </summary>
 		public async void LoginButton_Clicked(object sender, System.EventArgs e)
 		{
-			if (true == AreCredentialsCorrect(usernameEntry.Text, passwordEntry.Text))
+			if (true == areCredentialsCorrect(usernameEntry.Text, passwordEntry.Text))
 			{
 				App.IsUserLoggedIn = true;
 				Navigation.InsertPageBefore(new MainPage(), this);
@@ -28,26 +29,32 @@ namespace seniorCapstone.Views
 			}
 			else
 			{
+				// Todo:  Come up with a better alert
 				messageLabel.Text = "Login Failed";
 				passwordEntry.Text = string.Empty;
 			}
 		}
 
+
 		/// <summary>
-		/// 
+		/// If the user wants to register an account then push on a Modal registration page
 		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public async void RegistrationButton_Clicked(object sender, System.EventArgs e)
 		{
 			await Application.Current.MainPage.Navigation.PushModalAsync(new RegistrationPage());
 		}
 
+
 		/// <summary>
-		/// 
+		/// Verifies whether the credentials the user input are correct by querying 
+		/// into the user table.
 		/// </summary>
 		/// <param name="UserNameEntry"></param>
 		/// <param name="PasswordEntry"></param>
 		/// <returns></returns>
-		bool AreCredentialsCorrect(string UserNameEntry, string PasswordEntry)
+		private bool areCredentialsCorrect(string UserNameEntry, string PasswordEntry)
 		{
 			bool isUser = false;
 
@@ -56,13 +63,10 @@ namespace seniorCapstone.Views
 			{
 				dbConnection.CreateTable<UserTable>();
 
+				// Query to get a single entry with specific Username and Password
 				List<UserTable> userID = dbConnection.Query<UserTable>
 					("SELECT UID FROM UserTable WHERE UserName=? AND Password=?",
 					UserNameEntry, PasswordEntry);
-
-
-				/*TableQuery<UserTable> userQuery = dbConnection.Table<UserTable>().
-					Where(u => u.UserName.Equals(UserNameEntry) && u.Password.Equals(PasswordEntry));*/
 
 				if (null != userID && userID.Count == 1)
 				{

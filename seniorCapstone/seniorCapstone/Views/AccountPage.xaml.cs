@@ -1,6 +1,7 @@
 ﻿using seniorCapstone.Tables;
 using SQLite;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,7 +15,7 @@ namespace seniorCapstone.Views
 			InitializeComponent();
 		}
 
-		protected override void OnAppearing()
+		protected override async void OnAppearing()
 		{
 			base.OnAppearing();
 
@@ -23,8 +24,30 @@ namespace seniorCapstone.Views
 			{
 				dbConnection.CreateTable<UserTable>();
 
-				
+				// Query for the current user
+				List<UserTable> currentUser = dbConnection.Query<UserTable>
+					("SELECT * FROM UserTable WHERE UID=?",
+					App.UserID);
+
+				// If query fails then pop this page off the stack
+				if (null == currentUser || currentUser.Count != 1)
+				{
+					await Application.Current.MainPage.Navigation.PopAsync();
+					Debug.WriteLine("Finding Current User Failed");
+				}
+				else
+				{
+					username.Text = currentUser[0].UserName;
+					username.Text = currentUser[0].FirstName;
+					username.Text = currentUser[0].LastName;
+					username.Text = currentUser[0].Email;
+				}
 			}
+		}
+
+		public void DisplayUserContent ()
+		{
+
 		}
 	}
 }
