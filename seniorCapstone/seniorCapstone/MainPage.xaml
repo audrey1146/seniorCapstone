@@ -37,7 +37,7 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-		<Grid BackgroundColor="Black" Padding="10" RowSpacing="10" ColumnSpacing="10" CompressedLayout.IsHeadless="False">
+		<Grid BackgroundColor="White" Padding="10" RowSpacing="15" ColumnSpacing="15" CompressedLayout.IsHeadless="False">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="3*" />
 				<RowDefinition Height="3*" />
@@ -51,7 +51,7 @@
 
 			<Frame x:Name="FieldUpdates"
 			Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
-			BackgroundColor="#CC758387"
+			BackgroundColor="#CCD2B785"
 			CornerRadius="20">
 				<Label
 				Text="Updates" 

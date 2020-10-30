@@ -23,17 +23,17 @@ namespace seniorCapstone.ViewModels
 				case "AccountPage":
 					await Application.Current.MainPage.Navigation.PushAsync(new AccountPage());
 					break;
-				
+				case "FieldListPage":
+					await Application.Current.MainPage.Navigation.PushAsync(new FieldListPage());
+					break;
+				case "AddFieldPage":
+					await Application.Current.MainPage.Navigation.PushModalAsync(new AddFieldPage());
+					break;
+
 			}
 		}
 	}
 }
-/*case "FieldListPage":
-	await Application.Current.MainPage.Navigation.PushAsync(new FieldListPage());
-	break;
-case "AddFieldPage":
-	await Application.Current.MainPage.Navigation.PushModalAsync(new AddFieldPage());
-	break;
-case "RunPivotPage":
+/*case "RunPivotPage":
 	await Application.Current.MainPage.Navigation.PushModalAsync(new RunPivotPage());
 	break;*/

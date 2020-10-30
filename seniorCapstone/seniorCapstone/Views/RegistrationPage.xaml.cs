@@ -25,7 +25,7 @@ namespace seniorCapstone.Views
 
 			if (false == areEntiresFilledOut())
 			{
-				messageLabel.Text = "Please Fill Out All Fields";
+				await DisplayAlert("Alert", "Please Fill Out All Fields", "OK");
 			}
 			else
 			{
@@ -60,7 +60,7 @@ namespace seniorCapstone.Views
 					}
 					else
 					{
-						messageLabel.Text = "Username or Email already exist";
+						await DisplayAlert("Alert", "Username or Email Already Exists", "OK");
 					}
 				}
 			}		

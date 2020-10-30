@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="seniorCapstone.Views.AddFieldPage"
+			 Title="EvenStreamin"
+			 NavigationPage.HasNavigationBar="False">
+	
+    <ContentPage.Content>
+		<AbsoluteLayout BackgroundColor="White">
+			<ImageButton
+                Source="Logo"
+				Style="{DynamicResource LogoImage}" />
+
+			<StackLayout 
+				Margin="10,30,10,30"
+                AbsoluteLayout.LayoutBounds="0,0,1,.9"
+                AbsoluteLayout.LayoutFlags="All"
+                Spacing="20"
+                VerticalOptions="EndAndExpand">
+
+				<Label x:Name="messageLabel" />
+
+				<Frame 
+					Style="{DynamicResource EntryFrames}" 
+					Padding="0" BackgroundColor="White">
+					<Entry x:Name="fieldname" 
+							Placeholder="Field Name"
+							Style="{DynamicResource Entries}"/>
+				</Frame>
+
+				<Picker x:Name="pivotlength" Title="Select Pivot Length" BackgroundColor="White"
+					TitleColor="Black" FontAttributes="Bold" FontSize="Subtitle">
+					<Picker.Items>
+						<x:String>400 Meters</x:String>
+						<x:String>200 Meters</x:String>
+						<x:String>60 Meters</x:String>
+					</Picker.Items>
+				</Picker>
+
+				<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="3*" />
+						<RowDefinition Height="3*" />
+						<RowDefinition Height="3*" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*" />
+						<ColumnDefinition Width="5*" />
+					</Grid.ColumnDefinitions>
+
+					<Button Grid.Row="0" Grid.RowSpan="2"
+							Margin="20,20,20,0"
+							Text="Sync To Panel To Get Longitutde, Latitude, and Pivot Angle"
+							BackgroundColor="Gray"
+							Style="{DynamicResource LoginButtons}" >
+					</Button>
+					<Frame Grid.Row="0" Grid.Column="1"
+						Style="{DynamicResource EntryFrames}" 
+						Padding="0" BackgroundColor="White">
+						<Entry x:Name="longitude"
+							Placeholder="Longitutde"
+							Style="{DynamicResource Entries}"/>
+					</Frame>
+					<Frame Grid.Row="1" Grid.Column="1"
+						Style="{DynamicResource EntryFrames}" 
+						Padding="0" BackgroundColor="White">
+						<Entry x:Name="latitude"
+							Placeholder="Latitude"
+							Style="{DynamicResource Entries}"/>
+					</Frame>
+					
+					<!-- PIVOT ANGLE FRAME: angle will be 0 - 360 ? -->
+					
+				</Grid>
+
+				<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*" />
+						<ColumnDefinition Width="5*" />
+					</Grid.ColumnDefinitions>
+
+					<Button Grid.Row="0" Grid.Column="0"
+							Margin="20,20,20,0"
+							Text="Cancel"
+							Clicked="CancelButton_Clicked"
+							BackgroundColor="#7C2C29"
+							Style="{DynamicResource LoginButtons}" >
+					</Button>
+					<Button Grid.Row="0" Grid.Column="1"
+							Margin="20,20,20,0"
+							Text="Add Field"
+							Clicked="AddFieldButton_Clicked"
+							BackgroundColor="#617C29"
+							Style="{DynamicResource LoginButtons}">
+					</Button>
+				</Grid>
+			</StackLayout>
+		</AbsoluteLayout>
+	</ContentPage.Content>
+</ContentPage>
