@@ -19,9 +19,6 @@ namespace seniorCapstone.Tables
         [Column("PivotLength")]
         public int PivotLength { get; set; }
 
-        [Column("PivotAngle")]
-        public int Angle { get; set; }
-
         // BELOW IS FROM HARDWARE / SOFTWARE LOCALIZATION
         [Column("Longitude")]
         public string Longitude { get; set; }
@@ -30,7 +27,10 @@ namespace seniorCapstone.Tables
         public string Latitude { get; set; }
 
         // BELOW DEFAULT ZERO
+        [Column("PivotAngle")]
+        public int PivotAngle { get; set; }
+
         [Column("PivotRunning")]
-        public int Running { get; set; }
+        public int PivotRunning { get; set; }
     }
 }

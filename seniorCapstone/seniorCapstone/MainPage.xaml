@@ -49,44 +49,45 @@
 				<ColumnDefinition Width="5*" />
 			</Grid.ColumnDefinitions>
 
-			<Frame x:Name="FieldUpdates"
-			Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
-			BackgroundColor="#CCD2B785"
-			CornerRadius="20">
+			<Frame 
+				x:Name="FieldUpdates"
+				Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+				BackgroundColor="#CCD2B785"
+				CornerRadius="20">
 				<Label
-				Text="Updates" 
-				TextColor="White"
-				FontSize="Title" 
-				FontFamily="Montserrat" 
-				FontAttributes="Bold"/>
+					Text="Updates" 
+					TextColor="White"
+					FontSize="Title" 
+					FontAttributes="Bold">
+				</Label>
 			</Frame>
 
 			<ImageButton x:Name="RunPivotPage"
-			Source="RunPivot"
-			Aspect="AspectFit"
-			Command="{Binding ChangePageCommand}" CommandParameter="RunPivotPage"
-			BackgroundColor="#CC4F86BC" Grid.Column="0" Grid.Row="1" CornerRadius="20">
+				Source="RunPivot"
+				Aspect="AspectFit"
+				Command="{Binding ChangePageCommand}" CommandParameter="RunPivotPage"
+				BackgroundColor="#CC4F86BC" Grid.Column="0" Grid.Row="1" CornerRadius="20">
 			</ImageButton>
 
 			<ImageButton x:Name="AddFieldPage" 
-			Source="AddField"
-			Aspect="AspectFit"
-			Command="{Binding ChangePageCommand}" CommandParameter="AddFieldPage"
-			BackgroundColor="#CC349641" Grid.Column="1" Grid.Row="1" CornerRadius="20">
+				Source="AddField"
+				Aspect="AspectFit"
+				Command="{Binding ChangePageCommand}" CommandParameter="AddFieldPage"
+				BackgroundColor="#CC349641" Grid.Column="1" Grid.Row="1" CornerRadius="20">
 			</ImageButton>
 
 			<ImageButton x:Name="FieldListPage" 
-			Source="FieldList"
-			Aspect="AspectFit"
-			Command="{Binding ChangePageCommand}" CommandParameter="FieldListPage"
-			BackgroundColor="#CCAFBB41" Grid.Column="0" Grid.Row="2" CornerRadius="20">
+				Source="FieldList"
+				Aspect="AspectFit"
+				Command="{Binding ChangePageCommand}" CommandParameter="FieldListPage"
+				BackgroundColor="#CCAFBB41" Grid.Column="0" Grid.Row="2" CornerRadius="20">
 			</ImageButton>
 
 			<ImageButton x:Name="AccountPage" 
-			Source="Account"
-			Aspect="AspectFit"
-			Command="{Binding ChangePageCommand}" CommandParameter="AccountPage"
-			BackgroundColor="#CC855B95" Grid.Column="1" Grid.Row="2" CornerRadius="20">
+				Source="Account"
+				Aspect="AspectFit"
+				Command="{Binding ChangePageCommand}" CommandParameter="AccountPage"
+				BackgroundColor="#CC855B95" Grid.Column="1" Grid.Row="2" CornerRadius="20">
 			</ImageButton>
 
 		</Grid>

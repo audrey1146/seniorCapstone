@@ -1,19 +1,23 @@
 ﻿using seniorCapstone.Views;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
 {
-	public abstract class PageNavViewModel
+	public abstract class PageNavViewModel : INotifyPropertyChanged
 	{
 		// Properties
 		public ICommand ChangePageCommand { get; set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
 		/// When the buttons are pressed, the name of the button will be passed, 
 		/// and will correspond with a view.
 		/// </summary>
-		public async void ChangePage(string PageName)
+		public async void ChangePage (string PageName)
 		{
 			switch (PageName)
 			{
@@ -32,8 +36,15 @@ namespace seniorCapstone.ViewModels
 
 			}
 		}
+
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this,
+			new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }
+
 /*case "RunPivotPage":
 	await Application.Current.MainPage.Navigation.PushModalAsync(new RunPivotPage());
 	break;*/

@@ -1,11 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.AddFieldPage"
 			 Title="EvenStreamin"
 			 NavigationPage.HasNavigationBar="False">
-	
-    <ContentPage.Content>
+
+	<ContentPage.BindingContext>
+		<ViewModel:AddFieldViewModel/>
+	</ContentPage.BindingContext>
+
+	<ContentPage.Content>
 		<AbsoluteLayout BackgroundColor="White">
 			<ImageButton
                 Source="Logo"
@@ -18,23 +23,24 @@
                 Spacing="20"
                 VerticalOptions="EndAndExpand">
 
-				<Label x:Name="messageLabel" />
-
 				<Frame 
-					Style="{DynamicResource EntryFrames}" 
-					Padding="0" BackgroundColor="White">
-					<Entry x:Name="fieldname" 
-							Placeholder="Field Name"
-							Style="{DynamicResource Entries}"/>
+					Padding="0">
+					<Entry 
+						x:Name="fieldname" 
+						Placeholder="Field Name"
+						Text="{Binding FieldName}" 
+						Style="{DynamicResource Entries}"/>
 				</Frame>
 
-				<Picker x:Name="pivotlength" Title="Select Pivot Length" BackgroundColor="White"
-					TitleColor="Black" FontAttributes="Bold" FontSize="Subtitle">
-					<Picker.Items>
-						<x:String>400 Meters</x:String>
-						<x:String>200 Meters</x:String>
-						<x:String>60 Meters</x:String>
-					</Picker.Items>
+				<Picker 
+					x:Name="pivotlength" 
+					Title="Select Pivot Length" 
+					ItemsSource="{Binding PivotOptions}" 
+					SelectedIndex="{Binding PivotIndex}" 
+					FontAttributes="Bold" 
+					TextColor="#000000" 
+					TitleColor="#000000"
+					FontSize="Large">
 				</Picker>
 
 				<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -48,24 +54,31 @@
 						<ColumnDefinition Width="5*" />
 					</Grid.ColumnDefinitions>
 
-					<Button Grid.Row="0" Grid.RowSpan="2"
-							Margin="20,20,20,0"
-							Text="Sync To Panel To Get Longitutde, Latitude, and Pivot Angle"
-							BackgroundColor="Gray"
-							Style="{DynamicResource LoginButtons}" >
+					<Button 
+						Grid.Row="0" Grid.RowSpan="2"
+						Margin="20,20,20,0"
+						Text="Sync To Panel To Get Long/Lat and Pivot Angle"
+						BackgroundColor="Gray"
+						Style="{DynamicResource LoginButtons}" >
 					</Button>
-					<Frame Grid.Row="0" Grid.Column="1"
-						Style="{DynamicResource EntryFrames}" 
-						Padding="0" BackgroundColor="White">
-						<Entry x:Name="longitude"
+					
+					<Frame 
+						Grid.Row="0" Grid.Column="1" 
+						Padding="0">
+						<Entry 
+							x:Name="longitude"
 							Placeholder="Longitutde"
+							Text="{Binding Longitude}"
 							Style="{DynamicResource Entries}"/>
 					</Frame>
-					<Frame Grid.Row="1" Grid.Column="1"
-						Style="{DynamicResource EntryFrames}" 
-						Padding="0" BackgroundColor="White">
-						<Entry x:Name="latitude"
+					
+					<Frame 
+						Grid.Row="1" Grid.Column="1"
+						Padding="0">
+						<Entry 
+							x:Name="latitude"
 							Placeholder="Latitude"
+							Text="{Binding Latitude}"
 							Style="{DynamicResource Entries}"/>
 					</Frame>
 					
@@ -82,19 +95,21 @@
 						<ColumnDefinition Width="5*" />
 					</Grid.ColumnDefinitions>
 
-					<Button Grid.Row="0" Grid.Column="0"
-							Margin="20,20,20,0"
-							Text="Cancel"
-							Clicked="CancelButton_Clicked"
-							BackgroundColor="#7C2C29"
-							Style="{DynamicResource LoginButtons}" >
+					<Button 
+						Grid.Row="0" Grid.Column="0"
+						Margin="20,20,20,0"
+						Text="Cancel"
+						Command="{Binding CancelCommand}"
+						BackgroundColor="#7C2C29"
+						Style="{DynamicResource LoginButtons}" >
 					</Button>
-					<Button Grid.Row="0" Grid.Column="1"
-							Margin="20,20,20,0"
-							Text="Add Field"
-							Clicked="AddFieldButton_Clicked"
-							BackgroundColor="#617C29"
-							Style="{DynamicResource LoginButtons}">
+					<Button 
+						Grid.Row="0" Grid.Column="1"
+						Margin="20,20,20,0"
+						Text="Add Field"
+						Command="{Binding AddFieldCommand}"
+						BackgroundColor="#617C29"
+						Style="{DynamicResource LoginButtons}">
 					</Button>
 				</Grid>
 			</StackLayout>

@@ -38,6 +38,7 @@
 				<Setter Property="TextColor"					Value="Black"/>
 				<Setter Property="PlaceholderColor"				Value="Black"/>
 				<Setter Property="HorizontalOptions"			Value="FillAndExpand"/>
+				<Setter Property="FontSize"						Value="Large"/>
 			</Style>
 
 			<Style x:Key="LoginButtons" TargetType="Button">
@@ -63,6 +64,13 @@
 				<Setter Property="FontSize"						Value="Body"/>
 			</Style>
 
+
+			<Style x:Key="SimpleEntries" TargetType="Entry">
+				<Setter Property="FontAttributes"				Value="Bold"/>
+				<Setter Property="TextColor"					Value="Black"/>
+				<Setter Property="PlaceholderColor"				Value="Black"/>
+				<Setter Property="HorizontalOptions"			Value="FillAndExpand"/>
+			</Style>
 
 		</ResourceDictionary>
 		
