@@ -57,7 +57,7 @@
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.7.335</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.1141" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1560" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
   <ItemGroup>
@@ -89,12 +89,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\seniorCapstone\seniorCapstone.csproj">
-      <Project>{ED7852F1-9B04-4659-862A-706EC53F9EF5}</Project>
-      <Name>seniorCapstone</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\Logo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\AddField.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\seniorCapstone\seniorCapstone.csproj">
+      <Project>{3cea63a0-cfb0-4a0a-a2aa-8e7994b41186}</Project>
+      <Name>seniorCapstone</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

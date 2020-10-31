@@ -17,19 +17,19 @@
 			Order="Secondary"
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="MainPage"/>
-	<ToolbarItem 
+		<ToolbarItem 
 			Text="Field List"
 			Priority="1"
 			Order="Secondary"
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="FieldListPage"/>
-	<ToolbarItem 
+		<ToolbarItem 
 			Text="Add Field"
 			Priority="1"
 			Order="Secondary"
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="AddFieldPage"/>
-	<ToolbarItem 
+		<ToolbarItem 
 			Text="Run Pivot"
 			Priority="1"
 			Order="Secondary"
@@ -54,10 +54,7 @@
 			
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<ViewCell>
-						
-						
-					</ViewCell>
+					
 				</DataTemplate>
 			</ListView.ItemTemplate>
 			

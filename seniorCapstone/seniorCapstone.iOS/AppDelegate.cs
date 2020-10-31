@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-
 using Foundation;
 using UIKit;
 
@@ -30,8 +27,8 @@ namespace seniorCapstone.iOS
 
             global::Xamarin.Forms.Forms.Init();
 
-            // Use overloaded contructor
-            LoadApplication(new App(dbFullPath));
+			// Use overloaded contructor
+			LoadApplication (new App (dbFullPath));
 
             return base.FinishedLaunching(app, options);
         }

@@ -36,8 +36,7 @@
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="RunPivotPage"/>
 	</ContentPage.ToolbarItems>
-
-
+	
 	<ContentPage.Content>
 		<AbsoluteLayout>
 			<Image
