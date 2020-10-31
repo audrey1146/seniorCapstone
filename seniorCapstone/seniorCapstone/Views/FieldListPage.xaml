@@ -1,12 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="seniorCapstone.Views.FieldListPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
+             x:Class="seniorCapstone.Views.FieldListPage"
+			 Padding="10"
+			 Title="EvenStreamin">
+
+	<ContentPage.BindingContext>
+		<ViewModel:FieldListViewModel/>
+	</ContentPage.BindingContext>
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem 
+			Text="Home"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="MainPage"/>
+	<ToolbarItem 
+			Text="Field List"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="FieldListPage"/>
+	<ToolbarItem 
+			Text="Add Field"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AddFieldPage"/>
+	<ToolbarItem 
+			Text="Run Pivot"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="RunPivotPage"/>
+	</ContentPage.ToolbarItems>
+
+	<ContentPage.Content>
+		<ListView x:Name="fieldsListView">
+			
+			<ListView.Header>
+				<ContentView Padding="0,5" BackgroundColor="White">
+					<Label 
+						FontSize="Large" 
+						TextColor="BlueViolet"
+						Text="Field List" 
+						HorizontalTextAlignment="Center" 
+						VerticalTextAlignment="Center">
+					</Label>
+				</ContentView>
+			</ListView.Header>
+			
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						
+						
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+			
+			
+		</ListView>
     </ContentPage.Content>
 </ContentPage>

@@ -44,10 +44,5 @@ namespace seniorCapstone.Views
 				}
 			}
 		}
-
-		public void DisplayUserContent ()
-		{
-
-		}
 	}
 }

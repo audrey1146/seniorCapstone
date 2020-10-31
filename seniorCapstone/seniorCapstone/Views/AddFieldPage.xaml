@@ -57,23 +57,13 @@
 					<Button 
 						Grid.Row="0" Grid.RowSpan="2"
 						Margin="20,20,20,0"
-						Text="Sync To Panel To Get Long/Lat and Pivot Angle"
+						Text="Sync To Panel To Get Lat/Long and Pivot Angle"
 						BackgroundColor="Gray"
 						Style="{DynamicResource LoginButtons}" >
 					</Button>
-					
+
 					<Frame 
 						Grid.Row="0" Grid.Column="1" 
-						Padding="0">
-						<Entry 
-							x:Name="longitude"
-							Placeholder="Longitutde"
-							Text="{Binding Longitude}"
-							Style="{DynamicResource Entries}"/>
-					</Frame>
-					
-					<Frame 
-						Grid.Row="1" Grid.Column="1"
 						Padding="0">
 						<Entry 
 							x:Name="latitude"
@@ -81,7 +71,17 @@
 							Text="{Binding Latitude}"
 							Style="{DynamicResource Entries}"/>
 					</Frame>
-					
+
+					<Frame 
+						Grid.Row="1" Grid.Column="1"
+						Padding="0">
+						<Entry 
+							x:Name="longitude"
+							Placeholder="Longitude"
+							Text="{Binding Longitude}"
+							Style="{DynamicResource Entries}"/>
+					</Frame>
+
 					<!-- PIVOT ANGLE FRAME: angle will be 0 - 360 ? -->
 					
 				</Grid>

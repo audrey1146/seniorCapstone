@@ -23,17 +23,15 @@ namespace seniorCapstone.ViewModels
 		
 		// Private Varibales
 		private string fieldName = string.Empty;
-		private string longitude = string.Empty;
 		private string latitude = string.Empty;
+		private string longitude = string.Empty;
 		private int pivotIndex = -1;
 
 
 		// Public Properties
 		public ICommand AddFieldCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
-
 		public IList<int> PivotOptions { get; set; }
-
 		public string FieldName
 		{
 			get => this.fieldName;
@@ -46,20 +44,6 @@ namespace seniorCapstone.ViewModels
 				}
 			}
 		}
-
-		public string Longitude
-		{
-			get => this.longitude;
-			set
-			{
-				if (this.longitude != value)
-				{
-					this.longitude = value;
-					OnPropertyChanged (nameof (this.Longitude));
-				}
-			}
-		}
-
 		public string Latitude
 		{
 			get => this.latitude;
@@ -72,7 +56,18 @@ namespace seniorCapstone.ViewModels
 				}
 			}
 		}
-
+		public string Longitude
+		{
+			get => this.longitude;
+			set
+			{
+				if (this.longitude != value)
+				{
+					this.longitude = value;
+					OnPropertyChanged (nameof (this.Longitude));
+				}
+			}
+		}
 		public int PivotIndex
 		{
 			get => this.pivotIndex;
@@ -115,8 +110,8 @@ namespace seniorCapstone.ViewModels
 		public bool AreEntiresFilledOut ()
 		{
 			return (false == string.IsNullOrEmpty (this.FieldName) &&
-					false == string.IsNullOrEmpty (this.Longitude) &&
 					false == string.IsNullOrEmpty (this.Latitude) &&
+					false == string.IsNullOrEmpty (this.Longitude) &&
 					-1 != this.PivotIndex);
 		}
 
@@ -142,8 +137,8 @@ namespace seniorCapstone.ViewModels
 					UID = App.UserID,
 					FieldName = this.FieldName,
 					PivotLength = this.PivotOptions[this.PivotIndex],
-					Longitude = this.Longitude,
 					Latitude = this.Latitude,
+					Longitude = this.Longitude,
 					PivotAngle = 0,
 					PivotRunning = 0
 				};

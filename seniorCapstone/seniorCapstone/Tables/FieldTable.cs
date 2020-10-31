@@ -1,5 +1,4 @@
 ﻿using SQLite;
-using SQLiteNetExtensions.Attributes;
 
 namespace seniorCapstone.Tables
 {
@@ -20,11 +19,11 @@ namespace seniorCapstone.Tables
         public int PivotLength { get; set; }
 
         // BELOW IS FROM HARDWARE / SOFTWARE LOCALIZATION
+        [Column ("Latitude")]
+        public string Latitude { get; set; }
+
         [Column("Longitude")]
         public string Longitude { get; set; }
-
-        [Column("Latitude")]
-        public string Latitude { get; set; }
 
         // BELOW DEFAULT ZERO
         [Column("PivotAngle")]
