@@ -162,7 +162,7 @@ namespace seniorCapstone.ViewModels
 			}
 			else
 			{
-				await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Fill Out All Fields", "Ok");
+				await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Fill out entire form to add field", "Ok");
 			}
 		}
 

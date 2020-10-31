@@ -101,6 +101,13 @@
 					Style="{DynamicResource LoginButtons}">
 				</Button>
 				-->
+				<Button
+					Margin="0,20,0,0"
+					Clicked="DeleteAccountButton_Clicked"
+					Text="Delete Account" TextColor="#8B1111" VerticalOptions="End" HorizontalOptions="Center"
+					>
+				</Button>
+
 			</StackLayout>
 		</AbsoluteLayout>
 	</ContentPage.Content>
