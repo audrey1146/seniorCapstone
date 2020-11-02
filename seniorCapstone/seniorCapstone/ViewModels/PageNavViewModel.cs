@@ -25,26 +25,24 @@ namespace seniorCapstone.ViewModels
 					await Application.Current.MainPage.Navigation.PopToRootAsync();
 					break;
 				case "AccountPage":
-					await Application.Current.MainPage.Navigation.PushAsync(new AccountPage());
+					await Application.Current.MainPage.Navigation.PushAsync (new AccountPage ());
 					break;
 				case "FieldListPage":
-					await Application.Current.MainPage.Navigation.PushAsync(new FieldListPage());
+					await Application.Current.MainPage.Navigation.PushAsync (new FieldListPage ());
 					break;
 				case "AddFieldPage":
-					await Application.Current.MainPage.Navigation.PushModalAsync(new AddFieldPage());
+					await Application.Current.MainPage.Navigation.PushModalAsync (new AddFieldPage ());
 					break;
-
+				case "RunPivotPage":
+					await Application.Current.MainPage.Navigation.PushModalAsync (new RunPivotPage ());
+					break;
 			}
 		}
 
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
-			PropertyChanged?.Invoke(this,
-			new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke (this,
+			new PropertyChangedEventArgs (propertyName));
 		}
 	}
 }
-
-/*case "RunPivotPage":
-	await Application.Current.MainPage.Navigation.PushModalAsync(new RunPivotPage());
-	break;*/

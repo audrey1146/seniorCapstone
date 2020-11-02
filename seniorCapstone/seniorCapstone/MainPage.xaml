@@ -37,7 +37,7 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-		<Grid BackgroundColor="White" Padding="10" RowSpacing="15" ColumnSpacing="15" CompressedLayout.IsHeadless="False">
+		<Grid BackgroundColor="FloralWhite" Padding="10" RowSpacing="15" ColumnSpacing="15">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="3*" />
 				<RowDefinition Height="3*" />
@@ -80,7 +80,7 @@
 				Source="FieldList"
 				Aspect="AspectFit"
 				Command="{Binding ChangePageCommand}" CommandParameter="FieldListPage"
-				BackgroundColor="#CCAFBB41" Grid.Column="0" Grid.Row="2" CornerRadius="20">
+				BackgroundColor="#CCD6B459" Grid.Column="0" Grid.Row="2" CornerRadius="20">
 			</ImageButton>
 
 			<ImageButton x:Name="AccountPage" 

@@ -2,12 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
-             x:Class="seniorCapstone.Views.AddFieldPage"
+             x:Class="seniorCapstone.Views.RunPivotPage"
 			 Title="EvenStreamin"
 			 NavigationPage.HasNavigationBar="False">
 
 	<ContentPage.BindingContext>
-		<ViewModel:AddFieldViewModel/>
+		<ViewModel:RunPivotViewModel/>
 	</ContentPage.BindingContext>
 
 	<ContentPage.Content>
@@ -20,65 +20,20 @@
 
 			<StackLayout 
 				Margin="10,30,10,30"
-                AbsoluteLayout.LayoutBounds="0,0,1,.9"
+                AbsoluteLayout.LayoutBounds="0,0,1,.6"
                 AbsoluteLayout.LayoutFlags="All"
                 Spacing="20"
                 VerticalOptions="EndAndExpand">
 
-				<Entry 
-					x:Name="fieldname" 
-					Placeholder="Field Name"
-					Text="{Binding FieldName}" 
-					Style="{DynamicResource Entries}">
-				</Entry>
-
 				<Picker 
-					x:Name="pivotlength" 
-					Title="Select Pivot Length" 
-					ItemsSource="{Binding PivotOptions}" 
-					SelectedIndex="{Binding PivotIndex}" 
-					FontAttributes="Bold" 
+					x:Name="fieldChoice" 
+					Title="Select Field to Run" 
+					ItemsSource="{Binding FieldOptions}" 
+					SelectedIndex="{Binding FieldIndex}" 
 					TextColor="#000000" 
 					TitleColor="#000000"
 					FontSize="Large">
 				</Picker>
-
-				<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="3*" />
-						<RowDefinition Height="3*" />
-						<RowDefinition Height="3*" />
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="5*" />
-						<ColumnDefinition Width="5*" />
-					</Grid.ColumnDefinitions>
-
-					<Button 
-						Grid.Row="0" Grid.RowSpan="2"
-						Margin="20,20,20,0"
-						Text="Sync To Panel To Get Lat/Long and Pivot Angle"
-						BackgroundColor="Gray"
-						Style="{DynamicResource LoginButtons}" >
-					</Button>
-
-					<Entry Grid.Row="0" Grid.Column="1"
-						x:Name="latitude"
-						Placeholder="Latitude"
-						Text="{Binding Latitude}"
-						Style="{DynamicResource Entries}">
-					</Entry>
-
-					<Entry Grid.Row="1" Grid.Column="1"
-						x:Name="longitude"
-						Placeholder="Longitude"
-						Text="{Binding Longitude}"
-						Style="{DynamicResource Entries}">
-					</Entry>
-
-					<!-- PIVOT ANGLE FRAME: angle will be 0 - 360 ? -->
-					
-				</Grid>
 
 				<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 					<Grid.RowDefinitions>
@@ -100,8 +55,8 @@
 					<Button 
 						Grid.Row="0" Grid.Column="1"
 						Margin="20,20,20,0"
-						Text="Add Field"
-						Command="{Binding AddFieldCommand}"
+						Text="Run Pivot"
+						Command="{Binding RunPivotCommand}"
 						BackgroundColor="#617C29"
 						Style="{DynamicResource LoginButtons}">
 					</Button>

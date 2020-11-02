@@ -4,8 +4,8 @@
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
 			 xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="seniorCapstone.Views.FieldListPage"
-			 Padding="10"
-			 Title="EvenStreamin">
+			 Title="EvenStreamin"
+			 Padding="10">
 
 	<ContentPage.BindingContext>
 		<ViewModel:FieldListViewModel/>
@@ -39,6 +39,92 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
+		<StackLayout >
+
+			<ListView x:Name="runningListView">
+				<ListView.Header>
+					<ContentView>
+						<yummy:PancakeView CornerRadius="10,40,20,10">
+							<Label 
+								TextColor="Black"
+								FontSize="Title" 
+								FontAttributes="Bold"
+								Text="Running Pivots" 
+								HorizontalTextAlignment="Center"
+								VerticalTextAlignment="Center" BackgroundColor="#CCD6B459" Padding="0,10">
+							</Label>
+						</yummy:PancakeView>
+					</ContentView>
+				</ListView.Header>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell >
+							<StackLayout Orientation="Horizontal">
+								<Image Source="FieldLogo"/>
+								<StackLayout>
+									<Label FontSize="17" Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+									<Label>
+										<Label.FormattedText>
+											<FormattedString>
+												<Span FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
+												<Span FontSize="12" Text="{Binding Longitude, StringFormat='     Longitude: {0}'}" />
+											</FormattedString>
+										</Label.FormattedText>
+									</Label>
+								</StackLayout>
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+
+			<ListView x:Name="remainingListView">
+				<ListView.Header>
+					<ContentView>
+						<yummy:PancakeView CornerRadius="10,40,20,10">
+							<Label 
+								TextColor="Black"
+								FontSize="Title" 
+								FontAttributes="Bold"
+								Text="Remaining Pivots" 
+								HorizontalTextAlignment="Center"
+								VerticalTextAlignment="Center" BackgroundColor="#CCD6B459" Padding="0,10">
+							</Label>
+						</yummy:PancakeView>
+					</ContentView>
+				</ListView.Header>
+
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell >
+							<StackLayout Orientation="Horizontal">
+								<Image Source="FieldLogo"/>
+								<StackLayout>
+									<Label FontSize="17" Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+									<Label >
+										<Label.FormattedText>
+											<FormattedString>
+												<Span FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
+												<Span FontSize="12" Text="{Binding Longitude, StringFormat='     Longitude: {0}'}" />
+											</FormattedString>
+										</Label.FormattedText>
+									</Label>
+								</StackLayout>
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
+
+<!--
+		
+		BackgroundColor="#A97A7A"
+		
 		<ListView x:Name="fieldsListView">
 			
 			<ListView.Header>
@@ -61,5 +147,4 @@
 			
 			
 		</ListView>
-    </ContentPage.Content>
-</ContentPage>
+		-->
