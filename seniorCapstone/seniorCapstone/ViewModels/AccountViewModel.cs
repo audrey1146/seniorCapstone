@@ -5,104 +5,74 @@
  * Purpose		Account Page of the mobile application
  ****************************************************************************/
 
-using seniorCapstone.Tables;
-using SQLite;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using seniorCapstone.Tables;
+using seniorCapstone.Views;
+using SQLite;
 using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
 {
 	public class AccountViewModel : PageNavViewModel
 	{
+		// Public Properties
+		public ICommand DeleteAccountCommand { get; set; }
+
 		public AccountViewModel ()
 		{
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
+			this.DeleteAccountCommand = new Command (this.DeleteAccountButton_Clicked);
 		}
 
-		/*
-		// Private Variables
-		private string username = string.Empty;
-		private string firstname = string.Empty;
-		private string lastname = string.Empty;
-		private string email = string.Empty;
+		/// <summary>
+		/// When the login button is pressed, the input credntials must be checked.
+		/// If they are correct, then login as the user, else display an alert
+		/// </summary>
+		public async void DeleteAccountButton_Clicked ()
+		{
+			bool answer = await App.Current.MainPage.DisplayAlert ("Delete Account?", 
+				"Are you sure you want to delete your account? This cannot be undone.", "Yes", "No");
 
-		// Public Properties
-		public string UserName
-		{
-			get => this.username;
-			set
+			if (true == answer)
 			{
-				if (this.username != value)
+				using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
 				{
-					this.username = value;
-					OnPropertyChanged (nameof (this.UserName));
-				}
-			}
-		}
-		public string FirstName
-		{
-			get => this.firstname;
-			set
-			{
-				if (this.firstname != value)
-				{
-					this.firstname = value;
-					OnPropertyChanged (nameof (this.FirstName));
-				}
-			}
-		}		
-		public string LastName
-		{
-			get => this.lastname;
-			set
-			{
-				if (this.lastname != value)
-				{
-					this.lastname = value;
-					OnPropertyChanged (nameof (this.LastName));
-				}
-			}
-		}
-		public string Email
-		{
-			get => this.email;
-			set
-			{
-				if (this.email != value)
-				{
-					this.email = value;
-					OnPropertyChanged (nameof (this.Email));
-				}
-			}
-		}
+					dbConnection.CreateTable<UserTable> ();
 
+					List<UserTable> userAccount = dbConnection.Query<UserTable>
+					("DELETE FROM UserTable WHERE UID=?", App.UserID);
 
-		public async void LoadAccount ()
-		{
-			// Reading from Database
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
-			{
-				dbConnection.CreateTable<UserTable> ();
-
-				// Query for the current user
-				List<UserTable> currentUser = dbConnection.Query<UserTable>
+					userAccount = dbConnection.Query<UserTable>
 					("SELECT * FROM UserTable WHERE UID=?", App.UserID);
 
-				// If query fails then pop this page off the stack
-				if (null == currentUser || currentUser.Count != 1)
-				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					Debug.WriteLine ("Finding Current User Failed");
+					if (null == userAccount || userAccount.Count == 0)
+					{
+						Debug.WriteLine ("Account Deleted");
+					}
+
+					dbConnection.CreateTable<FieldTable> ();
+
+					List<FieldTable> userFields = dbConnection.Query<FieldTable>
+					("DELETE FROM FieldTable WHERE UID=?", App.UserID);
+
+					userFields = dbConnection.Query<FieldTable>
+					("SELECT * FROM FieldTable WHERE UID=?", App.UserID);
+
+					if (null == userFields || userFields.Count == 0)
+					{
+						Debug.WriteLine ("Fields Deleted");
+					}
 				}
-				else
-				{
-					this.UserName = currentUser[0].UserName;
-					this.FirstName = currentUser[0].FirstName;
-					this.LastName = currentUser[0].LastName;
-					this.Email = currentUser[0].Email;
-				}
+
+				App.IsUserLoggedIn = false;
+				App.UserID = -1;
+				Application.Current.MainPage = new NavigationPage (new LoginPage ());
 			}
-		}*/
+		}
 	}
 }

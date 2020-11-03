@@ -1,6 +1,4 @@
-﻿using seniorCapstone.Tables;
-using SQLite;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace seniorCapstone.Views

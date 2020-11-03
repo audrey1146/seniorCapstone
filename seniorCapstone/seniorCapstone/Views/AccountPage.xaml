@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
-			 xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="seniorCapstone.Views.AccountPage"
 			 Padding="10"
 			 Title="EvenStreamin">
@@ -39,27 +38,21 @@
 	</ContentPage.ToolbarItems>
 	
 	<ContentPage.Content>
-		<AbsoluteLayout >
+		<AbsoluteLayout BackgroundColor="White">
 			<ImageButton
                 Source="Logo"
-				WidthRequest="100"
-				HeightRequest="100"
 				Style="{DynamicResource LogoImage}" />
 
 			<StackLayout 
 				AbsoluteLayout.LayoutBounds="0.6, 0.6, 1, .7" 
-				AbsoluteLayout.LayoutFlags="All">
+				AbsoluteLayout.LayoutFlags="All"
+				Spacing="10">
 	
 				<!-- Could add grid info in one row of number of fields / number running / something else ? -->
 
-
 				<Label Text="First Name" TextColor="#000000" Padding="0,5,0,0" />
 				<Frame 
-					Padding="0"
-					BackgroundColor="White" 
-					BorderColor="Black"
-					Opacity="100"
-					Style="{DynamicResource EntryFrames}" >
+					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="firstname"
 							Text="First Name"
 							Style="{DynamicResource AccountInfo}"/>
@@ -67,11 +60,7 @@
 
 				<Label Text="Last Name" TextColor="#000000" Padding="0,5,0,0" />
 				<Frame 
-					Padding="0"
-					BackgroundColor="White" 
-					BorderColor="Black"
-					Opacity="100"
-					Style="{DynamicResource EntryFrames}" >
+					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="lastname"
 							Text="Last Name"
 							Style="{DynamicResource AccountInfo}"/>
@@ -79,11 +68,7 @@
 
 				<Label Text="Username" TextColor="#000000" Padding="0,10,0,0" />
 				<Frame 
-					Padding="0"
-					BackgroundColor="White" 
-					BorderColor="Black"
-					Opacity="100"
-					Style="{DynamicResource EntryFrames}" >
+					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="username"
 							Text="Username"
 							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
@@ -91,33 +76,22 @@
 
 				<Label Text="Email" TextColor="#000000" Padding="0,5,0,0" />
 				<Frame 
-					Padding="0"
-					BackgroundColor="White" 
-					BorderColor="Black"
-					Opacity="100"
-					Style="{DynamicResource EntryFrames}" >
+					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="email"
 							Text="Email"
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
-
-				<!-- Use this if you want to allow the user to edit their account
-				<Button Grid.Row="0" Grid.Column="1"
-					Margin="20,20,20,0"
-					Clicked="RegisterButton_Clicked"
-					Text="Register"
-					BackgroundColor="#617C29"
-					Style="{DynamicResource LoginButtons}">
-				</Button>
-				-->
-
 				<Button
 					Margin="0,40,0,0"
 					Text="Delete Account" 
 					TextColor="#8B1111" 
 					VerticalOptions="End" 
-					HorizontalOptions="Center"/>
+					HorizontalOptions="Center"
+					Command="{Binding DeleteAccountCommand}">
+				</Button>
 			</StackLayout>
+
+			
 		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>

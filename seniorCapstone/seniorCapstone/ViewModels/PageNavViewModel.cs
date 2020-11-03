@@ -36,6 +36,11 @@ namespace seniorCapstone.ViewModels
 				case "RunPivotPage":
 					await Application.Current.MainPage.Navigation.PushModalAsync (new RunPivotPage ());
 					break;
+				case "Logout":
+					App.IsUserLoggedIn = false;
+					App.UserID = -1;
+					Application.Current.MainPage = new NavigationPage (new LoginPage ());
+					break;
 			}
 		}
 

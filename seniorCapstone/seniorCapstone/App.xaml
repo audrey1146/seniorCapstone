@@ -10,8 +10,8 @@
 			<Style x:Key="LogoImage" TargetType="ImageButton">
 				<Setter Property="BackgroundColor"				Value="Transparent"/>
 				<!--<Setter Property="TranslationY"					Value="-40"/>-->
-				<Setter Property="WidthRequest"					Value="80"/>
-				<Setter Property="HeightRequest"				Value="80"/>
+				<Setter Property="WidthRequest"					Value="100"/>
+				<Setter Property="HeightRequest"				Value="100"/>
 				<Setter Property="VerticalOptions"				Value="CenterAndExpand"/>
 				<Setter Property="HorizontalOptions"			Value="CenterAndExpand"/>
 				<Setter Property="AbsoluteLayout.LayoutFlags"	Value="All"/>
@@ -25,18 +25,26 @@
 				<Setter Property="Opacity"						Value="0.9"/>
 			</Style>
 			
-			<Style x:Key="EntryFrames" TargetType="Frame">
+			<Style x:Key="BackgroudFrames" TargetType="Frame">
 				<Setter Property="Padding"						Value="0,5"/>
-				<Setter Property="BackgroundColor"				Value="#80E1D3D3"/>
-				<Setter Property="Opacity"						Value="0.5"/>
+				<Setter Property="BackgroundColor"				Value="#8076786B"/>
+				<Setter Property="BorderColor"					Value="AntiqueWhite"/>
 				<Setter Property="CornerRadius"					Value="10"/>
 			</Style>
-			
-			
-			<Style x:Key="Entries" TargetType="Entry">
-				<Setter Property="FontAttributes"				Value="Bold"/>
-				<Setter Property="TextColor"					Value="Black"/>
-				<Setter Property="PlaceholderColor"				Value="Black"/>
+
+			<Style x:Key="BorderFrames" TargetType="Frame">
+				<Setter Property="Padding"						Value="0"/>
+				<Setter Property="BackgroundColor"				Value="White"/>
+				<Setter Property="BorderColor"					Value="Black"/>
+				<Setter Property="Opacity"						Value="100"/>
+				<Setter Property="CornerRadius"					Value="10"/>
+			</Style>
+
+
+			<Style x:Key="BackgroundEntries" TargetType="Entry">
+				<!--<Setter Property="FontAttributes"				Value="Bold"/>-->
+				<Setter Property="TextColor"					Value="AntiqueWhite"/>
+				<Setter Property="PlaceholderColor"				Value="AntiqueWhite"/>
 				<Setter Property="HorizontalOptions"			Value="FillAndExpand"/>
 				<Setter Property="FontSize"						Value="Large"/>
 			</Style>
@@ -53,7 +61,7 @@
 				<Setter Property="Padding"						Value="0,5"/>
 				<Setter Property="BackgroundColor"				Value="#80E1D3D3"/>
 				<Setter Property="Opacity"						Value="0.5"/>
-				<Setter Property="CornerRadius"					Value="10"/>
+				<Setter Property="CornerRadius"					Value="20"/>
 			</Style>
 
 			<Style x:Key="AccountInfo" TargetType="Label">

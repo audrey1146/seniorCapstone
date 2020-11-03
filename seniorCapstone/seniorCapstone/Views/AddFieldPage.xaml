@@ -14,8 +14,6 @@
 		<AbsoluteLayout BackgroundColor="White">
 			<ImageButton
                 Source="Logo"
-				WidthRequest="100"
-				HeightRequest="100"
 				Style="{DynamicResource LogoImage}" />
 
 			<StackLayout 
@@ -28,19 +26,16 @@
 				<Entry 
 					x:Name="fieldname" 
 					Placeholder="Field Name"
-					Text="{Binding FieldName}" 
-					Style="{DynamicResource Entries}">
+					FontSize="Large"
+					Text="{Binding FieldName}">
 				</Entry>
 
 				<Picker 
 					x:Name="pivotlength" 
 					Title="Select Pivot Length" 
+					FontSize="Large"
 					ItemsSource="{Binding PivotOptions}" 
-					SelectedIndex="{Binding PivotIndex}" 
-					FontAttributes="Bold" 
-					TextColor="#000000" 
-					TitleColor="#000000"
-					FontSize="Large">
+					SelectedIndex="{Binding PivotIndex}">
 				</Picker>
 
 				<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -65,15 +60,15 @@
 					<Entry Grid.Row="0" Grid.Column="1"
 						x:Name="latitude"
 						Placeholder="Latitude"
-						Text="{Binding Latitude}"
-						Style="{DynamicResource Entries}">
+						FontSize="Large"
+						Text="{Binding Latitude}">
 					</Entry>
 
 					<Entry Grid.Row="1" Grid.Column="1"
 						x:Name="longitude"
 						Placeholder="Longitude"
-						Text="{Binding Longitude}"
-						Style="{DynamicResource Entries}">
+						FontSize="Large"
+						Text="{Binding Longitude}">
 					</Entry>
 
 					<!-- PIVOT ANGLE FRAME: angle will be 0 - 360 ? -->

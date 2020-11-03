@@ -6,64 +6,66 @@
 			 Title="EvenStreamin"
 			 NavigationPage.HasNavigationBar="False">
 
+	<ContentPage.BindingContext>
+		<ViewModel:RegistrationViewModel/>
+	</ContentPage.BindingContext>
+	
 	<ContentPage.Content>
 		<AbsoluteLayout>
-			<Image
+			<!--<Image
                 Source="RegistrationScreen" 
-				Style="{DynamicResource BackgroundImage}" />
+				Style="{DynamicResource BackgroundImage}" />-->
 			<ImageButton
                 Source="Logo"
 				Style="{DynamicResource LogoImage}" />
-			
-			
+
 			<StackLayout 
 				Margin="10,30,10,30"
-                AbsoluteLayout.LayoutBounds="0,0,1,1"
-                AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="0.6, 0.6, 1, .8" 
+				AbsoluteLayout.LayoutFlags="All"
                 Spacing="20"
                 VerticalOptions="EndAndExpand">
 
-				<Label x:Name="messageLabel" />
-
 				<Frame 
-					Style="{DynamicResource EntryFrames}" 
-					Padding="0" BackgroundColor="#E59CC5BF">
+					Style="{DynamicResource BorderFrames}">
 					<Entry x:Name="username"
-							Placeholder="Username"
-							Style="{DynamicResource Entries}"/>
+						Placeholder="Username"
+						PlaceholderColor="Gray"
+						TextColor="Black"
+						Text="{Binding UserName}"/>
 				</Frame>
 
 				<Frame 
-					Style="{DynamicResource EntryFrames}" 
-					Padding="0" BackgroundColor="#E59CC5BF">
+					Style="{DynamicResource BorderFrames}">
 					<Entry x:Name="password"
-							Placeholder="Password"
-							IsPassword="True" 
-							Style="{DynamicResource Entries}"/>
+						Placeholder="Password"
+						IsPassword="True" 
+						Text="{Binding Password}"
+						Style="{DynamicResource Entries}"/>
 				</Frame>
 
 				<Frame 
-					Style="{DynamicResource EntryFrames}" 
-					Padding="0" BackgroundColor="#E59CC5BF">
+					Style="{DynamicResource BorderFrames}">
 					<Entry x:Name="firstname"
-							Placeholder="First Name"
-							Style="{DynamicResource Entries}"/>
+						Placeholder="First Name"
+						Text="{Binding FirstName}"
+						Style="{DynamicResource Entries}"/>
 				</Frame>
 
 				<Frame 
-					Style="{DynamicResource EntryFrames}" 
-					Padding="0" BackgroundColor="#E59CC5BF">
+					Style="{DynamicResource BorderFrames}">
 					<Entry x:Name="lastname"
-							Placeholder="Last Name" 
-							Style="{DynamicResource Entries}"/>
+						Placeholder="Last Name" 
+						Text="{Binding LastName}"
+						Style="{DynamicResource Entries}"/>
 				</Frame>
 
 				<Frame 
-					Style="{DynamicResource EntryFrames}" 
-					Padding="0" BackgroundColor="#E59CC5BF">
+					Style="{DynamicResource BorderFrames}">
 					<Entry x:Name="email"
-							Placeholder="Email"
-							Style="{DynamicResource Entries}"/>
+						Placeholder="Email"
+						Text="{Binding Email}"
+						Style="{DynamicResource Entries}"/>
 				</Frame>
 
 				<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -77,16 +79,16 @@
 
 					<Button Grid.Row="0" Grid.Column="0"
 							Margin="20,20,20,0"
-							Clicked="CancelButton_Clicked"
 							Text="Cancel"
 							BackgroundColor="#7C2C29"
+							Command="{Binding CancelCommand}"
 							Style="{DynamicResource LoginButtons}" >
 					</Button>
 					<Button Grid.Row="0" Grid.Column="1"
 							Margin="20,20,20,0"
-							Clicked="RegisterButton_Clicked"
 							Text="Register"
 							BackgroundColor="#617C29"
+							Command="{Binding RegisterCommand}"
 							Style="{DynamicResource LoginButtons}">
 					</Button>
 				</Grid>

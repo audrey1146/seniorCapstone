@@ -15,9 +15,7 @@ namespace seniorCapstone.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		// Private Varibales
-		private string fieldName = string.Empty;
 		private int fieldIndex = -1;
-
 
 		// Public Properties
 		public ICommand RunPivotCommand { get; set; }
@@ -37,7 +35,6 @@ namespace seniorCapstone.ViewModels
 		}
 
 
-
 		/// <summary>
 		/// Constructor for the AddField VM. Sets the list of 
 		/// viable pivot lengths
@@ -51,6 +48,9 @@ namespace seniorCapstone.ViewModels
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
 		}
 
+		/// <summary>
+		/// Gets a list of all of the non-running fields
+		/// </summary>
 		public async void GetPivots ()
 		{
 			// Reading from Database
@@ -60,8 +60,7 @@ namespace seniorCapstone.ViewModels
 
 				// Query for the fields
 				List <FieldTable> FieldList = dbConnection.Query<FieldTable>
-					("SELECT * FROM FieldTable WHERE UID=? AND PivotRunning=0", App.UserID);
-
+					("SELECT FieldName FROM FieldTable WHERE UID=? AND PivotRunning=0", App.UserID);
 
 				// If query fails then pop this page off the stack
 				if (null == FieldList)

@@ -5,7 +5,6 @@
  * Purpose		
  ****************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -99,22 +98,6 @@ namespace seniorCapstone.ViewModels
 			this.AddFieldCommand = new Command (this.AddFieldButton_Clicked);
 		}
 
-
-		/// <summary>
-		/// Verfies that the user input data for all entries
-		/// </summary>
-		/// <returns>
-		/// True if all of the entries have some text in them, otherwise false 
-		/// if any are empty or null
-		/// </returns>
-		public bool AreEntiresFilledOut ()
-		{
-			return (false == string.IsNullOrEmpty (this.FieldName) &&
-					false == string.IsNullOrEmpty (this.Latitude) &&
-					false == string.IsNullOrEmpty (this.Longitude) &&
-					-1 != this.PivotIndex);
-		}
-
 		/// <summary>
 		/// Command that will pop the current page off of the stack
 		/// </summary>
@@ -130,33 +113,44 @@ namespace seniorCapstone.ViewModels
 		{
 			int returnValue = 0;
 
-			if (true == this.AreEntiresFilledOut ())
+			if (true == this.areEntiresFilledOut ())
 			{
-				FieldTable newField = new FieldTable ()
+				if (true == doesFieldNameExist ())
 				{
-					UID = App.UserID,
-					FieldName = this.FieldName,
-					PivotLength = this.PivotOptions[this.PivotIndex],
-					Latitude = this.Latitude,
-					Longitude = this.Longitude,
-					PivotAngle = 0,
-					PivotRunning = 0
-				};
-
-				// Insert into DB (using closes the DB for me)
-				using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+					await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Field Name Already Exists", "Ok");
+				}
+				else if (true == doesFieldLocationExist ())
 				{
-					dbConnection.CreateTable<FieldTable> ();
-
-					returnValue = dbConnection.Insert (newField);
-
-					if (1 == returnValue)
+					await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Field Location Already Exists", "Ok");
+				}
+				else
+				{
+					FieldTable newField = new FieldTable ()
 					{
-						await Application.Current.MainPage.Navigation.PopModalAsync ();
-					}
-					else
+						UID = App.UserID,
+						FieldName = this.FieldName,
+						PivotLength = this.PivotOptions[this.PivotIndex],
+						Latitude = this.Latitude,
+						Longitude = this.Longitude,
+						PivotAngle = 0,
+						PivotRunning = 0
+					};
+
+					// Insert into DB (using closes the DB for me)
+					using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
 					{
-						await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Did Not Insert Correctly", "Ok");
+						dbConnection.CreateTable<FieldTable> ();
+
+						returnValue = dbConnection.Insert (newField);
+
+						if (1 == returnValue)
+						{
+							await Application.Current.MainPage.Navigation.PopModalAsync ();
+						}
+						else
+						{
+							await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Did Not Insert Correctly", "Ok");
+						}
 					}
 				}
 			}
@@ -170,6 +164,71 @@ namespace seniorCapstone.ViewModels
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		/// <summary>
+		/// Query the database to check whether the field name already exists for the 
+		/// current user
+		/// </summary>
+		private bool doesFieldNameExist ()
+		{
+			bool isField = false;
+
+			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			{
+				dbConnection.CreateTable<FieldTable> ();
+
+				// Make sure the name doesn't already exist
+				List<FieldTable> fieldID = dbConnection.Query<FieldTable>
+				("SELECT FID FROM FieldTable WHERE FieldName=? AND UID=?",
+				this.FieldName, App.UserID);
+
+				if (null == fieldID || fieldID.Count != 0)
+				{
+					isField = true;
+				}
+			}
+			return isField;
+		}
+
+
+		/// <summary>
+		/// Query the database to check whether the field location  already exists for the 
+		/// current user
+		/// </summary>
+		private bool doesFieldLocationExist ()
+		{
+			bool isField = false;
+
+			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			{
+				dbConnection.CreateTable<FieldTable> ();
+
+				List<FieldTable> fieldID = dbConnection.Query<FieldTable>
+				("SELECT FID FROM FieldTable WHERE Latitude=? AND Longitude=? AND UID=?",
+				this.Latitude, this.Longitude, App.UserID);
+
+				if (null == fieldID || fieldID.Count != 0)
+				{
+					isField = true ;
+				}
+			}
+			return isField;
+		}
+
+		/// <summary>
+		/// Verfies that the user input data for all entries
+		/// </summary>
+		/// <returns>
+		/// True if all of the entries have some text in them, otherwise false 
+		/// if any are empty or null
+		/// </returns>
+		private bool areEntiresFilledOut ()
+		{
+			return (false == string.IsNullOrEmpty (this.FieldName) &&
+					false == string.IsNullOrEmpty (this.Latitude) &&
+					false == string.IsNullOrEmpty (this.Longitude) &&
+					-1 != this.PivotIndex);
 		}
 	}
 }
