@@ -6,10 +6,7 @@
  ****************************************************************************/
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
@@ -30,8 +27,7 @@ namespace seniorCapstone.ViewModels
 		}
 
 		/// <summary>
-		/// When the login button is pressed, the input credntials must be checked.
-		/// If they are correct, then login as the user, else display an alert
+		/// 
 		/// </summary>
 		public async void DeleteAccountButton_Clicked ()
 		{

@@ -137,6 +137,7 @@ namespace seniorCapstone.ViewModels
 				{
 					isUser = true;
 					App.UserID = userID[0].UID; // Other entries null because I am only returning the UID
+					App.FieldID = -1;
 				}
 			}
 			return isUser;

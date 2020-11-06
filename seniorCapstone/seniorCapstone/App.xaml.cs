@@ -13,6 +13,7 @@ namespace seniorCapstone
 		// Current User Information
 		public static bool IsUserLoggedIn { get; set; }
 		public static int UserID { get; set; }
+		public static int FieldID { get; set; }
 
 		public App()
 		{

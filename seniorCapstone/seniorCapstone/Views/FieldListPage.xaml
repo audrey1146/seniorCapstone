@@ -39,10 +39,89 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-		<StackLayout >
+		<AbsoluteLayout>
+			<StackLayout
+				AbsoluteLayout.LayoutBounds="0,0,1,.48"
+                AbsoluteLayout.LayoutFlags="All">
+				<StackLayout>
+					<yummy:PancakeView CornerRadius="10,40,20,10">
+						<Label 
+							TextColor="Black"
+							FontSize="Title" 
+							FontAttributes="Bold"
+							Text="Running Pivots" 
+							HorizontalTextAlignment="Center"
+							VerticalTextAlignment="Center" BackgroundColor="#CCD6B459" Padding="0,10">
+						</Label>
+					</yummy:PancakeView>
+				</StackLayout>
+				<ListView x:Name="runningListView" ItemTapped="{Binding RunningPivotPageCommand}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell >
+								<StackLayout Orientation="Horizontal">
+									<Image Source="FieldLogo"/>
+									<StackLayout>
+										<Label FontSize="17" Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+										<Label>
+											<Label.FormattedText>
+												<FormattedString>
+													<Span FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
+													<Span FontSize="12" Text="{Binding Longitude, StringFormat='     Longitude: {0}'}" />
+												</FormattedString>
+											</Label.FormattedText>
+										</Label>
+									</StackLayout>
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
 
-			<ListView x:Name="runningListView">
-				<ListView.Header>
+			<StackLayout
+				AbsoluteLayout.LayoutBounds=".5,1,1,.5"
+                AbsoluteLayout.LayoutFlags="All">
+				<StackLayout>
+					<yummy:PancakeView CornerRadius="10,40,20,10">
+						<Label 
+							TextColor="Black"
+							FontSize="Title" 
+							FontAttributes="Bold"
+							Text="Remaining Pivots" 
+							HorizontalTextAlignment="Center"
+							VerticalTextAlignment="Center" BackgroundColor="#CCD6B459" Padding="0,10">
+						</Label>
+					</yummy:PancakeView>
+				</StackLayout>
+				<ListView x:Name="remainingListView" ItemTapped="OnStoppedPivot_Selected">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell >
+								<StackLayout Orientation="Horizontal">
+									<Image Source="FieldLogo"/>
+									<StackLayout>
+										<Label FontSize="17" Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+										<Label >
+											<Label.FormattedText>
+												<FormattedString>
+													<Span FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
+													<Span FontSize="12" Text="{Binding Longitude, StringFormat='     Longitude: {0}'}" />
+												</FormattedString>
+											</Label.FormattedText>
+										</Label>
+									</StackLayout>
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
+		</AbsoluteLayout>
+	</ContentPage.Content>
+</ContentPage>
+
+<!--<ListView.Header>
 					<ContentView>
 						<yummy:PancakeView CornerRadius="10,40,20,10">
 							<Label 
@@ -55,71 +134,23 @@
 							</Label>
 						</yummy:PancakeView>
 					</ContentView>
-				</ListView.Header>
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<ViewCell >
-							<StackLayout Orientation="Horizontal">
-								<Image Source="FieldLogo"/>
-								<StackLayout>
-									<Label FontSize="17" Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
-									<Label>
-										<Label.FormattedText>
-											<FormattedString>
-												<Span FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
-												<Span FontSize="12" Text="{Binding Longitude, StringFormat='     Longitude: {0}'}" />
-											</FormattedString>
-										</Label.FormattedText>
-									</Label>
-								</StackLayout>
-							</StackLayout>
-						</ViewCell>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
+				</ListView.Header>-->
 
-
-			<ListView x:Name="remainingListView">
-				<ListView.Header>
-					<ContentView>
-						<yummy:PancakeView CornerRadius="10,40,20,10">
-							<Label 
+<!--<ListView.Header>
+						<ContentView>
+							<yummy:PancakeView CornerRadius="10,40,20,10">
+								<Label 
 								TextColor="Black"
 								FontSize="Title" 
 								FontAttributes="Bold"
 								Text="Remaining Pivots" 
 								HorizontalTextAlignment="Center"
 								VerticalTextAlignment="Center" BackgroundColor="#CCD6B459" Padding="0,10">
-							</Label>
-						</yummy:PancakeView>
-					</ContentView>
-				</ListView.Header>
+								</Label>
+							</yummy:PancakeView>
+						</ContentView>
+					</ListView.Header>-->
 
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<ViewCell >
-							<StackLayout Orientation="Horizontal">
-								<Image Source="FieldLogo"/>
-								<StackLayout>
-									<Label FontSize="17" Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
-									<Label >
-										<Label.FormattedText>
-											<FormattedString>
-												<Span FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
-												<Span FontSize="12" Text="{Binding Longitude, StringFormat='     Longitude: {0}'}" />
-											</FormattedString>
-										</Label.FormattedText>
-									</Label>
-								</StackLayout>
-							</StackLayout>
-						</ViewCell>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
-
-		</StackLayout>
-	</ContentPage.Content>
-</ContentPage>
 
 <!--
 		
