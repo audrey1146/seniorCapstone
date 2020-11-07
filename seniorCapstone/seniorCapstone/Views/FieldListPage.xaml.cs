@@ -1,5 +1,6 @@
 ﻿using seniorCapstone.Tables;
 using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -11,7 +12,8 @@ namespace seniorCapstone.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FieldListPage : ContentPage
 	{
-		public List<FieldTable> RunningFields { get; set; }
+		private List<FieldTable> RunningFields;
+		private List<FieldTable> RemainingFields;
 
 		public FieldListPage()
 		{
@@ -28,43 +30,70 @@ namespace seniorCapstone.Views
 				dbConnection.CreateTable<FieldTable> ();
 
 				// Query for the fields
-				RunningFields = dbConnection.Query<FieldTable>
+				this.RunningFields = dbConnection.Query<FieldTable>
 					("SELECT * FROM FieldTable WHERE UID=? AND PivotRunning=1", App.UserID);
 
-				List<FieldTable> remainingFields = dbConnection.Query<FieldTable>
+				this.RemainingFields = dbConnection.Query<FieldTable>
 					("SELECT * FROM FieldTable WHERE UID=? AND PivotRunning=0", App.UserID);
 
 				// If query fails then pop this page off the stack
-				if (null == RunningFields || null == remainingFields)
+				if (null == this.RunningFields || null == this.RemainingFields)
 				{
 					await Application.Current.MainPage.Navigation.PopAsync ();
 					Debug.WriteLine ("Finding User Fields Failed");
 				}
 				else
 				{
-					runningListView.ItemsSource = RunningFields;
-					remainingListView.ItemsSource = remainingFields;
+					runningListView.ItemsSource = this.RunningFields;
+					remainingListView.ItemsSource = this.RemainingFields;
 				}
 			}
 		}
 
-		async void OnRunningPivot_Selected (object sender, SelectedItemChangedEventArgs e)
+		public async void OnRunningPivot_Selected (object sender, ItemTappedEventArgs e)
 		{
-			if (e.SelectedItem != null)
+			if (e.Item != null)
 			{
-				List<FieldTable> selectedField = e.SelectedItem as List<FieldTable>;
-				App.FieldID = selectedField[e.SelectedItemIndex].FID;
+				App.FieldID = this.RunningFields[e.ItemIndex].FID;
 				await Application.Current.MainPage.Navigation.PushAsync (new RunningFieldPage());
 			}
 		}
 
-		async void OnStoppedPivot_Selected (object sender, SelectedItemChangedEventArgs e)
+		public async void OnStoppedPivot_Selected (object sender, ItemTappedEventArgs e)
 		{
-			if (e.SelectedItem != null)
+			if (e.Item != null)
 			{
-				List<FieldTable> selectedField = e.SelectedItem as List<FieldTable>;
-				App.FieldID = selectedField[e.SelectedItemIndex].FID;
+				App.FieldID = this.RemainingFields[e.ItemIndex].FID;
 				await Application.Current.MainPage.Navigation.PushAsync (new StoppedFieldPage ());
+			}
+		}
+
+		public async void OnDelete_Selected (object sender, EventArgs e)
+		{
+			FieldTable fieldMenuItem = ((MenuItem)sender).CommandParameter as FieldTable;
+
+			bool answer = await App.Current.MainPage.DisplayAlert ("Delete Field?",
+				"Are you sure you want to delete:  " +  fieldMenuItem.FieldName + "? \nThis cannot be undone.", 
+				"Yes", "No");
+
+			if (true == answer)
+			{
+				using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+				{
+					dbConnection.CreateTable<FieldTable> ();
+
+					List<FieldTable> deleteCheck = dbConnection.Query<FieldTable>
+					("DELETE FROM FieldTable WHERE UID=? AND FID=?", App.UserID, fieldMenuItem.FID);
+
+					deleteCheck = dbConnection.Query<FieldTable>
+					("SELECT * FROM FieldTable WHERE UID=? AND FID=?", App.UserID, fieldMenuItem.FID);
+
+					if (null == deleteCheck || deleteCheck.Count == 0)
+					{
+						Debug.WriteLine ("Field Deleted");
+						this.OnAppearing ();
+					}
+				}
 			}
 		}
 	}

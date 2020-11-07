@@ -55,7 +55,7 @@
 						</Label>
 					</yummy:PancakeView>
 				</StackLayout>
-				<ListView x:Name="runningListView" ItemTapped="{Binding RunningPivotPageCommand}">
+				<ListView x:Name="runningListView" ItemTapped="OnRunningPivot_Selected">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell >
@@ -97,7 +97,14 @@
 				<ListView x:Name="remainingListView" ItemTapped="OnStoppedPivot_Selected">
 					<ListView.ItemTemplate>
 						<DataTemplate>
-							<ViewCell >
+							<ViewCell>
+								<ViewCell.ContextActions>
+									<MenuItem Clicked="OnDelete_Selected" 
+											  Text="Delete" 
+											  IsDestructive="True" 
+											  CommandParameter="{Binding .}">
+									</MenuItem>
+								</ViewCell.ContextActions>
 								<StackLayout Orientation="Horizontal">
 									<Image Source="FieldLogo"/>
 									<StackLayout>
