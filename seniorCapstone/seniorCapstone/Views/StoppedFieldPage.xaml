@@ -7,7 +7,7 @@
 			 Title="EvenStreamin">
 
 	<ContentPage.BindingContext>
-		<ViewModel:RunningFieldViewModel/>
+		<ViewModel:StoppedFieldViewModel/>
 	</ContentPage.BindingContext>
 
 	<ContentPage.ToolbarItems>
@@ -38,19 +38,21 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-		<AbsoluteLayout BackgroundColor="White">
+		<AbsoluteLayout 
+			BackgroundColor="White" >
+			
 			<ImageButton
                 Source="Logo"
 				Style="{DynamicResource LogoImage}" />
 
 			<StackLayout 
-				AbsoluteLayout.LayoutBounds="0.6, 0.6, 1, .7" 
+				AbsoluteLayout.LayoutBounds="0, 0.4, 1, 0.6" 
 				AbsoluteLayout.LayoutFlags="All"
-				Spacing="10">
+				Spacing="5">
 
 				<!-- Could add grid info in one row of number of fields / number running / something else ? -->
 
-				<Label Text="Field Name" TextColor="#000000" Padding="0,5,0,0" />
+				<Label Text="Field Name" TextColor="#000000" Padding="0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="fieldname"
@@ -58,38 +60,60 @@
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
-				<Label Text="Latitude" TextColor="#000000" Padding="0,5,0,0" />
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label x:Name="latitude"
+				<Grid 
+					RowSpacing="0"
+					HorizontalOptions="FillAndExpand">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="30"/>
+						<RowDefinition Height="40"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*" />
+						<ColumnDefinition Width="5*" />
+					</Grid.ColumnDefinitions>
+
+
+					<Label Text="Latitude" TextColor="#000000" Padding="0,5,0,0" Grid.Row="0" Grid.Column="0"/>
+					<Frame 
+						Grid.Row="1" Grid.Column="0"
+						Style="{DynamicResource BorderFrames}">
+						<Label x:Name="latitude"
 							Text="Latitude"
 							Style="{DynamicResource AccountInfo}"/>
-				</Frame>
+					</Frame>
 
-				<Label Text="Longitude" TextColor="#000000" Padding="0,10,0,0" />
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label x:Name="longitude"
+					<Label Text="Longitude" TextColor="#000000" Padding="0,5,0,0" Grid.Row="0" Grid.Column="1"/>
+					<Frame 
+						Grid.Row="1" Grid.Column="1"
+						Style="{DynamicResource BorderFrames}">
+						<Label x:Name="longitude"
 							Text="Longitude"
 							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
-				</Frame>
+					</Frame>
 
-				<Label Text="Pivot Length" TextColor="#000000" Padding="0,5,0,0" />
+				</Grid>
+
+				<Label Text="Pivot Length" TextColor="#000000" Padding="0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="pivotlength"
 							Text="Pivot Length"
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
-
+			</StackLayout>
+			<StackLayout
+				AbsoluteLayout.LayoutBounds="0, .9, 1, .1" 
+				AbsoluteLayout.LayoutFlags="All"
+				Spacing="5">
 				<Button
-					Margin="0,40,0,0"
+					x:Name="runpivot"
 					Text="Run Pivot" 
 					CornerRadius="10"
 					BackgroundColor="CornflowerBlue"				
 					TextColor="White" 
 					VerticalOptions="End" 
-					HorizontalOptions="Start">
+					HorizontalOptions="Start"
+					Command="{Binding RunPivotCommand}">
 				</Button>
 			</StackLayout>
 		</AbsoluteLayout>

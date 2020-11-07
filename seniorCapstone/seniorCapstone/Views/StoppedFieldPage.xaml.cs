@@ -40,7 +40,7 @@ namespace seniorCapstone.Views
 					fieldname.Text = currentField[0].FieldName;
 					latitude.Text = currentField[0].Latitude;
 					longitude.Text = currentField[0].Longitude;
-					pivotlength.Text = currentField[0].PivotLength.ToString ();
+					pivotlength.Text = currentField[0].PivotLength.ToString () + " meters";
 				}
 			}
 		}
