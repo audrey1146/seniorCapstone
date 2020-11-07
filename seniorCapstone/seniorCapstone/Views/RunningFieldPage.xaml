@@ -1,12 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="seniorCapstone.Views.RunningFieldPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
+             x:Class="seniorCapstone.Views.RunningFieldPage"
+			 Padding="10"
+			 Title="EvenStreamin">
+
+	<ContentPage.BindingContext>
+		<ViewModel:RunningFieldViewModel/>
+	</ContentPage.BindingContext>
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem 
+			Text="Home"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="MainPage"/>
+		<ToolbarItem 
+			Text="Field List"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="FieldListPage"/>
+		<ToolbarItem 
+			Text="Add Field"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AddFieldPage"/>
+		<ToolbarItem 
+			Text="Run Pivot"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="RunPivotPage"/>
+	</ContentPage.ToolbarItems>
+
+	<ContentPage.Content>
+		<AbsoluteLayout BackgroundColor="White">
+			<ImageButton
+                Source="Logo"
+				Style="{DynamicResource LogoImage}" />
+
+			<StackLayout 
+				AbsoluteLayout.LayoutBounds="0.6, 0.6, 1, .7" 
+				AbsoluteLayout.LayoutFlags="All"
+				Spacing="10">
+
+				<!-- Could add grid info in one row of number of fields / number running / something else ? -->
+
+				<Label Text="Field Name" TextColor="#000000" Padding="0,5,0,0" />
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label x:Name="fieldname"
+							Text="Field Name"
+							Style="{DynamicResource AccountInfo}"/>
+				</Frame>
+
+				<Label Text="Latitude" TextColor="#000000" Padding="0,5,0,0" />
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label x:Name="latitude"
+							Text="Latitude"
+							Style="{DynamicResource AccountInfo}"/>
+				</Frame>
+
+				<Label Text="Longitude" TextColor="#000000" Padding="0,10,0,0" />
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label x:Name="longitude"
+							Text="Longitude"
+							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
+				</Frame>
+
+				<Label Text="Pivot Length" TextColor="#000000" Padding="0,5,0,0" />
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label x:Name="pivotlength"
+							Text="Pivot Length"
+							Style="{DynamicResource AccountInfo}"/>
+				</Frame>
+
+				<Label Text="Running Stats / ArgGIS info will go here" 
+					   TextColor="#000000" 
+					   Padding="0,5,0,0" />
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label 
+							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
+				</Frame>
+
+				<Button
+					Margin="0,40,0,0"
+					Text="Stop Pivot" 
+					CornerRadius="10"
+					BackgroundColor="IndianRed"				
+					TextColor="White" 
+					VerticalOptions="End" 
+					HorizontalOptions="Start">
+				</Button>
+
+			</StackLayout>
+		</AbsoluteLayout>
+	</ContentPage.Content>
 </ContentPage>
