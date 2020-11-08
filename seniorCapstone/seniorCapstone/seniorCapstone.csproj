@@ -49,5 +49,6 @@
 
   <ItemGroup>
     <Folder Include="Converters\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 </Project>

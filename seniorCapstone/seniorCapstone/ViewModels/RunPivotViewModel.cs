@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using seniorCapstone.Tables;
@@ -71,8 +72,9 @@ namespace seniorCapstone.ViewModels
 
 				for (int i = 0; i < FieldList.Count; i++)
 				{
-					FieldOptions.Add (FieldList[i].FieldName);
+					this.FieldOptions.Add (FieldList[i].FieldName);
 				}
+				this.FieldOptions = this.FieldOptions.OrderBy (q => q).ToList ();
 			}
 		}
 

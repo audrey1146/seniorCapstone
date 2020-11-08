@@ -30,6 +30,7 @@
 				<Setter Property="BackgroundColor"				Value="#8076786B"/>
 				<Setter Property="BorderColor"					Value="AntiqueWhite"/>
 				<Setter Property="CornerRadius"					Value="10"/>
+				<Setter Property="HasShadow"					Value="False"/>
 			</Style>
 
 			<Style x:Key="BorderFrames" TargetType="Frame">
@@ -38,11 +39,13 @@
 				<Setter Property="BorderColor"					Value="Black"/>
 				<Setter Property="Opacity"						Value="100"/>
 				<Setter Property="CornerRadius"					Value="10"/>
+				<Setter Property="HasShadow"					Value="False"/>
 			</Style>
 
 
 			<Style x:Key="BackgroundEntries" TargetType="Entry">
 				<!--<Setter Property="FontAttributes"				Value="Bold"/>-->
+				<Setter Property="BackgroundColor"				Value="Transparent"/>
 				<Setter Property="TextColor"					Value="AntiqueWhite"/>
 				<Setter Property="PlaceholderColor"				Value="AntiqueWhite"/>
 				<Setter Property="HorizontalOptions"			Value="FillAndExpand"/>
@@ -62,6 +65,7 @@
 				<Setter Property="BackgroundColor"				Value="#80E1D3D3"/>
 				<Setter Property="Opacity"						Value="0.5"/>
 				<Setter Property="CornerRadius"					Value="20"/>
+				<Setter Property="HasShadow"					Value="False"/>
 			</Style>
 
 			<Style x:Key="AccountInfo" TargetType="Label">

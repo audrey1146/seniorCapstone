@@ -81,10 +81,28 @@
 							Text="Email"
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
+
 				<Button
-					Margin="0,10,0,0"
-					Text="Delete Account" 
+					Padding="10"
+					Text="Logout"
 					TextColor="#8B1111" 
+					BackgroundColor="White"
+					VerticalOptions="End" 
+					HorizontalOptions="Center"
+					Command="{Binding LogoutCommand}">
+				</Button>
+			</StackLayout>
+
+			<StackLayout
+				AbsoluteLayout.LayoutBounds="0, .95, 1, .1" 
+				AbsoluteLayout.LayoutFlags="All"
+				Spacing="5">
+				<Button
+					x:Name="deleteaccount"
+					Padding="10"
+					Text="Delete Account"
+					TextColor="#8B1111" 
+					BackgroundColor="White"
 					VerticalOptions="End" 
 					HorizontalOptions="Center"
 					Command="{Binding DeleteAccountCommand}">

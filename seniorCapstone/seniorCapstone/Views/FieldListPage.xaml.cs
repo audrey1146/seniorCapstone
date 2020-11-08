@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,8 +13,8 @@ namespace seniorCapstone.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FieldListPage : ContentPage
 	{
-		private List<FieldTable> RunningFields;
-		private List<FieldTable> RemainingFields;
+		private IList<FieldTable> RunningFields;
+		private IList<FieldTable> RemainingFields;
 
 		public FieldListPage()
 		{
@@ -44,6 +45,9 @@ namespace seniorCapstone.Views
 				}
 				else
 				{
+					this.RunningFields = this.RunningFields.OrderBy (x => x.FieldName).ToList ();
+					this.RemainingFields = this.RemainingFields.OrderBy (x => x.FieldName).ToList ();
+
 					runningListView.ItemsSource = this.RunningFields;
 					remainingListView.ItemsSource = this.RemainingFields;
 				}

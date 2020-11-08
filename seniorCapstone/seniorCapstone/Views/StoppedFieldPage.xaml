@@ -18,12 +18,6 @@
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="MainPage"/>
 		<ToolbarItem 
-			Text="Field List"
-			Priority="1"
-			Order="Secondary"
-			Command="{Binding ChangePageCommand}"
-			CommandParameter="FieldListPage"/>
-		<ToolbarItem 
 			Text="Add Field"
 			Priority="1"
 			Order="Secondary"
@@ -46,9 +40,9 @@
 				Style="{DynamicResource LogoImage}" />
 
 			<StackLayout 
-				AbsoluteLayout.LayoutBounds="0, 0.4, 1, 0.6" 
+				AbsoluteLayout.LayoutBounds="0, 0.4, 1, 0.5" 
 				AbsoluteLayout.LayoutFlags="All"
-				Spacing="5">
+				Spacing="15">
 
 				<!-- Could add grid info in one row of number of fields / number running / something else ? -->
 
@@ -107,6 +101,7 @@
 				Spacing="5">
 				<Button
 					x:Name="runpivot"
+					Padding="10"
 					Text="Run Pivot" 
 					CornerRadius="10"
 					BackgroundColor="CornflowerBlue"				

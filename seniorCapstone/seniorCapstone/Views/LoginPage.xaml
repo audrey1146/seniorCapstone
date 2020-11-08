@@ -32,8 +32,10 @@
 					<Label x:Name="messageLabel" 
 						   TextColor="#961B1B" />
 					<Frame 
-						Style="{DynamicResource BackgroudFrames}">
-						<Entry x:Name="usernameEntry"
+						Style="{DynamicResource BackgroudFrames}"
+						HasShadow="False">
+						<Entry 
+							x:Name="usernameEntry"
 							Placeholder="Username"
 							Text="{Binding UserName}"
 							Style="{DynamicResource BackgroundEntries}" />
@@ -57,7 +59,7 @@
 
 						<Button Grid.Row="0" Grid.Column="0"
 							Margin="20,20,20,0"
-							Text="login"
+							Text="Login"
 							Command="{Binding LoginCommand}"
 							Style="{DynamicResource LoginButtons}">
 						</Button>

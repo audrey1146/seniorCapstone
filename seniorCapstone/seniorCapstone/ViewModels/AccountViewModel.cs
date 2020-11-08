@@ -19,11 +19,13 @@ namespace seniorCapstone.ViewModels
 	{
 		// Public Properties
 		public ICommand DeleteAccountCommand { get; set; }
+		public ICommand LogoutCommand { get; set; }
 
 		public AccountViewModel ()
 		{
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
 			this.DeleteAccountCommand = new Command (this.DeleteAccountButton_Clicked);
+			this.LogoutCommand = new Command (this.LogoutButton_Clicked);
 		}
 
 		/// <summary>
@@ -65,6 +67,20 @@ namespace seniorCapstone.ViewModels
 					}
 				}
 
+				App.IsUserLoggedIn = false;
+				App.UserID = -1;
+				Application.Current.MainPage = new NavigationPage (new LoginPage ());
+			}
+		}
+
+
+		public async void LogoutButton_Clicked ()
+		{
+			bool answer = await App.Current.MainPage.DisplayAlert ("Logging Out?",
+				"Are you sure you want to logout?", "Yes", "No");
+
+			if (true == answer)
+			{
 				App.IsUserLoggedIn = false;
 				App.UserID = -1;
 				Application.Current.MainPage = new NavigationPage (new LoginPage ());

@@ -4,7 +4,8 @@
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.AddFieldPage"
 			 Title="EvenStreamin"
-			 NavigationPage.HasNavigationBar="False">
+			 NavigationPage.HasNavigationBar="False"
+			 Padding="10">
 
 	<ContentPage.BindingContext>
 		<ViewModel:AddFieldViewModel/>
@@ -13,12 +14,13 @@
 	<ContentPage.Content>
 		<AbsoluteLayout BackgroundColor="White">
 			<ImageButton
+				AbsoluteLayout.LayoutBounds="0,0,1,.3"
+				AbsoluteLayout.LayoutFlags="All"
                 Source="Logo"
 				Style="{DynamicResource LogoImage}" />
 
 			<StackLayout 
-				Margin="10,30,10,30"
-                AbsoluteLayout.LayoutBounds="0,0,1,.95"
+                AbsoluteLayout.LayoutBounds="0,0,1,.85"
                 AbsoluteLayout.LayoutFlags="All"
                 Spacing="20"
                 VerticalOptions="EndAndExpand">
@@ -51,8 +53,8 @@
 
 					<Button 
 						Grid.Row="0" Grid.RowSpan="2"
-						Margin="20,20,20,0"
-						Text="Sync To Panel To Get Lat/Long and Pivot Angle"
+						Margin="15,10,15,10"
+						Text="Sync To Panel"
 						BackgroundColor="Gray"
 						Style="{DynamicResource LoginButtons}" >
 					</Button>

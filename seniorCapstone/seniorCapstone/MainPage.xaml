@@ -37,7 +37,7 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-		<Grid BackgroundColor="FloralWhite" Padding="10" RowSpacing="15" ColumnSpacing="15">
+		<Grid BackgroundColor="FloralWhite" Padding="20" RowSpacing="15" ColumnSpacing="15">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="3*" />
 				<RowDefinition Height="3*" />
@@ -50,6 +50,7 @@
 			</Grid.ColumnDefinitions>
 
 			<Frame 
+				HasShadow="False"
 				x:Name="FieldUpdates"
 				Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
 				BackgroundColor="#CCD2B785"

@@ -19,12 +19,6 @@
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="MainPage"/>
 		<ToolbarItem 
-			Text="Field List"
-			Priority="1"
-			Order="Secondary"
-			Command="{Binding ChangePageCommand}"
-			CommandParameter="FieldListPage"/>
-		<ToolbarItem 
 			Text="Add Field"
 			Priority="1"
 			Order="Secondary"
@@ -51,27 +45,37 @@
 							FontAttributes="Bold"
 							Text="Running Pivots" 
 							HorizontalTextAlignment="Center"
-							VerticalTextAlignment="Center" BackgroundColor="#CCD6B459" Padding="0,10">
+							VerticalTextAlignment="Center" 
+							BackgroundColor="#CCD6B459" 
+							Padding="0,10">
 						</Label>
 					</yummy:PancakeView>
 				</StackLayout>
-				<ListView x:Name="runningListView" ItemTapped="OnRunningPivot_Selected">
+				<ListView x:Name="runningListView" ItemTapped="OnRunningPivot_Selected" >
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell >
 								<StackLayout Orientation="Horizontal">
 									<Image Source="FieldLogo"/>
-									<StackLayout>
-										<Label FontSize="17" Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
-										<Label>
-											<Label.FormattedText>
-												<FormattedString>
-													<Span FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
-													<Span FontSize="12" Text="{Binding Longitude, StringFormat='     Longitude: {0}'}" />
-												</FormattedString>
-											</Label.FormattedText>
-										</Label>
-									</StackLayout>
+									<Grid HorizontalOptions="FillAndExpand">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="5*"/>
+											<ColumnDefinition Width="5*"/>
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="5*"/>
+											<RowDefinition Height="5*"/>
+										</Grid.RowDefinitions>
+										<StackLayout VerticalOptions="FillAndExpand" Grid.Column="0" Grid.RowSpan="2">
+											<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+										</StackLayout>
+										<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
+											<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
+										</StackLayout>
+										<StackLayout VerticalOptions="End" Grid.Row="1"  Grid.Column="1">
+											<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}" />
+										</StackLayout>
+									</Grid>
 								</StackLayout>
 							</ViewCell>
 						</DataTemplate>
@@ -90,7 +94,9 @@
 							FontAttributes="Bold"
 							Text="Remaining Pivots" 
 							HorizontalTextAlignment="Center"
-							VerticalTextAlignment="Center" BackgroundColor="#CCD6B459" Padding="0,10">
+							VerticalTextAlignment="Center" 
+							BackgroundColor="#CCD6B459" 
+							Padding="0,10">
 						</Label>
 					</yummy:PancakeView>
 				</StackLayout>
@@ -107,17 +113,25 @@
 								</ViewCell.ContextActions>
 								<StackLayout Orientation="Horizontal">
 									<Image Source="FieldLogo"/>
-									<StackLayout>
-										<Label FontSize="17" Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
-										<Label >
-											<Label.FormattedText>
-												<FormattedString>
-													<Span FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
-													<Span FontSize="12" Text="{Binding Longitude, StringFormat='     Longitude: {0}'}" />
-												</FormattedString>
-											</Label.FormattedText>
-										</Label>
-									</StackLayout>
+									<Grid HorizontalOptions="FillAndExpand">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="5*"/>
+											<ColumnDefinition Width="5*"/>
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="5*"/>
+											<RowDefinition Height="5*"/>
+										</Grid.RowDefinitions>
+										<StackLayout VerticalOptions="FillAndExpand" Grid.Column="0" Grid.RowSpan="2">
+											<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+										</StackLayout>
+										<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
+											<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
+										</StackLayout>
+										<StackLayout VerticalOptions="End" Grid.Row="1"  Grid.Column="1">
+											<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}" />
+										</StackLayout>
+									</Grid>
 								</StackLayout>
 							</ViewCell>
 						</DataTemplate>
