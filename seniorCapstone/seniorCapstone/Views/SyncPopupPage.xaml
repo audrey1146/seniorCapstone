@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage	xmlns="http://xamarin.com/schemas/2014/forms"
+					xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
+					xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+					x:Class="seniorCapstone.Views.SyncPopupPage">
+	
+	<ContentPage.BindingContext>
+		<ViewModel:AddFieldViewModel/>
+	</ContentPage.BindingContext>
+
+	<StackLayout 
+		Margin="12"
+        Padding="24"
+        BackgroundColor="DarkGray"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+
+
+		<StackLayout>
+			<ImageButton
+                Source="SyncImage"
+				WidthRequest="150"
+				HeightRequest="150"
+				Style="{DynamicResource LogoImage}" />
+			<Label 
+				Text="Hold the phone to the control panel, press Sync when ready"/>
+		</StackLayout>
+
+		<Button 
+			Grid.Row="0" Grid.Column="1"
+			Margin="30,30,30,0"
+			Text="Sync"
+			BackgroundColor="#617C29"
+			Command="{Binding SyncCommand}"
+			Style="{DynamicResource LoginButtons}">
+		</Button>
+
+		<!--<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="5*" />
+				<ColumnDefinition Width="5*" />
+			</Grid.ColumnDefinitions>
+
+			<Button 
+				Grid.Row="0" Grid.Column="0"
+				Margin="30,30,30,0"
+				Text="Cancel"
+				BackgroundColor="#7C2C29"
+				Style="{DynamicResource LoginButtons}" >
+			</Button>
+			<Button 
+				Grid.Row="0" Grid.Column="1"
+				Margin="30,30,30,0"
+				Text="Sync"
+				BackgroundColor="#617C29"
+				Style="{DynamicResource LoginButtons}">
+			</Button>
+		</Grid>-->
+
+	</StackLayout>
+</pages:PopupPage>

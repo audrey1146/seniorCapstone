@@ -25,6 +25,7 @@ namespace seniorCapstone.iOS
             string dbFileLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library");
             string dbFullPath = Path.Combine(dbFileLocation, dbFileName);
 
+            Rg.Plugins.Popup.Popup.Init ();
             global::Xamarin.Forms.Forms.Init();
 
 			// Use overloaded contructor

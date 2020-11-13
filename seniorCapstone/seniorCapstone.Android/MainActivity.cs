@@ -25,6 +25,8 @@ namespace seniorCapstone.Droid
             string dbFileLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             string dbFullPath = Path.Combine(dbFileLocation, dbFileName);
 
+            Rg.Plugins.Popup.Popup.Init (this, savedInstanceState);
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 

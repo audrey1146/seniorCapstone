@@ -56,7 +56,8 @@
 						Margin="15,10,15,10"
 						Text="Sync To Panel"
 						BackgroundColor="Gray"
-						Style="{DynamicResource LoginButtons}" >
+						Style="{DynamicResource LoginButtons}" 
+						Command="{Binding SyncToPanelCommand}">
 					</Button>
 
 					<Entry Grid.Row="0" Grid.Column="1"

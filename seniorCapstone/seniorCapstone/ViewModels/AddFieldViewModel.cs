@@ -10,7 +10,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Rg.Plugins.Popup.Services;
 using seniorCapstone.Tables;
+using seniorCapstone.Views;
 using SQLite;
 using Xamarin.Forms;
 
@@ -30,6 +32,8 @@ namespace seniorCapstone.ViewModels
 		// Public Properties
 		public ICommand AddFieldCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
+		public ICommand SyncToPanelCommand { get; set; }
+		public ICommand SyncCommand { get; set; }
 		public IList<int> PivotOptions { get; set; }
 		public string FieldName
 		{
@@ -96,6 +100,8 @@ namespace seniorCapstone.ViewModels
 
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.AddFieldCommand = new Command (this.AddFieldButton_Clicked);
+			this.SyncToPanelCommand = new Command (this.SyncToPanelButton_Clicked);
+			this.SyncCommand = new Command (this.SyncButton_Clicked);
 		}
 
 		/// <summary>
@@ -160,6 +166,22 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public void SyncToPanelButton_Clicked ()
+		{
+			PopupNavigation.Instance.PushAsync (new SyncPopupPage ());
+		}
+
+		/// <summary>
+		/// The phone is in the correct place to now register the exact latitude
+		/// and longitude of the phone location using ArcGIS
+		/// </summary>
+		public void SyncButton_Clicked ()
+		{
+			
+		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
