@@ -1,11 +1,7 @@
 ﻿using Android;
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using Esri.ArcGISRuntime;
 using System;
 using System.IO;
 using Android.Support.V4.Content;
@@ -48,7 +44,7 @@ namespace seniorCapstone.Droid
         private const int LocationPermissionRequestCode = 99;
         private const int LocationRequesNoMap = 97;
 
-        private Esri.ArcGISRuntime.Xamarin.Forms.MapView _lastUsedMapView;
+        private Esri.ArcGISRuntime.Location.LocationDataSource _lastUsedLocationDataSource;
         private TaskCompletionSource<bool> _permissionTCS;
 
         public async Task<bool> AskForLocationPermission ()
@@ -62,10 +58,10 @@ namespace seniorCapstone.Droid
             else return true;
         }
 
-        public async void AskForLocationPermission (Esri.ArcGISRuntime.Xamarin.Forms.MapView myMapView)
+        public async void AskForLocationPermission (Esri.ArcGISRuntime.Location.LocationDataSource myLocationDataSource)
         {
             // Save the mapview for later.
-            _lastUsedMapView = myMapView;
+            _lastUsedLocationDataSource = myLocationDataSource;
 
             // Only check if permission hasn't been granted yet.
             if (ContextCompat.CheckSelfPermission (this, LocationService) != Permission.Granted)
@@ -79,8 +75,8 @@ namespace seniorCapstone.Droid
                 try
                 {
                     // Explicit DataSource.LoadAsync call is used to surface any errors that may arise.
-                    await myMapView.LocationDisplay.DataSource.StartAsync ();
-                    myMapView.LocationDisplay.IsEnabled = true;
+                    await myLocationDataSource.StartAsync ();
+                    //myMapView.LocationDisplay.IsEnabled = true;
                 }
                 catch (Exception ex)
                 {
@@ -95,14 +91,15 @@ namespace seniorCapstone.Droid
             if (requestCode == LocationPermissionRequestCode)
             {
                 // If the permissions were granted, enable location.
-                if (grantResults.Length == 1 && grantResults[0] == Permission.Granted && _lastUsedMapView != null)
+                if (grantResults.Length == 1 && grantResults[0] == Permission.Granted && _lastUsedLocationDataSource != null)
                 {
                     System.Diagnostics.Debug.WriteLine ("User affirmatively gave permission to use location. Enabling location.");
                     try
                     {
                         // Explicit DataSource.LoadAsync call is used to surface any errors that may arise.
-                        await _lastUsedMapView.LocationDisplay.DataSource.StartAsync ();
-                        _lastUsedMapView.LocationDisplay.IsEnabled = true;
+                        //await _lastUsedMapView.LocationDisplay.DataSource.StartAsync ();
+                        //_lastUsedMapView.LocationDisplay.IsEnabled = true;
+                        await _lastUsedLocationDataSource.StartAsync ();
                     }
                     catch (Exception ex)
                     {
@@ -116,7 +113,7 @@ namespace seniorCapstone.Droid
                 }
 
                 // Reset the mapview.
-                _lastUsedMapView = null;
+                _lastUsedLocationDataSource = null;
             }
             else if (requestCode == LocationRequesNoMap)
             {

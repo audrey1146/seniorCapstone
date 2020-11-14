@@ -5,17 +5,20 @@
  * Purpose		
  ****************************************************************************/
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Location;
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
 using SQLite;
 using Xamarin.Forms;
-using Esri.ArcGISRuntime.Location;
 
 namespace seniorCapstone.ViewModels
 {
@@ -28,8 +31,7 @@ namespace seniorCapstone.ViewModels
 		private string latitude = string.Empty;
 		private string longitude = string.Empty;
 		private int pivotIndex = -1;
-		private LocationDataSource softwareLocalization;
-
+		private LocationDataSource phoneLocation = LocationDataSource.CreateDefault();
 
 		// Public Properties
 		public ICommand AddFieldCommand { get; set; }
@@ -85,6 +87,18 @@ namespace seniorCapstone.ViewModels
 				}
 			}
 		}
+		public LocationDataSource PhoneLocation
+		{
+			get => this.phoneLocation;
+			set
+			{
+				if (this.phoneLocation != value)
+				{
+					this.phoneLocation = value;
+					OnPropertyChanged (nameof (this.PhoneLocation));
+				}
+			}
+		}
 
 
 		/// <summary>
@@ -99,6 +113,7 @@ namespace seniorCapstone.ViewModels
 				300,
 				60
 			};
+			this.PhoneLocation.LocationChanged += LocationDisplay_LocationChanged;
 
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.AddFieldCommand = new Command (this.AddFieldButton_Clicked);
@@ -180,12 +195,47 @@ namespace seniorCapstone.ViewModels
 		/// The phone is in the correct place to now register the exact latitude
 		/// and longitude of the phone location using ArcGIS
 		/// </summary>
-		public void SyncButton_Clicked ()
+		public async void SyncButton_Clicked ()
 		{
-			PopupNavigation.Instance.PopAsync (true);
+			try
+			{
+				switch (Device.RuntimePlatform)
+				{
+					case Device.iOS:
+						await this.PhoneLocation.StartAsync ();
+						break;
+					case Device.Android:
+						MainActivity.Instance.AskForLocationPermission (this.PhoneLocation);
+						break;
+				}
 
+				//Permission request only needed on Android.
+#if __ANDROID__
+                // See implementation in MainActivity.cs in the Android platform project.
+                MainActivity.Instance.AskForLocationPermission(this.PhoneLocation);
+#else
+				await this.PhoneLocation.StartAsync ();
+#endif
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine (ex);
+				await Application.Current.MainPage.DisplayAlert ("Couldn't start location", ex.Message, "OK");
+			}
 
+			await PopupNavigation.Instance.PopAsync (true);
 		}
+
+		private void LocationDisplay_LocationChanged (object sender, Esri.ArcGISRuntime.Location.Location e)
+		{
+			// Return if position is null; event is called with null position when location display is turned on.
+			if (e.Position == null)
+			{
+				return;
+			}
+			string temp = CoordinateFormatter.ToLatitudeLongitude (e.Position, LatitudeLongitudeFormat.DecimalDegrees, 15);
+		}
+
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
