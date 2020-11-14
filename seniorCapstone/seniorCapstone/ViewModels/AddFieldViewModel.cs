@@ -15,6 +15,7 @@ using seniorCapstone.Tables;
 using seniorCapstone.Views;
 using SQLite;
 using Xamarin.Forms;
+using Esri.ArcGISRuntime.Location;
 
 namespace seniorCapstone.ViewModels
 {
@@ -27,6 +28,7 @@ namespace seniorCapstone.ViewModels
 		private string latitude = string.Empty;
 		private string longitude = string.Empty;
 		private int pivotIndex = -1;
+		private LocationDataSource softwareLocalization;
 
 
 		// Public Properties
@@ -180,7 +182,9 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public void SyncButton_Clicked ()
 		{
-			
+			PopupNavigation.Instance.PopAsync (true);
+
+
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

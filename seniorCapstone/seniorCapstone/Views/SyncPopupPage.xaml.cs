@@ -19,7 +19,7 @@ namespace seniorCapstone.Views
 			InitializeComponent ();
 		}
 
-		public EventHandler<bool> Action;  //you can change "string" to any parameter you want to pass back.
+		/*public EventHandler<bool> Action;  //you can change "string" to any parameter you want to pass back.
 
 		public async void Sync_ButtonClickedEvent (object sender, EventArgs e)
 		{
@@ -39,6 +39,6 @@ namespace seniorCapstone.Views
 
 			await PopupNavigation.Instance.PopAsync ();
 
-		}
+		}*/
 	}
 }
