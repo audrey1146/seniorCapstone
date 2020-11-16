@@ -6,6 +6,8 @@ using System;
 using System.IO;
 using Android.Support.V4.Content;
 using System.Threading.Tasks;
+using Android.Runtime;
+using Plugin.Permissions;
 
 namespace seniorCapstone.Droid
 {
@@ -39,7 +41,16 @@ namespace seniorCapstone.Droid
         }
 
 
+        public override void OnRequestPermissionsResult (int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult (requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult (requestCode, permissions, grantResults);
+        }
+
+
         #region LocationDisplay
+        /*
 
         private const int LocationPermissionRequestCode = 99;
         private const int LocationRequesNoMap = 97;
@@ -122,7 +133,7 @@ namespace seniorCapstone.Droid
         }
 
         private void ShowMessage (string message, string title = "Error") => new AlertDialog.Builder (this).SetTitle (title).SetMessage (message).Show ();
-
+        */
         #endregion LocationDisplay
     }
 }

@@ -19,6 +19,7 @@ using seniorCapstone.Tables;
 using seniorCapstone.Views;
 using SQLite;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace seniorCapstone.ViewModels
 {
@@ -197,25 +198,20 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void SyncButton_Clicked ()
 		{
+			var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse> ();
+
+
 			try
 			{
-				switch (Device.RuntimePlatform)
+				if (Device.RuntimePlatform == Device.iOS)
 				{
-					case Device.iOS:
-						await this.PhoneLocation.StartAsync ();
-						break;
-					case Device.Android:
-						MainActivity.Instance.AskForLocationPermission (this.PhoneLocation);
-						break;
+					await PopupNavigation.Instance.PopAsync (true);
+					await this.phoneLocation.StartAsync ();
 				}
+				else if (Device.RuntimePlatform == Device.Android)
+				{
 
-				//Permission request only needed on Android.
-#if __ANDROID__
-                // See implementation in MainActivity.cs in the Android platform project.
-                MainActivity.Instance.AskForLocationPermission(this.PhoneLocation);
-#else
-				await this.PhoneLocation.StartAsync ();
-#endif
+				}
 			}
 			catch (Exception ex)
 			{
@@ -223,7 +219,7 @@ namespace seniorCapstone.ViewModels
 				await Application.Current.MainPage.DisplayAlert ("Couldn't start location", ex.Message, "OK");
 			}
 
-			await PopupNavigation.Instance.PopAsync (true);
+			
 		}
 
 		private void LocationDisplay_LocationChanged (object sender, Esri.ArcGISRuntime.Location.Location e)
