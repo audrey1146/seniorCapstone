@@ -23,7 +23,7 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>seniorCapstone</string>
+	<string>EvenStreamin</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.companyname.seniorCapstone</string>
 	<key>CFBundleVersion</key>

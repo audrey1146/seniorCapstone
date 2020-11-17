@@ -229,6 +229,7 @@ namespace seniorCapstone.ViewModels
 			{
 				await this.PhoneLocation.StartAsync ();
 				await this.PhoneLocation.StopAsync ();
+				await PopupNavigation.Instance.PopAsync (true);
 			}
 		}
 
@@ -240,6 +241,7 @@ namespace seniorCapstone.ViewModels
 				return;
 			}
 			string temp = CoordinateFormatter.ToLatitudeLongitude (e.Position, LatitudeLongitudeFormat.DecimalDegrees, 15);
+			this.convertCoordinates (temp);
 		}
 
 
@@ -311,6 +313,16 @@ namespace seniorCapstone.ViewModels
 					false == string.IsNullOrEmpty (this.Latitude) &&
 					false == string.IsNullOrEmpty (this.Longitude) &&
 					-1 != this.PivotIndex);
+		}
+
+
+
+		private void convertCoordinates (string coordLatLong)
+		{
+			// The latitude-longitude string will contain a space separating the latitude from the longitude value
+			string[] coords = coordLatLong.Split (' ');
+			this.Latitude = coords[0];
+			this.Longitude = coords[1];
 		}
 	}
 }
