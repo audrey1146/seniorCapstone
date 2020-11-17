@@ -1,13 +1,7 @@
-﻿using Android;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using System;
 using System.IO;
-using Android.Support.V4.Content;
-using System.Threading.Tasks;
-using Android.Runtime;
-using Plugin.Permissions;
 
 namespace seniorCapstone.Droid
 {

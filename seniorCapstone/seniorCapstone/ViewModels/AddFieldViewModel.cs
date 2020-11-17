@@ -200,26 +200,36 @@ namespace seniorCapstone.ViewModels
 		{
 			var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse> ();
 
-
-			try
+			if (status != PermissionStatus.Granted)
 			{
-				if (Device.RuntimePlatform == Device.iOS)
+				if (status == PermissionStatus.Denied && DeviceInfo.Platform == DevicePlatform.iOS)
+				{
+					// Prompt the user to turn on in settings
+					// On iOS once a permission has been denied it may not be requested again from the application
+					await PopupNavigation.Instance.PopAsync (true);
+					await App.Current.MainPage.DisplayAlert ("Add Field Alert",
+						"Please naviagte to your app settings and allow EvenStreamin to access your location.", "Ok");
+					return;
+				}
+				else // Just ask for permissions
+				{
+					status = await Permissions.RequestAsync<Permissions.LocationWhenInUse> ();
+				}
+
+				if (status != PermissionStatus.Granted)
 				{
 					await PopupNavigation.Instance.PopAsync (true);
-					await this.phoneLocation.StartAsync ();
-				}
-				else if (Device.RuntimePlatform == Device.Android)
-				{
-
+					await App.Current.MainPage.DisplayAlert ("Add Field Alert",
+						"EvenStreamin requires access to your location in order to locate the center pivot.", "Ok");
+					return;
 				}
 			}
-			catch (Exception ex)
+
+			if (status == PermissionStatus.Granted)
 			{
-				Debug.WriteLine (ex);
-				await Application.Current.MainPage.DisplayAlert ("Couldn't start location", ex.Message, "OK");
+				await this.PhoneLocation.StartAsync ();
+				await this.PhoneLocation.StopAsync ();
 			}
-
-			
 		}
 
 		private void LocationDisplay_LocationChanged (object sender, Esri.ArcGISRuntime.Location.Location e)
