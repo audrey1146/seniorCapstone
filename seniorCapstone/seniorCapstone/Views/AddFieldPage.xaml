@@ -22,7 +22,7 @@
 			<StackLayout 
                 AbsoluteLayout.LayoutBounds="0,0,1,.85"
                 AbsoluteLayout.LayoutFlags="All"
-                Spacing="20"
+                Spacing="10"
                 VerticalOptions="EndAndExpand">
 
 				<Entry 
@@ -47,8 +47,8 @@
 						<RowDefinition Height="3*" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="5*" />
-						<ColumnDefinition Width="5*" />
+						<ColumnDefinition Width="3*" />
+						<ColumnDefinition Width="7*" />
 					</Grid.ColumnDefinitions>
 
 					<Button 
@@ -57,20 +57,20 @@
 						Text="Sync To Panel"
 						BackgroundColor="Gray"
 						Style="{DynamicResource LoginButtons}" 
-						Command="{Binding SyncToPanelCommand}">
+						Command ="{Binding SyncToPanelCommand}">
 					</Button>
 
 					<Entry Grid.Row="0" Grid.Column="1"
 						x:Name="latitude"
 						Placeholder="Latitude"
-						FontSize="Large"
+						FontSize="Medium"
 						Text="{Binding Latitude}">
 					</Entry>
 
 					<Entry Grid.Row="1" Grid.Column="1"
 						x:Name="longitude"
 						Placeholder="Longitude"
-						FontSize="Large"
+						FontSize="Medium"
 						Text="{Binding Longitude}">
 					</Entry>
 

@@ -60,7 +60,7 @@ namespace seniorCapstone.ViewModels
 				if (this.latitude != value)
 				{
 					this.latitude = value;
-					OnPropertyChanged (nameof (this.Latitude));
+					this.OnPropertyChanged (nameof (this.Latitude));
 				}
 			}
 		}
@@ -189,7 +189,12 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public void SyncToPanelButton_Clicked ()
 		{
-			PopupNavigation.Instance.PushAsync (new SyncPopupPage ());
+			var popupPage = new SyncPopupPage ();
+
+			// the method where you do whatever you want to after the popup is closed
+			popupPage.CallbackEvent += (object sender, object e) => this.getUserLocation ();
+			
+			PopupNavigation.Instance.PushAsync (popupPage);
 		}
 
 		/// <summary>
@@ -198,39 +203,8 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void SyncButton_Clicked ()
 		{
-			var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse> ();
-
-			if (status != PermissionStatus.Granted)
-			{
-				if (status == PermissionStatus.Denied && DeviceInfo.Platform == DevicePlatform.iOS)
-				{
-					// Prompt the user to turn on in settings
-					// On iOS once a permission has been denied it may not be requested again from the application
-					await PopupNavigation.Instance.PopAsync (true);
-					await App.Current.MainPage.DisplayAlert ("Add Field Alert",
-						"Please naviagte to your app settings and allow EvenStreamin to access your location.", "Ok");
-					return;
-				}
-				else // Just ask for permissions
-				{
-					status = await Permissions.RequestAsync<Permissions.LocationWhenInUse> ();
-				}
-
-				if (status != PermissionStatus.Granted)
-				{
-					await PopupNavigation.Instance.PopAsync (true);
-					await App.Current.MainPage.DisplayAlert ("Add Field Alert",
-						"EvenStreamin requires access to your location in order to locate the center pivot.", "Ok");
-					return;
-				}
-			}
-
-			if (status == PermissionStatus.Granted)
-			{
-				await this.PhoneLocation.StartAsync ();
-				await this.PhoneLocation.StopAsync ();
-				await PopupNavigation.Instance.PopAsync (true);
-			}
+			await PopupNavigation.Instance.PopAsync (true);
+			
 		}
 
 		private void LocationDisplay_LocationChanged (object sender, Esri.ArcGISRuntime.Location.Location e)
@@ -248,7 +222,53 @@ namespace seniorCapstone.ViewModels
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}	
+
+		/// <summary>
+		/// User ArcGIS in order to get the location of the users phone
+		/// </summary>
+		private async void getUserLocation ()
+		{
+			var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse> ();
+
+			if (status != PermissionStatus.Granted)
+			{
+				if (status == PermissionStatus.Denied && DeviceInfo.Platform == DevicePlatform.iOS)
+				{
+					// Prompt the user to turn on in settings
+					// On iOS once a permission has been denied it may not be requested again from the application
+					await App.Current.MainPage.DisplayAlert ("Add Field Alert",
+						"Please naviagte to your app settings and allow EvenStreamin to access your location.", "Ok");
+					return;
+				}
+				else // Just ask for permissions
+				{
+					status = await Permissions.RequestAsync<Permissions.LocationWhenInUse> ();
+				}
+
+				if (status != PermissionStatus.Granted)
+				{
+					await App.Current.MainPage.DisplayAlert ("Add Field Alert",
+						"EvenStreamin requires access to your location in order to locate the center pivot.", "Ok");
+					return;
+				}
+			}
+
+			if (status == PermissionStatus.Granted)
+			{
+				await this.PhoneLocation.StartAsync ();
+				await this.PhoneLocation.StopAsync ();
+			}
 		}
+
+		private void convertCoordinates (string coordLatLong)
+		{
+			// The latitude-longitude string will contain a space separating the latitude from the longitude value
+			string[] coords = coordLatLong.Split (' ');
+			this.Latitude = coords[0];
+			this.Longitude = coords[1];
+		}
+
 
 		/// <summary>
 		/// Query the database to check whether the field name already exists for the 
@@ -275,7 +295,6 @@ namespace seniorCapstone.ViewModels
 			return isField;
 		}
 
-
 		/// <summary>
 		/// Query the database to check whether the field location  already exists for the 
 		/// current user
@@ -294,7 +313,7 @@ namespace seniorCapstone.ViewModels
 
 				if (null == fieldID || fieldID.Count != 0)
 				{
-					isField = true ;
+					isField = true;
 				}
 			}
 			return isField;
@@ -315,14 +334,5 @@ namespace seniorCapstone.ViewModels
 					-1 != this.PivotIndex);
 		}
 
-
-
-		private void convertCoordinates (string coordLatLong)
-		{
-			// The latitude-longitude string will contain a space separating the latitude from the longitude value
-			string[] coords = coordLatLong.Split (' ');
-			this.Latitude = coords[0];
-			this.Longitude = coords[1];
-		}
 	}
 }

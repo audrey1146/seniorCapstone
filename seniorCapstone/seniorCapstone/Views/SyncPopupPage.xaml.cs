@@ -14,6 +14,10 @@ namespace seniorCapstone.Views
 	[XamlCompilation (XamlCompilationOptions.Compile)]
 	public partial class SyncPopupPage : PopupPage
 	{
+		// event callback
+		public event EventHandler<object> CallbackEvent;
+		protected override void OnDisappearing () => CallbackEvent?.Invoke (this, EventArgs.Empty);
+
 		public SyncPopupPage ()
 		{
 			InitializeComponent ();
