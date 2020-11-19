@@ -54,7 +54,6 @@
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="firstname"
-							Text="First Name"
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
@@ -62,7 +61,6 @@
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="lastname"
-							Text="Last Name"
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
@@ -70,7 +68,6 @@
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="username"
-							Text="Username"
 							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
 				</Frame>
 
@@ -78,7 +75,6 @@
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="email"
-							Text="Email"
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 

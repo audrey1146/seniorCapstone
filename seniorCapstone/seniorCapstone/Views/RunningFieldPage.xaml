@@ -50,7 +50,6 @@
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="fieldname"
-							Text="Field Name"
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
@@ -72,7 +71,6 @@
 						Grid.Row="1" Grid.Column="0"
 						Style="{DynamicResource BorderFrames}">
 						<Label x:Name="latitude"
-							Text="Latitude"
 							Style="{DynamicResource AccountInfo}"/>
 					</Frame>
 
@@ -81,7 +79,6 @@
 						Grid.Row="1" Grid.Column="1"
 						Style="{DynamicResource BorderFrames}">
 						<Label x:Name="longitude"
-							Text="Longitude"
 							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
 					</Frame>
 
@@ -91,7 +88,6 @@
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label x:Name="pivotlength"
-							Text="Pivot Length"
 							Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
