@@ -1,13 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:PopupPage	xmlns="http://xamarin.com/schemas/2014/forms"
 					xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-					xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
 					xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
 					x:Class="seniorCapstone.Views.SyncPopupPage">
-	
-	<ContentPage.BindingContext>
-		<ViewModel:AddFieldViewModel/>
-	</ContentPage.BindingContext>
 
 	<StackLayout 
 		Margin="12"
@@ -32,7 +27,7 @@
 			Margin="30,30,30,0"
 			Text="Sync"
 			BackgroundColor="#617C29"
-			Command="{Binding SyncCommand}"
+			Clicked="SyncButton_Clicked"
 			Style="{DynamicResource LoginButtons}">
 		</Button>
 

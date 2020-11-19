@@ -73,7 +73,8 @@ namespace seniorCapstone.ViewModels
 				}
 				else
 				{
-					await App.Current.MainPage.DisplayAlert ("Login Alert", "The username and password you entered did not match our records. Please double-check and try again.", "OK");
+					await App.Current.MainPage.DisplayAlert ("Login Alert", 
+						"The username and password you entered did not match our records. \nPlease double-check and try again.", "OK");
 					this.Password = string.Empty;
 				}
 			}

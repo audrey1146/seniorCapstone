@@ -51,31 +51,33 @@
 						</Label>
 					</yummy:PancakeView>
 				</StackLayout>
-				<ListView x:Name="runningListView" ItemTapped="OnRunningPivot_Selected" >
+				<ListView x:Name="runningListView" ItemTapped="OnRunningPivot_Selected" HasUnevenRows="True">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell >
 								<StackLayout Orientation="Horizontal">
-									<Image Source="FieldLogo"/>
-									<Grid HorizontalOptions="FillAndExpand">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="5*"/>
-											<ColumnDefinition Width="5*"/>
-										</Grid.ColumnDefinitions>
-										<Grid.RowDefinitions>
-											<RowDefinition Height="5*"/>
-											<RowDefinition Height="5*"/>
-										</Grid.RowDefinitions>
-										<StackLayout VerticalOptions="FillAndExpand" Grid.Column="0" Grid.RowSpan="2">
-											<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
-										</StackLayout>
-										<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
-											<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
-										</StackLayout>
-										<StackLayout VerticalOptions="End" Grid.Row="1"  Grid.Column="1">
-											<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}" />
-										</StackLayout>
-									</Grid>
+									<Image Source="FieldLogo" WidthRequest="55" HeightRequest="55"/>
+									<StackLayout VerticalOptions="FillAndExpand">
+										<Grid HorizontalOptions="Start" RowSpacing="0" Padding="0,0,0,5">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition />
+											</Grid.ColumnDefinitions>
+											<Grid.RowDefinitions>
+												<RowDefinition Height="4*"/>
+												<RowDefinition Height="3*"/>
+												<RowDefinition Height="3*"/>
+											</Grid.RowDefinitions>
+											<StackLayout VerticalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0">
+												<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+											</StackLayout>
+											<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
+												<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
+											</StackLayout>
+											<StackLayout VerticalOptions="End" Grid.Row="2"  Grid.Column="0">
+												<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}"  />
+											</StackLayout>
+										</Grid>
+									</StackLayout>
 								</StackLayout>
 							</ViewCell>
 						</DataTemplate>
@@ -100,7 +102,7 @@
 						</Label>
 					</yummy:PancakeView>
 				</StackLayout>
-				<ListView x:Name="remainingListView" ItemTapped="OnStoppedPivot_Selected">
+				<ListView x:Name="remainingListView" ItemTapped="OnStoppedPivot_Selected" HasUnevenRows="True">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell>
@@ -112,26 +114,28 @@
 									</MenuItem>
 								</ViewCell.ContextActions>
 								<StackLayout Orientation="Horizontal">
-									<Image Source="FieldLogo"/>
-									<Grid HorizontalOptions="FillAndExpand">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="5*"/>
-											<ColumnDefinition Width="5*"/>
-										</Grid.ColumnDefinitions>
-										<Grid.RowDefinitions>
-											<RowDefinition Height="5*"/>
-											<RowDefinition Height="5*"/>
-										</Grid.RowDefinitions>
-										<StackLayout VerticalOptions="FillAndExpand" Grid.Column="0" Grid.RowSpan="2">
-											<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
-										</StackLayout>
-										<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
-											<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
-										</StackLayout>
-										<StackLayout VerticalOptions="End" Grid.Row="1"  Grid.Column="1">
-											<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}" />
-										</StackLayout>
-									</Grid>
+									<Image Source="FieldLogo" WidthRequest="55" HeightRequest="55"/>
+									<StackLayout VerticalOptions="FillAndExpand">
+										<Grid HorizontalOptions="Start" RowSpacing="0" Padding="0,0,0,5">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition />
+											</Grid.ColumnDefinitions>
+											<Grid.RowDefinitions>
+												<RowDefinition Height="4*"/>
+												<RowDefinition Height="3*"/>
+												<RowDefinition Height="3*"/>
+											</Grid.RowDefinitions>
+											<StackLayout VerticalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0">
+												<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+											</StackLayout>
+											<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
+												<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
+											</StackLayout>
+											<StackLayout VerticalOptions="End" Grid.Row="2"  Grid.Column="0">
+												<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}"  />
+											</StackLayout>
+										</Grid>
+									</StackLayout>
 								</StackLayout>
 							</ViewCell>
 						</DataTemplate>
@@ -141,6 +145,37 @@
 		</AbsoluteLayout>
 	</ContentPage.Content>
 </ContentPage>
+
+
+
+<!--PREVIOUS CELLS WHEN THE CELLS WERE EVEN
+	<Grid HorizontalOptions="FillAndExpand">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="5*"/>
+			<ColumnDefinition Width="5*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="5*"/>
+		</Grid.RowDefinitions>
+		<StackLayout VerticalOptions="FillAndExpand" Grid.Column="0" Grid.RowSpan="2">
+			<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
+		</StackLayout>
+		<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
+			<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
+		</StackLayout>
+		<StackLayout VerticalOptions="End" Grid.Row="1"  Grid.Column="1">
+			<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}" />
+		</StackLayout>
+	</Grid>-->
+
+
+
+
+
+
+
+
 
 <!--<ListView.Header>
 					<ContentView>

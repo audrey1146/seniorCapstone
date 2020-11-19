@@ -38,7 +38,6 @@ namespace seniorCapstone.ViewModels
 		public ICommand AddFieldCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
 		public ICommand SyncToPanelCommand { get; set; }
-		public ICommand SyncCommand { get; set; }
 		public IList<int> PivotOptions { get; set; }
 		public string FieldName
 		{
@@ -119,7 +118,6 @@ namespace seniorCapstone.ViewModels
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.AddFieldCommand = new Command (this.AddFieldButton_Clicked);
 			this.SyncToPanelCommand = new Command (this.SyncToPanelButton_Clicked);
-			this.SyncCommand = new Command (this.SyncButton_Clicked);
 		}
 
 		/// <summary>
@@ -195,16 +193,6 @@ namespace seniorCapstone.ViewModels
 			popupPage.CallbackEvent += (object sender, object e) => this.getUserLocation ();
 			
 			PopupNavigation.Instance.PushAsync (popupPage);
-		}
-
-		/// <summary>
-		/// The phone is in the correct place to now register the exact latitude
-		/// and longitude of the phone location using ArcGIS
-		/// </summary>
-		public async void SyncButton_Clicked ()
-		{
-			await PopupNavigation.Instance.PopAsync (true);
-			
 		}
 
 		private void LocationDisplay_LocationChanged (object sender, Esri.ArcGISRuntime.Location.Location e)

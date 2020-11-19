@@ -1,12 +1,6 @@
 ﻿using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace seniorCapstone.Views
@@ -23,26 +17,12 @@ namespace seniorCapstone.Views
 			InitializeComponent ();
 		}
 
-		/*public EventHandler<bool> Action;  //you can change "string" to any parameter you want to pass back.
-
-		public async void Sync_ButtonClickedEvent (object sender, EventArgs e)
+		/// <summary>
+		/// Close the popup so that the main viewmodel can register the location
+		/// </summary>
+		public async void SyncButton_Clicked (object sender, EventArgs args)
 		{
-			bool parameter = true;
-
-			Action?.Invoke (this, parameter); // don't forget to invoke the method before close the popup. (only invoke when you want to pass the value back).
-
-			await PopupNavigation.Instance.PopAsync ();
-
+			await PopupNavigation.Instance.PopAsync (true);
 		}
-
-		public async void Cancel_ButtonClickedEvent (object sender, EventArgs e)
-		{
-			bool parameter = false;
-
-			Action?.Invoke (this, parameter); // don't forget to invoke the method before close the popup. (only invoke when you want to pass the value back).
-
-			await PopupNavigation.Instance.PopAsync ();
-
-		}*/
 	}
 }
