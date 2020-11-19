@@ -5,7 +5,6 @@
  * Purpose		
  ****************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -26,13 +25,13 @@ namespace seniorCapstone.ViewModels
 	class AddFieldViewModel : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-		
-		// Private Varibales
+
+		//Private Varibales
 		private string fieldName = string.Empty;
 		private string latitude = string.Empty;
 		private string longitude = string.Empty;
 		private int pivotIndex = -1;
-		private LocationDataSource phoneLocation = LocationDataSource.CreateDefault();
+		private LocationDataSource phoneLocation = LocationDataSource.CreateDefault ();
 
 		// Public Properties
 		public ICommand AddFieldCommand { get; set; }
@@ -107,7 +106,7 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public AddFieldViewModel ()
 		{
-			PivotOptions = new ObservableCollection<int>()
+			PivotOptions = new ObservableCollection<int> ()
 			{
 				400,
 				300,
@@ -191,7 +190,7 @@ namespace seniorCapstone.ViewModels
 
 			// the method where you do whatever you want to after the popup is closed
 			popupPage.CallbackEvent += (object sender, object e) => this.getUserLocation ();
-			
+
 			PopupNavigation.Instance.PushAsync (popupPage);
 		}
 
@@ -207,10 +206,10 @@ namespace seniorCapstone.ViewModels
 		}
 
 
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}	
+			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
+		}
 
 		/// <summary>
 		/// User ArcGIS in order to get the location of the users phone
