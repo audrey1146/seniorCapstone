@@ -86,7 +86,7 @@ namespace seniorCapstone.ViewModels
 		public async void DeleteAccountButton_Clicked ()
 		{
 			bool answer = await App.Current.MainPage.DisplayAlert ("Delete Account?", 
-				"Are you sure you want to delete your account? This cannot be undone.", "Yes", "No");
+				"Are you sure you want to delete your account? \nThis cannot be undone.", "Yes", "No");
 
 			if (true == answer)
 			{
