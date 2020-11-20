@@ -4,7 +4,7 @@
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.AccountPage"
 			 Padding="10"
-			 Title="EvenStreamin">
+			 Title="Account">
 
 	<ContentPage.BindingContext>
 		<ViewModel:AccountViewModel/>
@@ -53,29 +53,37 @@
 				<Label Text="First Name" TextColor="#000000" Padding="0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
-					<Label x:Name="firstname"
-							Style="{DynamicResource AccountInfo}"/>
+					<Label 
+						x:Name="firstname"
+						Text="{Binding User.FirstName}"
+						Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
 				<Label Text="Last Name" TextColor="#000000" Padding="0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
-					<Label x:Name="lastname"
-							Style="{DynamicResource AccountInfo}"/>
+					<Label 
+						x:Name="lastname"
+						Text="{Binding User.LastName}"
+						Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
 				<Label Text="Username" TextColor="#000000" Padding="0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
-					<Label x:Name="username"
-							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
+					<Label 
+						x:Name="username"
+						Text="{Binding User.UserName}"
+						Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
 				</Frame>
 
 				<Label Text="Email" TextColor="#000000" Padding="0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
-					<Label x:Name="email"
-							Style="{DynamicResource AccountInfo}"/>
+					<Label 
+						x:Name="email"
+						Text="{Binding User.Email}"
+						Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
 				<Button

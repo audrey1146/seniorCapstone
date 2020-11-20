@@ -10,15 +10,35 @@ namespace seniorCapstone.ViewModels
 {
 	class StoppedFieldViewModel : PageNavViewModel
 	{
+		// Private Variables
+		private FieldTable stoppedField = null;
+
 		// Public Properties
 		public ICommand RunPivotCommand { get; set; }
+		public FieldTable StoppedField
+		{
+			get => this.stoppedField;
+			set
+			{
+				if (this.stoppedField != value)
+				{
+					this.stoppedField = value;
+					base.OnPropertyChanged (nameof (this.StoppedField));
+				}
+			}
+		}
 
 		public StoppedFieldViewModel ()
 		{
+			this.loadStoppedFieldInfo ();
+
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public async void RunPivotButton_Clicked ()
 		{
 			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
@@ -38,6 +58,34 @@ namespace seniorCapstone.ViewModels
 				{
 					await Application.Current.MainPage.Navigation.PopAsync ();
 					//await Application.Current.MainPage.Navigation.PushAsync (new RunningFieldPage ());
+				}
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private async void loadStoppedFieldInfo ()
+		{
+			// Reading from Database
+			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			{
+				dbConnection.CreateTable<FieldTable> ();
+
+				// Query for the current field
+				List<FieldTable> currentField = dbConnection.Query<FieldTable>
+					("SELECT * FROM FieldTable WHERE UID=? AND FID=?",
+					App.UserID, App.FieldID);
+
+				// If query fails then pop this page off the stack
+				if (null == currentField || currentField.Count != 1)
+				{
+					await Application.Current.MainPage.Navigation.PopAsync ();
+					Debug.WriteLine ("Finding Current Field Failed");
+				}
+				else
+				{
+					this.StoppedField = currentField[0];
 				}
 			}
 		}

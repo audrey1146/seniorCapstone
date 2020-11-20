@@ -49,8 +49,10 @@
 				<Label Text="Field Name" TextColor="#000000" Padding="0,5,0,0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
-					<Label x:Name="fieldname"
-							Style="{DynamicResource AccountInfo}"/>
+					<Label 
+						x:Name="fieldname"
+						Text="{Binding RunningField.FieldName}"
+						Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
 				<Grid 
@@ -70,7 +72,10 @@
 					<Frame 
 						Grid.Row="1" Grid.Column="0"
 						Style="{DynamicResource BorderFrames}">
-						<Label x:Name="latitude"
+						<Label 
+							x:Name="latitude"
+							FontSize="Small"
+							Text="{Binding RunningField.Latitude}"
 							Style="{DynamicResource AccountInfo}"/>
 					</Frame>
 
@@ -78,7 +83,10 @@
 					<Frame 
 						Grid.Row="1" Grid.Column="1"
 						Style="{DynamicResource BorderFrames}">
-						<Label x:Name="longitude"
+						<Label 
+							x:Name="longitude"
+							FontSize="Small"
+							Text="{Binding RunningField.Longitude}"
 							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
 					</Frame>
 
@@ -87,18 +95,22 @@
 				<Label Text="Pivot Length" TextColor="#000000" Padding="0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
-					<Label x:Name="pivotlength"
-							Style="{DynamicResource AccountInfo}"/>
+					<Label 
+						x:Name="pivotlength"
+						Text="{Binding RunningField.PivotLength, StringFormat='{0} meters'}"
+						Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
-				<Label Text="Running Stats / ArgGIS info will go here" 
-					   TextColor="#000000" 
-					   Padding="0" />
+				<!--<Label 
+					Text="Running Stats / ArgGIS info will go here" 
+					TextColor="#000000" 
+					Padding="0" >
+				</Label>
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label 
 						Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
-				</Frame>
+				</Frame>-->
 			</StackLayout>
 
 			<StackLayout

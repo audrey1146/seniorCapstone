@@ -10,7 +10,7 @@ namespace seniorCapstone.Views
 	{
 		// event callback
 		public event EventHandler<object> CallbackEvent;
-		protected override void OnDisappearing () => CallbackEvent?.Invoke (this, EventArgs.Empty);
+		//protected override void OnDisappearing () => CallbackEvent?.Invoke (this, EventArgs.Empty);
 
 		public SyncPopupPage ()
 		{
@@ -23,6 +23,9 @@ namespace seniorCapstone.Views
 		public async void SyncButton_Clicked (object sender, EventArgs args)
 		{
 			await PopupNavigation.Instance.PopAsync (true);
+
+			// Callback is only invoked when the user presses the sync button
+			CallbackEvent?.Invoke (this, EventArgs.Empty);
 		}
 	}
 }

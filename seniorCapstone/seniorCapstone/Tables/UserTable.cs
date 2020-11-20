@@ -4,7 +4,7 @@ using SQLiteNetExtensions.Attributes;
 namespace seniorCapstone.Tables
 {
     [Table("UserTable")]
-	class UserTable
+	public class UserTable
 	{
         [PrimaryKey, AutoIncrement]
         [Column("UID")]

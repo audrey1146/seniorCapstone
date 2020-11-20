@@ -15,7 +15,7 @@ namespace seniorCapstone.Views
 			InitializeComponent ();
 		}
 
-		protected override async void OnAppearing ()
+		/*protected override async void OnAppearing ()
 		{
 			base.OnAppearing ();
 
@@ -43,7 +43,7 @@ namespace seniorCapstone.Views
 					pivotlength.Text = currentField[0].PivotLength.ToString () + " meters";
 				}
 			}
-		}
+		}*/
 
 	}
 }

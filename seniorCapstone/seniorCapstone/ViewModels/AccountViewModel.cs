@@ -17,16 +17,68 @@ namespace seniorCapstone.ViewModels
 {
 	public class AccountViewModel : PageNavViewModel
 	{
+		// Private Variables
+		private UserTable user = null;
+
 		// Public Properties
 		public ICommand DeleteAccountCommand { get; set; }
 		public ICommand LogoutCommand { get; set; }
+		public UserTable User
+		{
+			get => this.user;
+			set
+			{
+				if (this.user != value)
+				{
+					this.user = value;
+					base.OnPropertyChanged (nameof (this.User));
+				}
+			}
+		}
 
+
+		/// <summary>
+		/// Constructor that sets the commands accessible from the Accound page, 
+		/// and loads the user information
+		/// </summary>
 		public AccountViewModel ()
 		{
+			this.loadAccountInfo ();
+
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
 			this.DeleteAccountCommand = new Command (this.DeleteAccountButton_Clicked);
 			this.LogoutCommand = new Command (this.LogoutButton_Clicked);
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private async void loadAccountInfo ()
+		{
+			// Reading from Database
+			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			{
+				dbConnection.CreateTable<UserTable> ();
+
+				// Query for the current user
+				List<UserTable> currentUser = dbConnection.Query<UserTable>
+					("SELECT * FROM UserTable WHERE UID=?",
+					App.UserID);
+
+				// If query fails then pop this page off the stack
+				if (null == currentUser || currentUser.Count != 1)
+				{
+					await Application.Current.MainPage.Navigation.PopAsync ();
+					Debug.WriteLine ("Finding Current User Failed");
+				}
+				else
+				{
+					this.User = currentUser[0];
+				}
+			}
+		}
+
 
 		/// <summary>
 		/// 
@@ -73,7 +125,9 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
 		public async void LogoutButton_Clicked ()
 		{
 			bool answer = await App.Current.MainPage.DisplayAlert ("Logging Out?",

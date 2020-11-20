@@ -4,7 +4,7 @@
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
 			 xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="seniorCapstone.Views.FieldListPage"
-			 Title="EvenStreamin"
+			 Title="Field List"
 			 Padding="10">
 
 	<ContentPage.BindingContext>
@@ -94,7 +94,7 @@
 							TextColor="Black"
 							FontSize="Title" 
 							FontAttributes="Bold"
-							Text="Remaining Pivots" 
+							Text="Stopped Pivots" 
 							HorizontalTextAlignment="Center"
 							VerticalTextAlignment="Center" 
 							BackgroundColor="#CCD6B459" 
