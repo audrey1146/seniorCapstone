@@ -55,7 +55,25 @@
 						Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
-				<Grid 
+				<Label Text="Latitude" TextColor="#000000" Padding="0,5,0,0"/>
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label 
+						x:Name="latitude"
+						Text="{Binding RunningField.Latitude}"
+						Style="{DynamicResource AccountInfo}"/>
+				</Frame>
+
+				<Label Text="Longitude" TextColor="#000000" Padding="0,5,0,0"/>
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label 
+						x:Name="longitude"
+						Text="{Binding RunningField.Longitude}"
+						Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
+				</Frame>
+
+				<!--<Grid 
 					RowSpacing="0"
 					HorizontalOptions="FillAndExpand">
 					<Grid.RowDefinitions>
@@ -85,14 +103,14 @@
 						Style="{DynamicResource BorderFrames}">
 						<Label 
 							x:Name="longitude"
-							FontSize="Small"
-							Text="{Binding RunningField.Longitude}"
+							FontSize="Micro"
+							Text="122.450000000000000W"
 							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
 					</Frame>
 
-				</Grid>
-				
-				<Label Text="Pivot Length" TextColor="#000000" Padding="0" />
+				</Grid>-->
+
+				<Label Text="Pivot Length" TextColor="#000000" Padding="0,5,0,0" />
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label 

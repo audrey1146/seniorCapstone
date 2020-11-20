@@ -42,20 +42,39 @@
 			<StackLayout 
 				AbsoluteLayout.LayoutBounds="0, 0.4, 1, 0.5" 
 				AbsoluteLayout.LayoutFlags="All"
-				Spacing="15">
+				Spacing="10">
 
 				<!-- Could add grid info in one row of number of fields / number running / something else ? -->
 
-				<Label Text="Field Name" TextColor="#000000" Padding="0" />
+				<Label Text="Field Name" TextColor="#000000" Padding="0,5,0,0"/>
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label 
 						x:Name="fieldname"
+						FontSize="Medium"
 						Text="{Binding StoppedField.FieldName}"
 						Style="{DynamicResource AccountInfo}"/>
 				</Frame>
 
-				<Grid 
+				<Label Text="Latitude" TextColor="#000000" Padding="0,5,0,0"/>
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label 
+						x:Name="latitude"
+						Text="{Binding StoppedField.Latitude}"
+						Style="{DynamicResource AccountInfo}"/>
+				</Frame>
+
+				<Label Text="Longitude" TextColor="#000000" Padding="0,5,0,0"/>
+				<Frame 
+					Style="{DynamicResource BorderFrames}">
+					<Label 
+						x:Name="longitude"
+						Text="{Binding StoppedField.Longitude}"
+						Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
+				</Frame>
+				
+				<!--<Grid 
 					RowSpacing="0"
 					HorizontalOptions="FillAndExpand">
 					<Grid.RowDefinitions>
@@ -90,9 +109,9 @@
 							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
 					</Frame>
 
-				</Grid>
+				</Grid>-->
 
-				<Label Text="Pivot Length" TextColor="#000000" Padding="0" />
+				<Label Text="Pivot Length" TextColor="#000000" Padding="0,5,0,0"/>
 				<Frame 
 					Style="{DynamicResource BorderFrames}">
 					<Label 

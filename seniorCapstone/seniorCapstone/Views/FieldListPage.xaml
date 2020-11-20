@@ -71,10 +71,10 @@
 												<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
 											</StackLayout>
 											<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
-												<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
+												<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" TextColor="DarkGray"/>
 											</StackLayout>
 											<StackLayout VerticalOptions="End" Grid.Row="2"  Grid.Column="0">
-												<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}"  />
+												<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}"  TextColor="DarkGray"/>
 											</StackLayout>
 										</Grid>
 									</StackLayout>
@@ -129,10 +129,10 @@
 												<Label FontSize="17"  Text="{Binding FieldName}" TextColor="Black" FontAttributes="Bold"/>
 											</StackLayout>
 											<StackLayout VerticalOptions="End" Grid.Row="1" Grid.Column="0">
-												<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" />
+												<Label FontSize="12" Text="{Binding Latitude, StringFormat='Latitude: {0}'}" TextColor="DarkGray"/>
 											</StackLayout>
 											<StackLayout VerticalOptions="End" Grid.Row="2"  Grid.Column="0">
-												<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}"  />
+												<Label  FontSize="12"  Text="{Binding Longitude, StringFormat='Longitude: {0}'}" TextColor="DarkGray" />
 											</StackLayout>
 										</Grid>
 									</StackLayout>
