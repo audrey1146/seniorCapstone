@@ -30,6 +30,12 @@
 			Order="Secondary"
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="RunPivotPage"/>
+		<ToolbarItem 
+			Text="Account"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AccountPage"/>
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>

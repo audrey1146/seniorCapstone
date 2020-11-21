@@ -181,5 +181,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\SyncImage.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\testMath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RainCatLogo.png" />
+  </ItemGroup>
 </Project>

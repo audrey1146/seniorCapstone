@@ -19,7 +19,7 @@
 				HeightRequest="150"
 				Style="{DynamicResource LogoImage}" />
 			<Label 
-				Text="Hold the phone to the control panel, press Sync when ready"/>
+				Text="Hold your phone near the Control Panel of your RainCat Center Pivot. Press 'Sync' when ready."/>
 		</StackLayout>
 
 		<Button 

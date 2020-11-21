@@ -16329,19 +16329,25 @@ namespace seniorCapstone.Droid
 			public const int notify_panel_notification_icon_bg = 2131165307;
 			
 			// aapt resource value: 0x7F07007C
-			public const int RegistrationScreen = 2131165308;
+			public const int RainCatLogo = 2131165308;
 			
 			// aapt resource value: 0x7F07007D
-			public const int RunPivot = 2131165309;
+			public const int RegistrationScreen = 2131165309;
 			
 			// aapt resource value: 0x7F07007E
-			public const int SyncImage = 2131165310;
+			public const int RunPivot = 2131165310;
 			
 			// aapt resource value: 0x7F07007F
-			public const int tooltip_frame_dark = 2131165311;
+			public const int SyncImage = 2131165311;
 			
 			// aapt resource value: 0x7F070080
-			public const int tooltip_frame_light = 2131165312;
+			public const int testMath = 2131165312;
+			
+			// aapt resource value: 0x7F070081
+			public const int tooltip_frame_dark = 2131165313;
+			
+			// aapt resource value: 0x7F070082
+			public const int tooltip_frame_light = 2131165314;
 			
 			static Drawable()
 			{

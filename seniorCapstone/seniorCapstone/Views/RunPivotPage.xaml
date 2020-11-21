@@ -14,8 +14,6 @@
 		<AbsoluteLayout BackgroundColor="White">
 			<ImageButton
                 Source="Logo"
-				WidthRequest="100"
-				HeightRequest="100"
 				Style="{DynamicResource LogoImage}" />
 
 			<StackLayout 

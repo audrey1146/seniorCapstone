@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.AccountPage"
-			 Padding="10"
-			 Title="Account">
+			 Padding="20"
+			 Title="Account" 
+			 BackgroundColor="White">
 
 	<ContentPage.BindingContext>
 		<ViewModel:AccountViewModel/>
@@ -18,12 +19,6 @@
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="MainPage"/>
 		<ToolbarItem 
-			Text="Field List"
-			Priority="1"
-			Order="Secondary"
-			Command="{Binding ChangePageCommand}"
-			CommandParameter="FieldListPage"/>
-		<ToolbarItem 
 			Text="Add Field"
 			Priority="1"
 			Order="Secondary"
@@ -35,6 +30,12 @@
 			Order="Secondary"
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="RunPivotPage"/>
+		<ToolbarItem 
+			Text="Field List"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="FieldListPage"/>		
 	</ContentPage.ToolbarItems>
 	
 	<ContentPage.Content>
@@ -43,51 +44,77 @@
                 Source="Logo"
 				Style="{DynamicResource LogoImage}" />
 
-			<StackLayout 
-				AbsoluteLayout.LayoutBounds="1, 0.4, 1, .6" 
-				AbsoluteLayout.LayoutFlags="All"
-				Spacing="10">
+			<StackLayout
+				AbsoluteLayout.LayoutBounds="0, .4, 1, .5" 
+				AbsoluteLayout.LayoutFlags="All">
 
-				<!-- Could add grid info in one row of number of fields / number running / something else ? -->
+				<!--<Button
+					Padding="10"
+					Text="Edit Account"
+					TextColor="Black" 
+					BackgroundColor="LightGray"
+					CornerRadius="15"
+					VerticalOptions="End" 
+					HorizontalOptions="Center"
+					Command="{Binding EditCommand}">
+				</Button>-->
 
-				<Label Text="First Name" TextColor="#000000" Padding="0" />
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="2*" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="2*" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="2*" />
+						<RowDefinition Height="1*" />
+					</Grid.RowDefinitions>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+
+					<Label Grid.Row="0"
+						Text="First Name" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="1"
 						x:Name="firstname"
 						Text="{Binding User.FirstName}"
-						Style="{DynamicResource AccountInfo}"/>
-				</Frame>
+						Style="{DynamicResource DisplayInfo}"/>
 
-				<Label Text="Last Name" TextColor="#000000" Padding="0" />
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
+					<Label Grid.Row="2"
+						Text="Last Name" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="3"
 						x:Name="lastname"
 						Text="{Binding User.LastName}"
-						Style="{DynamicResource AccountInfo}"/>
-				</Frame>
+						Style="{DynamicResource DisplayInfo}"/>
 
-				<Label Text="Username" TextColor="#000000" Padding="0" />
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
+					<Label Grid.Row="4"
+						Text="Username" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="5"
 						x:Name="username"
 						Text="{Binding User.UserName}"
-						Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
-				</Frame>
+						Style="{DynamicResource DisplayInfo}"/>
 
-				<Label Text="Email" TextColor="#000000" Padding="0" />
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
+					<Label Grid.Row="6"
+						Text="Email" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="7"
 						x:Name="email"
 						Text="{Binding User.Email}"
-						Style="{DynamicResource AccountInfo}"/>
-				</Frame>
+						Style="{DynamicResource DisplayInfo}"/>
+				</Grid>
 
+
+			</StackLayout>
+
+			<StackLayout
+				AbsoluteLayout.LayoutBounds="0, .9, 1, .2" 
+				AbsoluteLayout.LayoutFlags="All">
 				<Button
-					Padding="10"
+					Padding="0"
 					Text="Logout"
 					TextColor="#8B1111" 
 					BackgroundColor="White"
@@ -95,19 +122,14 @@
 					HorizontalOptions="Center"
 					Command="{Binding LogoutCommand}">
 				</Button>
-			</StackLayout>
-
-			<StackLayout
-				AbsoluteLayout.LayoutBounds="0, .95, 1, .1" 
-				AbsoluteLayout.LayoutFlags="All"
-				Spacing="5">
+				
 				<Button
+					Padding="0"
 					x:Name="deleteaccount"
-					Padding="10"
 					Text="Delete Account"
 					TextColor="#8B1111" 
 					BackgroundColor="White"
-					VerticalOptions="End" 
+					VerticalOptions="Center" 
 					HorizontalOptions="Center"
 					Command="{Binding DeleteAccountCommand}">
 				</Button>

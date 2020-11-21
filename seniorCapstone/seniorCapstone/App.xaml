@@ -10,8 +10,8 @@
 			<Style x:Key="LogoImage" TargetType="ImageButton">
 				<Setter Property="BackgroundColor"				Value="Transparent"/>
 				<!--<Setter Property="TranslationY"					Value="-40"/>-->
-				<Setter Property="WidthRequest"					Value="100"/>
-				<Setter Property="HeightRequest"				Value="100"/>
+				<Setter Property="WidthRequest"					Value="120"/>
+				<Setter Property="HeightRequest"				Value="120"/>
 				<Setter Property="VerticalOptions"				Value="CenterAndExpand"/>
 				<Setter Property="HorizontalOptions"			Value="CenterAndExpand"/>
 				<Setter Property="AbsoluteLayout.LayoutFlags"	Value="All"/>
@@ -68,14 +68,21 @@
 				<Setter Property="HasShadow"					Value="False"/>
 			</Style>
 
-			<Style x:Key="AccountInfo" TargetType="Label">
+			<Style x:Key="DisplayInfo" TargetType="Label">
 				<Setter Property="FontAttributes"				Value="Bold"/>
 				<Setter Property="TextColor"					Value="Black"/>
 				<Setter Property="HorizontalOptions"			Value="FillAndExpand"/>
-				<Setter Property="Margin"						Value="5,10"/>
+				<Setter Property="Margin"						Value="0"/>
+				<Setter Property="Padding"						Value="0"/>
 				<Setter Property="FontSize"						Value="Body"/>
 			</Style>
 
+			<Style x:Key="DisplayInfoHeader" TargetType="Label">
+				<Setter Property="FontSize"						Value="Small"/>
+				<Setter Property="FontAttributes"				Value="Italic"/>
+				<Setter Property="TextColor"					Value="Black"/>
+			</Style>
+			
 		</ResourceDictionary>
 		
 		

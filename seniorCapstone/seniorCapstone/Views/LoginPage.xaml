@@ -20,59 +20,69 @@
 				Style="{DynamicResource LogoImage}"/>
 
 			<StackLayout
-				Margin="10,30,10,30"
-                AbsoluteLayout.LayoutBounds="0,0,1,.8"
+				Padding="10"
+                AbsoluteLayout.LayoutBounds="0,.5,1,.4"
                 AbsoluteLayout.LayoutFlags="All"
                 Spacing="20"
                 VerticalOptions="EndAndExpand">
-				<StackLayout
-					Orientation="Vertical"
-                    Spacing="10"
-                    HorizontalOptions="FillAndExpand">
-					<Label x:Name="messageLabel" 
-						   TextColor="#961B1B" />
-					<Frame 
-						Style="{DynamicResource BackgroudFrames}"
-						HasShadow="False">
-						<Entry 
-							x:Name="usernameEntry"
-							Placeholder="Username"
-							Text="{Binding UserName}"
-							Style="{DynamicResource BackgroundEntries}" />
-					</Frame>
-					<Frame 
-						Style="{DynamicResource BackgroudFrames}">
-						<Entry x:Name="passwordEntry" IsPassword="true"
-							Placeholder="Password"
-							Text="{Binding Password}"
-                            Style="{DynamicResource BackgroundEntries}"/>
-					</Frame>
+				<Frame
+					Style="{DynamicResource BackgroudFrames}" 
+					BackgroundColor="#8009120A">
 
-					<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="5*" />
-							<ColumnDefinition Width="5*" />
-						</Grid.ColumnDefinitions>
+					<StackLayout
+						Orientation="Vertical"
+						Padding="10, 5"
+						HorizontalOptions="FillAndExpand">
 
-						<Button Grid.Row="0" Grid.Column="0"
-							Margin="20,20,20,0"
-							Text="Login"
-							Command="{Binding LoginCommand}"
-							Style="{DynamicResource LoginButtons}">
-						</Button>
-						<Button Grid.Row="0" Grid.Column="1"
-							Margin="20,20,20,0"
-							Text="Register"
-							Command="{Binding RegistrationCommand}"
-							Style="{DynamicResource LoginButtons}">
-						</Button>
-					</Grid>
+						<Grid VerticalOptions="Fill" HorizontalOptions="Fill" ColumnSpacing="3" RowSpacing="10">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="3*"/>
+								<RowDefinition Height="3*"/>
+								<RowDefinition Height="3*"/>
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="5*" />
+								<ColumnDefinition Width="5*" />
+							</Grid.ColumnDefinitions>
 
-				</StackLayout>
-				
+							<Frame 
+								Grid.Row="0" Grid.ColumnSpan="2"
+								Style="{DynamicResource BackgroudFrames}">
+								<Entry 
+									x:Name="usernameEntry"
+									Placeholder="Username"
+									Text="{Binding UserName}"
+									Style="{DynamicResource BackgroundEntries}" />
+							</Frame>
+							<Frame 
+								Grid.Row="1" Grid.ColumnSpan="2"
+								Style="{DynamicResource BackgroudFrames}">
+								<Entry 
+									x:Name="passwordEntry" IsPassword="true"
+									Placeholder="Password"
+									Text="{Binding Password}"
+									Style="{DynamicResource BackgroundEntries}"/>
+							</Frame>
+
+							<Button  
+								Margin="10"
+								Grid.Row="2" Grid.Column="0"
+								Text="Login"
+								Command="{Binding LoginCommand}"
+								Style="{DynamicResource LoginButtons}">
+							</Button>
+							<Button 
+								Margin="10"
+								Grid.Row="2" Grid.Column="1"
+								Text="Register"
+								Command="{Binding RegistrationCommand}"
+								Style="{DynamicResource LoginButtons}">
+							</Button>
+						</Grid>
+
+
+					</StackLayout>
+				</Frame>
 			</StackLayout>
 		</AbsoluteLayout>
 	</ContentPage.Content>

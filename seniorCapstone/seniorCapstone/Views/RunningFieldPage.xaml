@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.RunningFieldPage"
-			 Padding="10"
-			 Title="EvenStreamin">
+			 Padding="20"
+			 Title="EvenStreamin"
+			 BackgroundColor="White">
 
 	<ContentPage.BindingContext>
 		<ViewModel:RunningFieldViewModel/>
@@ -29,6 +30,12 @@
 			Order="Secondary"
 			Command="{Binding ChangePageCommand}"
 			CommandParameter="RunPivotPage"/>
+		<ToolbarItem 
+			Text="Account"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AccountPage"/>
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
@@ -44,34 +51,55 @@
 				AbsoluteLayout.LayoutFlags="All"
 				Spacing="10">
 
-				<!-- Could add grid info in one row of number of fields / number running / something else ? -->
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="2*" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="2*" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="2*" />
+						<RowDefinition Height="1*" />
+					</Grid.RowDefinitions>
 
-				<Label Text="Field Name" TextColor="#000000" Padding="0,5,0,0" />
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+
+					<Label Grid.Row="0"
+						Text="Field Name" 
+						   FontAttributes="Italic"
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="1"
 						x:Name="fieldname"
 						Text="{Binding RunningField.FieldName}"
-						Style="{DynamicResource AccountInfo}"/>
-				</Frame>
+						Style="{DynamicResource DisplayInfo}"/>
 
-				<Label Text="Latitude" TextColor="#000000" Padding="0,5,0,0"/>
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
+					<Label Grid.Row="2"
+						Text="Latitude" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="3"
 						x:Name="latitude"
 						Text="{Binding RunningField.Latitude}"
-						Style="{DynamicResource AccountInfo}"/>
-				</Frame>
+						Style="{DynamicResource DisplayInfo}"/>
 
-				<Label Text="Longitude" TextColor="#000000" Padding="0,5,0,0"/>
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
+					<Label Grid.Row="4"
+						Text="Longitude" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="5"
 						x:Name="longitude"
 						Text="{Binding RunningField.Longitude}"
-						Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
-				</Frame>
+						Style="{DynamicResource DisplayInfo}"/>
+
+					<Label Grid.Row="6"
+						Text="Pivot Length" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="7"
+						x:Name="pivotlength"
+						Text="{Binding RunningField.PivotLength, StringFormat='{0} meters'}"
+						Style="{DynamicResource DisplayInfo}"/>
+				</Grid>
+				
 
 				<!--<Grid 
 					RowSpacing="0"
@@ -109,15 +137,6 @@
 					</Frame>
 
 				</Grid>-->
-
-				<Label Text="Pivot Length" TextColor="#000000" Padding="0,5,0,0" />
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
-						x:Name="pivotlength"
-						Text="{Binding RunningField.PivotLength, StringFormat='{0} meters'}"
-						Style="{DynamicResource AccountInfo}"/>
-				</Frame>
 
 				<!--<Label 
 					Text="Running Stats / ArgGIS info will go here" 
