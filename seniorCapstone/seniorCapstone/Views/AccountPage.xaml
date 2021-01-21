@@ -48,16 +48,16 @@
 				AbsoluteLayout.LayoutBounds="0, .4, 1, .5" 
 				AbsoluteLayout.LayoutFlags="All">
 
-				<!--<Button
+				<Button
 					Padding="10"
 					Text="Edit Account"
-					TextColor="Black" 
-					BackgroundColor="LightGray"
+					TextColor="Gray" 
+					BackgroundColor="White"
 					CornerRadius="15"
 					VerticalOptions="End" 
 					HorizontalOptions="Center"
 					Command="{Binding EditCommand}">
-				</Button>-->
+				</Button>
 
 				<Grid>
 					<Grid.RowDefinitions>

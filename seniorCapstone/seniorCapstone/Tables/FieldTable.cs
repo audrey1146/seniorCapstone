@@ -31,5 +31,16 @@ namespace seniorCapstone.Tables
 
         [Column("PivotRunning")]
         public int PivotRunning { get; set; }
+
+        /* What to add to field table?
+        
+        [Column("SoilType")]
+        public string SoilType { get; set; }
+         
+        [Column("CropType")]
+        public string CropType { get; set; }
+            (Empty, ...?) 
+         
+         */
     }
 }

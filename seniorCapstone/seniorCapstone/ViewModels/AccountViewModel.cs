@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
+using Rg.Plugins.Popup.Services;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
 using SQLite;
@@ -22,6 +23,7 @@ namespace seniorCapstone.ViewModels
 
 		// Public Properties
 		public ICommand DeleteAccountCommand { get; set; }
+		public ICommand EditAccountCommand { get; set; }
 		public ICommand LogoutCommand { get; set; }
 		public UserTable User
 		{
@@ -47,6 +49,7 @@ namespace seniorCapstone.ViewModels
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
 			this.DeleteAccountCommand = new Command (this.DeleteAccountButton_Clicked);
+			this.EditAccountCommand = new Command (this.EditAccountButton_Clicked);
 			this.LogoutCommand = new Command (this.LogoutButton_Clicked);
 		}
 
@@ -77,6 +80,20 @@ namespace seniorCapstone.ViewModels
 					this.User = currentUser[0];
 				}
 			}
+		}
+
+
+		/// <summary>
+		/// Display a popup to edit the users account.
+		/// </summary>
+		public void EditAccountButton_Clicked ()
+		{
+			var popupPage = new SyncPopupPage ();
+
+			// the method where you do whatever you want to after the popup is closed
+			//popupPage.CallbackEvent += (object sender, object e) => this.getUserLocation ();
+
+			PopupNavigation.Instance.PushAsync (popupPage);
 		}
 
 
