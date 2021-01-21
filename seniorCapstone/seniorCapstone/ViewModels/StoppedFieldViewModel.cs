@@ -1,5 +1,12 @@
-﻿using seniorCapstone.Tables;
-using seniorCapstone.Views;
+﻿/****************************************************************************
+ * File			StoppedFieldViewModel.cs
+ * Author		Audrey Lincoln
+ * Date			10/30/2020
+ * Purpose		Functions and binding to display the information
+ *				of a specific stopped field
+ ****************************************************************************/
+
+using seniorCapstone.Tables;
 using SQLite;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,6 +35,11 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
+		/// <summary>
+		/// Constructor that loads the field to be displayed then sets the change page 
+		/// and run pivot commands
+		/// </summary>
 		public StoppedFieldViewModel ()
 		{
 			this.loadStoppedFieldInfo ();
@@ -36,8 +48,9 @@ namespace seniorCapstone.ViewModels
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
 		}
 
+
 		/// <summary>
-		/// 
+		/// Update the database then pop off the current page
 		/// </summary>
 		public async void RunPivotButton_Clicked ()
 		{
@@ -62,8 +75,9 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
 		/// <summary>
-		/// 
+		/// Query the database for the selected field
 		/// </summary>
 		private async void loadStoppedFieldInfo ()
 		{

@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+﻿/****************************************************************************
+ * File			RegistrationViewModel.cs
+ * Author		Audrey Lincoln
+ * Date			10/30/2020
+ * Purpose		Functions and binding for the Registration functionality
+ ****************************************************************************/
+
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -83,6 +90,10 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
+		/// <summary>
+		/// Constructor that sets up the Cancel and Register commands
+		/// </summary>
 		public RegistrationViewModel ()
 		{
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
@@ -90,6 +101,10 @@ namespace seniorCapstone.ViewModels
 		}
 
 
+		/// <summary>
+		/// When the register button is clicked this command with verify that all fields are filled
+		/// out, and that the email/username don't already exist
+		/// </summary>
 		public async void RegisterButton_Clicked ()
 		{
 			int returnValue = 0;
@@ -136,6 +151,7 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
 		/// <summary>
 		/// Command that will pop the current page off of the stack
 		/// </summary>
@@ -144,8 +160,9 @@ namespace seniorCapstone.ViewModels
 			await Application.Current.MainPage.Navigation.PopModalAsync ();
 		}
 
+
 		/// <summary>
-		/// 
+		/// Invoked when a property changes to notify the view and viewmodel
 		/// </summary>
 		/// <param name="propertyName"></param>
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)

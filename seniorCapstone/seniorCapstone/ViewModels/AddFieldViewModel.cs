@@ -1,14 +1,13 @@
 ﻿/****************************************************************************
- * File			AddFieldViewmodel.cs
+ * File			AddFieldViewModel.cs
  * Author		Audrey Lincoln
  * Date			10/30/2020
- * Purpose		
+ * Purpose		Functions and binding for the Add Field functionality
  ****************************************************************************/
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Esri.ArcGISRuntime.Geometry;
@@ -46,7 +45,7 @@ namespace seniorCapstone.ViewModels
 				if (this.fieldName != value)
 				{
 					this.fieldName = value;
-					OnPropertyChanged (nameof (this.FieldName));
+					this.OnPropertyChanged (nameof (this.FieldName));
 				}
 			}
 		}
@@ -70,7 +69,7 @@ namespace seniorCapstone.ViewModels
 				if (this.longitude != value)
 				{
 					this.longitude = value;
-					OnPropertyChanged (nameof (this.Longitude));
+					this.OnPropertyChanged (nameof (this.Longitude));
 				}
 			}
 		}
@@ -82,7 +81,7 @@ namespace seniorCapstone.ViewModels
 				if (this.pivotIndex != value)
 				{
 					this.pivotIndex = value;
-					OnPropertyChanged (nameof (this.PivotIndex));
+					this.OnPropertyChanged (nameof (this.PivotIndex));
 				}
 			}
 		}
@@ -94,7 +93,7 @@ namespace seniorCapstone.ViewModels
 				if (this.phoneLocation != value)
 				{
 					this.phoneLocation = value;
-					OnPropertyChanged (nameof (this.PhoneLocation));
+					this.OnPropertyChanged (nameof (this.PhoneLocation));
 				}
 			}
 		}
@@ -119,6 +118,7 @@ namespace seniorCapstone.ViewModels
 			this.SyncToPanelCommand = new Command (this.SyncToPanelButton_Clicked);
 		}
 
+
 		/// <summary>
 		/// Command that will pop the current page off of the stack
 		/// </summary>
@@ -126,6 +126,7 @@ namespace seniorCapstone.ViewModels
 		{
 			await Application.Current.MainPage.Navigation.PopModalAsync ();
 		}
+
 
 		/// <summary>
 		/// Command that when pressed will attempt to add the field to the Field Table
@@ -181,8 +182,9 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
 		/// <summary>
-		/// 
+		/// Creates a popup to appear, with a callback method to get the users location
 		/// </summary>
 		public void SyncToPanelButton_Clicked ()
 		{
@@ -194,6 +196,12 @@ namespace seniorCapstone.ViewModels
 			PopupNavigation.Instance.PushAsync (popupPage);
 		}
 
+
+		/// <summary>
+		/// Updates the PhoneLocation property each time the location changes
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void LocationDisplay_LocationChanged (object sender, Esri.ArcGISRuntime.Location.Location e)
 		{
 			// Return if position is null; event is called with null position when location display is turned on.
@@ -206,13 +214,18 @@ namespace seniorCapstone.ViewModels
 		}
 
 
+		/// <summary>
+		/// Invoked when a property changes to notify the view and viewmodel
+		/// </summary>
+		/// <param name="propertyName"></param>
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
 		}
 
+
 		/// <summary>
-		/// User ArcGIS in order to get the location of the users phone
+		/// Uses ArcGIS in order to get the location of the users phone
 		/// </summary>
 		private async void getUserLocation ()
 		{
@@ -248,6 +261,11 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
+		/// <summary>
+		/// Convert the ArcGIS string of coordinates into two separate values
+		/// </summary>
+		/// <param name="coordLatLong"></param>
 		private void convertCoordinates (string coordLatLong)
 		{
 			// The latitude-longitude string will contain a space separating the latitude from the longitude value
@@ -282,6 +300,7 @@ namespace seniorCapstone.ViewModels
 			return isField;
 		}
 
+
 		/// <summary>
 		/// Query the database to check whether the field location  already exists for the 
 		/// current user
@@ -305,6 +324,7 @@ namespace seniorCapstone.ViewModels
 			}
 			return isField;
 		}
+
 
 		/// <summary>
 		/// Verfies that the user input data for all entries

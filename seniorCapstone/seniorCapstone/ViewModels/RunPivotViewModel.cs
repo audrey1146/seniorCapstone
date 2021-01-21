@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+﻿/****************************************************************************
+ * File			RunPivotViewModel.cs
+ * Author		Audrey Lincoln
+ * Date			10/30/2020
+ * Purpose		Functions and binding for the ability to run a pivot page
+ ****************************************************************************/
+
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -37,17 +44,21 @@ namespace seniorCapstone.ViewModels
 
 
 		/// <summary>
-		/// Constructor for the AddField VM. Sets the list of 
-		/// viable pivot lengths
+		/// Constructor that gets the viable fields, 
+		/// then sets the cancel and run pivot commands.
 		/// </summary>
 		public RunPivotViewModel ()
 		{
-			FieldOptions = new ObservableCollection<string> ();
+
+			// TODO		CHECK ALL RUNNING FIELDS AND STOP IF PAST END TIME
+
+			this.FieldOptions = new ObservableCollection<string> ();
 			this.GetPivots ();
 
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
 		}
+
 
 		/// <summary>
 		/// Gets a list of all of the non-running fields
@@ -91,6 +102,7 @@ namespace seniorCapstone.ViewModels
 			return (-1 != this.FieldIndex);
 		}
 
+
 		/// <summary>
 		/// Command that will pop the current page off of the stack
 		/// </summary>
@@ -100,6 +112,10 @@ namespace seniorCapstone.ViewModels
 		}
 
 		
+		/// <summary>
+		/// When the run pivot button is selected, update the databse
+		/// and pop off the current page - otherwise display an alert
+		/// </summary>
 		public async void RunPivotButton_Clicked ()
 		{
 			if (true == this.AreEntiresFilledOut ())
@@ -126,6 +142,10 @@ namespace seniorCapstone.ViewModels
 		}
 
 
+		/// <summary>
+		/// Invoked when a property changes to notify the view and viewmodel
+		/// </summary>
+		/// <param name="propertyName"></param>
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));

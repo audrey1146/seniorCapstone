@@ -52,7 +52,7 @@ namespace seniorCapstone.ViewModels
 
 
 		/// <summary>
-		/// 
+		/// Read from the database and bind that information to a UserTable variable
 		/// </summary>
 		private async void loadAccountInfo ()
 		{
@@ -81,7 +81,8 @@ namespace seniorCapstone.ViewModels
 
 
 		/// <summary>
-		/// 
+		/// Verify that the use wishes to delete their accout, then deletes all information from the 
+		/// database connected to that account and logs the use out.
 		/// </summary>
 		public async void DeleteAccountButton_Clicked ()
 		{
@@ -126,7 +127,7 @@ namespace seniorCapstone.ViewModels
 		}
 
 		/// <summary>
-		/// 
+		/// Verify that the use wants to log out, and then logs them out
 		/// </summary>
 		public async void LogoutButton_Clicked ()
 		{

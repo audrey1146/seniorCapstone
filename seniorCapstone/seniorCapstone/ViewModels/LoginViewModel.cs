@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+﻿/****************************************************************************
+ * File			LoginViewModel.cs
+ * Author		Audrey Lincoln
+ * Date			10/30/2020
+ * Purpose		Functions and binding for the Login functionality
+ ****************************************************************************/
+
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -46,7 +53,7 @@ namespace seniorCapstone.ViewModels
 		}
 
 		/// <summary>
-		/// Constructor that sets up the specific commands
+		/// Constructor that sets up the login and registration commands
 		/// </summary>
 		public LoginViewModel()
 		{
@@ -91,7 +98,7 @@ namespace seniorCapstone.ViewModels
 
 
 		/// <summary>
-		/// 
+		/// Invoked when a property changes to notify the view and viewmodel
 		/// </summary>
 		/// <param name="propertyName"></param>
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
@@ -112,6 +119,7 @@ namespace seniorCapstone.ViewModels
 			return (false == string.IsNullOrEmpty (this.UserName) &&
 					false == string.IsNullOrEmpty (this.Password));
 		}
+
 
 		/// <summary>
 		/// Verifies whether the credentials the user input are correct by querying 

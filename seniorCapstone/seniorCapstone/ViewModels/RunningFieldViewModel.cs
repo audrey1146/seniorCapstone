@@ -1,5 +1,12 @@
-﻿using seniorCapstone.Tables;
-using seniorCapstone.Views;
+﻿/****************************************************************************
+ * File			RunningFieldViewModel.cs
+ * Author		Audrey Lincoln
+ * Date			10/30/2020
+ * Purpose		Functions and binding to display the information
+ *				of a specific running field
+ ****************************************************************************/
+
+using seniorCapstone.Tables;
 using SQLite;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,8 +35,10 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
 		/// <summary>
-		/// 
+		/// Get the information for the specific field to display,
+		/// then set the change page and stop pivot commands
 		/// </summary>
 		public RunningFieldViewModel ()
 		{
@@ -39,8 +48,9 @@ namespace seniorCapstone.ViewModels
 			this.StopPivotCommand = new Command (this.StopPivotButton_Clicked);
 		}
 
+
 		/// <summary>
-		/// 
+		/// Update the database and pop off the running page
 		/// </summary>
 		public async void StopPivotButton_Clicked ()
 		{
@@ -65,8 +75,9 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
 		/// <summary>
-		/// 
+		/// Queries that database for the specific field selected
 		/// </summary>
 		private async void loadRunningFieldInfo ()
 		{

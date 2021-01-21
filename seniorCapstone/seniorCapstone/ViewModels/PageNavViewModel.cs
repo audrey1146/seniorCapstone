@@ -1,4 +1,12 @@
-﻿using seniorCapstone.Views;
+﻿/****************************************************************************
+ * File			PageNavViewModel.cs
+ * Author		Audrey Lincoln
+ * Date			10/22/2020
+ * Purpose		Handles the navigation functionality when a user attempts
+ *				to change to another page.
+ ****************************************************************************/
+
+using seniorCapstone.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -10,8 +18,8 @@ namespace seniorCapstone.ViewModels
 	{
 		// Properties
 		public ICommand ChangePageCommand { get; set; }
-
 		public event PropertyChangedEventHandler PropertyChanged;
+
 
 		/// <summary>
 		/// When the buttons are pressed, the name of the button will be passed, 
@@ -44,6 +52,11 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+
+		/// <summary>
+		/// Invoked when a property changes to notify the view and viewmodel
+		/// </summary>
+		/// <param name="propertyName"></param>
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke (this,
