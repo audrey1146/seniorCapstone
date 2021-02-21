@@ -1,10 +1,14 @@
-﻿using System;
+﻿
+using Newtonsoft.Json;
+using seniorCapstone.Tables;
+using seniorCapstone.Helpers;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace seniorCapstone
 {
@@ -14,5 +18,5 @@ namespace seniorCapstone
 		{
 			InitializeComponent();
 		}
-	}
+    } 
 }
