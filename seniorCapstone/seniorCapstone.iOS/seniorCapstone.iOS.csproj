@@ -187,4 +187,16 @@
   <ItemGroup>
     <BundleResource Include="Resources\RainCatLogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\gauge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\humidity.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\wind.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cloudiness.png" />
+  </ItemGroup>
 </Project>

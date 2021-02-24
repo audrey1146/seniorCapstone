@@ -5,8 +5,6 @@
  * Purpose		Home Page of the mobile application
  ****************************************************************************/
 
-using seniorCapstone.Views;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels

@@ -36,6 +36,155 @@
 			CommandParameter="AccountPage"/>
 	</ContentPage.ToolbarItems>
 
+
+	<ContentPage.Content>
+
+		<Grid BackgroundColor="FloralWhite" Padding="20" RowSpacing="15" ColumnSpacing="15">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="4*" />
+				<RowDefinition Height="3*" />
+				<RowDefinition Height="3*" />
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="5*" />
+				<ColumnDefinition Width="5*" />
+			</Grid.ColumnDefinitions>
+
+
+			<Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="#d9ae6a" CornerRadius="15" HasShadow="False">
+				<Grid RowSpacing="2" ColumnSpacing="2">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="4*" />
+						<RowDefinition Height="6*" />
+					</Grid.RowDefinitions>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+
+					<StackLayout Grid.ColumnSpan="4" Grid.Row="0" Orientation="Vertical" Spacing="0" HorizontalOptions="CenterAndExpand">
+						<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
+							<Label x:Name="temperatureTxt" TextColor="White" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
+								<Label Text="°" TextColor="White" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
+						</StackLayout>
+						<Label Text="Fahrenheit" TextColor="White" FontSize="Small" HorizontalOptions="Center"/>
+					</StackLayout>
+
+					<StackLayout Grid.Column="0" Grid.Row="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+						<Image Source="humidity.png" HeightRequest="25" HorizontalOptions="Center"/>
+						<StackLayout>
+							<Label x:Name="humidityTxt" Style="{DynamicResource WeatherMainPage}"/>
+								<Label Text="Humidity" TextColor="White" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
+						</StackLayout>
+					</StackLayout>
+
+					<StackLayout Grid.Column="1" Grid.Row="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+						<Image Source="wind.png" HeightRequest="25" HorizontalOptions="Center"/>
+						<StackLayout>
+							<Label x:Name="windTxt" Style="{DynamicResource WeatherMainPage}"/>
+								<Label Text="Wind" TextColor="White" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
+						</StackLayout>
+					</StackLayout>
+
+					<StackLayout Grid.Column="2" Grid.Row="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+						<Image Source="gauge.png" HeightRequest="25" HorizontalOptions="Center"/>
+						<StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+							<Label x:Name="pressureTxt" Style="{DynamicResource WeatherMainPage}"/>
+								<Label Text="Pressure" TextColor="White" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
+						</StackLayout>
+					</StackLayout>
+
+					<StackLayout Grid.Column="3" Grid.Row="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+						<Image Source="cloudiness.png" HeightRequest="25" HorizontalOptions="Center"/>
+						<StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+							<Label x:Name="cloudinessTxt" Style="{DynamicResource WeatherMainPage}"/>
+							<Label Text="Cloudiness" TextColor="White" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
+						</StackLayout>
+					</StackLayout>
+
+				</Grid>
+
+			</Frame>
+
+
+			<ImageButton x:Name="RunPivotPage"
+				Source="RunPivot"
+				Aspect="AspectFit"
+				Command="{Binding ChangePageCommand}" CommandParameter="RunPivotPage"
+				BackgroundColor="#87baed" Grid.Column="0" Grid.Row="1" CornerRadius="20">
+			</ImageButton>
+
+			<ImageButton x:Name="AddFieldPage" 
+				Source="AddField"
+				Aspect="AspectFit"
+				Command="{Binding ChangePageCommand}" CommandParameter="AddFieldPage"
+				BackgroundColor="#a8b655" Grid.Column="1" Grid.Row="1" CornerRadius="20">
+			</ImageButton>
+
+			<ImageButton x:Name="FieldListPage" 
+				Source="FieldList"
+				Aspect="AspectFit"
+				Command="{Binding ChangePageCommand}" CommandParameter="FieldListPage"
+				BackgroundColor="#ccb187" Grid.Column="0" Grid.Row="2" CornerRadius="20">
+			</ImageButton>
+
+			<ImageButton x:Name="AccountPage" 
+				Source="Account"
+				Aspect="AspectFit"
+				Command="{Binding ChangePageCommand}" CommandParameter="AccountPage"
+				BackgroundColor="#bc9cb4" Grid.Column="1" Grid.Row="2" CornerRadius="20">
+			</ImageButton>
+
+		</Grid>
+
+		
+	</ContentPage.Content>
+</ContentPage>
+	
+	
+<!-- 
+	<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
+             x:Class="seniorCapstone.MainPage"
+			 Title="EvenStreamin">
+
+	<ContentPage.BindingContext>
+		<ViewModel:MainViewModel/>
+	</ContentPage.BindingContext>
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem 
+			Text="Field List"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="FieldListPage"/>
+		<ToolbarItem 
+			Text="Add Field"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AddFieldPage"/>
+		<ToolbarItem 
+			Text="Run Pivot"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="RunPivotPage"/>
+		<ToolbarItem 
+			Text="Account"
+			Priority="1"
+			Order="Secondary"
+			Command="{Binding ChangePageCommand}"
+			CommandParameter="AccountPage"/>
+	</ContentPage.ToolbarItems>
+
 	<ContentPage.Content>
 		<Grid BackgroundColor="FloralWhite" Padding="20" RowSpacing="15" ColumnSpacing="15">
 			<Grid.RowDefinitions>
@@ -94,3 +243,4 @@
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>
+-->

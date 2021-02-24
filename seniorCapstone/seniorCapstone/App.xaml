@@ -82,7 +82,14 @@
 				<Setter Property="FontAttributes"				Value="Italic"/>
 				<Setter Property="TextColor"					Value="Black"/>
 			</Style>
-			
+
+			<Style x:Key="WeatherMainPage" TargetType="Label">
+				<Setter Property="FontSize"						Value="Small"/>
+				<Setter Property="FontAttributes"				Value="Bold"/>
+				<Setter Property="TextColor"					Value="White"/>
+				<Setter Property="HorizontalOptions"			Value="Center"/>
+			</Style>
+
 		</ResourceDictionary>
 		
 		
