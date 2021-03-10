@@ -125,7 +125,8 @@ namespace seniorCapstone.ViewModels
 					dbConnection.CreateTable<FieldTable> ();
 
 					List<FieldTable> runPivot = dbConnection.Query<FieldTable>
-					("UPDATE FieldTable SET PivotRunning=1 WHERE UID=? AND FieldName=? AND PivotRunning=0", App.UserID, this.FieldOptions[FieldIndex]);
+						("UPDATE FieldTable SET PivotRunning=1 WHERE UID=? AND FieldName=? AND PivotRunning=0", 
+						App.UserID, this.FieldOptions[FieldIndex]);
 
 					// If query fails then pop this page off the stack
 					if (null == runPivot)

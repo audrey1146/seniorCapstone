@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage    xmlns="http://xamarin.com/schemas/2014/forms"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			        xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-                    x:Class="seniorCapstone.Views.EditAccountPopupPage">
-
+<pages:PopupPage	xmlns="http://xamarin.com/schemas/2014/forms"
+					xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+					x:Class="seniorCapstone.Views.EditStoppedFieldPopupPage">
 
 	<pages:PopupPage.Content>
 		<StackLayout 
@@ -18,7 +17,6 @@
 					<RowDefinition Height="2*" />
 					<RowDefinition Height="2*" />
 					<RowDefinition Height="2*" />
-					<RowDefinition Height="2*" />
 				</Grid.RowDefinitions>
 
 				<Grid.ColumnDefinitions>
@@ -27,22 +25,25 @@
 
 
 				<Entry Grid.Row="0"
-					x:Name="password"
-					Placeholder="Password"
+					x:Name="fieldname"
+					Placeholder="Field Name"
 					IsPassword="True" />
 
-				<Entry Grid.Row="1"
-					x:Name="firstname"
-					Placeholder="First Name"/>
+				<Picker Grid.Row="1"
+					x:Name="pivotlength" 
+					Title="Select Pivot Length" 
+					FontSize="Large"
+					ItemsSource="{Binding PivotOptions}" 
+					SelectedIndex="{Binding PivotIndex}">
+				</Picker>
 
-				<Entry Grid.Row="2"
-					x:Name="lastname"
-					Placeholder="Last Name" >
-				</Entry>
-
-				<Entry Grid.Row="3"
-					x:Name="email"
-					Placeholder="Email"/>
+				<Picker Grid.Row="2"
+					x:Name="soiltype" 
+					Title="Select Soil Type" 
+					FontSize="Large"
+					ItemsSource="{Binding SoilOptions}" 
+					SelectedIndex="{Binding SoilIndex}">
+				</Picker>
 			</Grid>
 
 			<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -67,7 +68,8 @@
 							Clicked="SubmitButton_Clicked">
 				</Button>
 			</Grid>
-			
+
 		</StackLayout>
 	</pages:PopupPage.Content>
+
 </pages:PopupPage>

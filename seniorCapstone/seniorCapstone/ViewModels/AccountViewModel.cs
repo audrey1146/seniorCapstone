@@ -91,7 +91,7 @@ namespace seniorCapstone.ViewModels
 			var popupPage = new EditAccountPopupPage ();
 
 			// the method where you do whatever you want to after the popup is closed
-			//popupPage.CallbackEvent += (object sender, object e) => this.getUserLocation ();
+			popupPage.CallbackEvent += (object sender, object e) => this.loadAccountInfo ();
 
 			PopupNavigation.Instance.PushAsync (popupPage);
 		}
