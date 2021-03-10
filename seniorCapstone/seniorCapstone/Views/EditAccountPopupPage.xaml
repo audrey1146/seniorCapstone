@@ -4,15 +4,68 @@
 			        xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
                     x:Class="seniorCapstone.Views.EditAccountPopupPage">
 
-	<StackLayout
+
+	<pages:PopupPage.Content>
+		<StackLayout 
 		Margin="12"
         Padding="24"
         BackgroundColor="DarkGray"
         HorizontalOptions="Center"
         VerticalOptions="Center">
-		
+
+			<Grid RowSpacing="10">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="2*" />
+					<RowDefinition Height="2*" />
+					<RowDefinition Height="2*" />
+					<RowDefinition Height="2*" />
+				</Grid.RowDefinitions>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+
+				<Entry Grid.Row="0"
+					x:Name="password"
+					Placeholder="Password"
+					IsPassword="True" />
+
+				<Entry Grid.Row="1"
+					x:Name="firstname"
+					Placeholder="First Name"/>
+
+				<Entry Grid.Row="2"
+					x:Name="lastname"
+					Placeholder="Last Name" >
+				</Entry>
+
+				<Entry Grid.Row="3"
+					x:Name="email"
+					Placeholder="Email"/>
+			</Grid>
+
+			<Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="5*" />
+					<ColumnDefinition Width="5*" />
+				</Grid.ColumnDefinitions>
+
+				<Button Grid.Row="0" Grid.Column="0"
+							Margin="20,20,20,0"
+							Text="Cancel"
+							BackgroundColor="#7C2C29" >
+				</Button>
+				<Button Grid.Row="0" Grid.Column="1"
+							Margin="20,20,20,0"
+							Text="Submit"
+							BackgroundColor="#617C29">
+				</Button>
+			</Grid>
 			
-		
-	</StackLayout>
-	
+		</StackLayout>
+	</pages:PopupPage.Content>
 </pages:PopupPage>

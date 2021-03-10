@@ -56,7 +56,7 @@
 					CornerRadius="15"
 					VerticalOptions="End" 
 					HorizontalOptions="Center"
-					Command="{Binding EditCommand}">
+					Command="{Binding EditAccountCommand}">
 				</Button>
 
 				<Grid>

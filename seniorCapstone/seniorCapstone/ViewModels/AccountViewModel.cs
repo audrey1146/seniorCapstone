@@ -88,7 +88,7 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public void EditAccountButton_Clicked ()
 		{
-			var popupPage = new SyncPopupPage ();
+			var popupPage = new EditAccountPopupPage ();
 
 			// the method where you do whatever you want to after the popup is closed
 			//popupPage.CallbackEvent += (object sender, object e) => this.getUserLocation ();
