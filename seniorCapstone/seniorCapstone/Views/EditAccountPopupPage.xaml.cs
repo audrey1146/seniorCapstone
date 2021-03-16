@@ -42,6 +42,7 @@ namespace seniorCapstone.Views
 				{
 					await Application.Current.MainPage.Navigation.PopAsync ();
 					Debug.WriteLine ("Finding Current User Failed");
+					await PopupNavigation.Instance.PopAsync (true);
 				}
 				else
 				{

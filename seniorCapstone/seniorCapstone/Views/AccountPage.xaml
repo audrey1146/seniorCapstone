@@ -59,7 +59,7 @@
 					Command="{Binding EditAccountCommand}">
 				</Button>
 
-				<Grid>
+				<Grid RowSpacing="0">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*" />
 						<RowDefinition Height="2*" />
@@ -111,7 +111,7 @@
 			</StackLayout>
 
 			<StackLayout
-				AbsoluteLayout.LayoutBounds="0, .9, 1, .2" 
+				AbsoluteLayout.LayoutBounds="0, .95, 1, .2" 
 				AbsoluteLayout.LayoutFlags="All">
 				<Button
 					Padding="0"

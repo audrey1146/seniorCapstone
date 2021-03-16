@@ -51,6 +51,18 @@
 				AbsoluteLayout.LayoutFlags="All"
 				Spacing="10">
 
+				<Button
+					x:Name="editField"
+					Padding="10"
+					Text="Edit Field" 
+					CornerRadius="10"
+					BackgroundColor="White"				
+					TextColor="Gray" 
+					VerticalOptions="End" 
+					HorizontalOptions="Center"
+					Command="{Binding EditFieldCommand}">
+				</Button>
+
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*" />
@@ -59,10 +71,10 @@
 						<RowDefinition Height="2*" />
 						<RowDefinition Height="1*" />
 						<RowDefinition Height="2*" />
-						<RowDefinition Height="1*" />
 					</Grid.RowDefinitions>
 
 					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 
@@ -75,28 +87,36 @@
 						Text="{Binding StoppedField.FieldName}"
 						Style="{DynamicResource DisplayInfo}"/>
 
-					<Label Grid.Row="2"
+					<Label Grid.Row="2" Grid.Column="0"
 						Text="Latitude" 
 						Style="{DynamicResource DisplayInfoHeader}"/>
-					<Label Grid.Row="3"
+					<Label Grid.Row="3" Grid.Column="0"
 						x:Name="latitude"
 						Text="{Binding StoppedField.Latitude}"
 						Style="{DynamicResource DisplayInfo}"/>
 
-					<Label Grid.Row="4"
+					<Label Grid.Row="2"  Grid.Column="1"
 						Text="Longitude" 
 						Style="{DynamicResource DisplayInfoHeader}"/>
-					<Label Grid.Row="5"
+					<Label Grid.Row="3" Grid.Column="1"
 						x:Name="longitude"
 						Text="{Binding StoppedField.Longitude}"
 						Style="{DynamicResource DisplayInfo}"/>
 
-					<Label Grid.Row="6"
+					<Label Grid.Row="4" Grid.Column="0"
 						Text="Pivot Length" 
 						Style="{DynamicResource DisplayInfoHeader}"/>
-					<Label Grid.Row="7"
-						x:Name="pivotlength"
+					<Label Grid.Row="5"
+						x:Name="pivotlength" Grid.Column="0"
 						Text="{Binding StoppedField.PivotLength, StringFormat='{0} meters'}"
+						Style="{DynamicResource DisplayInfo}"/>
+
+					<Label Grid.Row="4" Grid.Column="1"
+						Text="Soil Type" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="5"
+						x:Name="soilType" Grid.Column="1"
+						Text="{Binding StoppedField.SoilType}"
 						Style="{DynamicResource DisplayInfo}"/>
 				</Grid>
 

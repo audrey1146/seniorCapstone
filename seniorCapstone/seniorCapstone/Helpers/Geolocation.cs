@@ -89,7 +89,7 @@ namespace seniorCapstone.Helpers
 			{
 				return;
 			}
-			string temp = CoordinateFormatter.ToLatitudeLongitude (e.Position, LatitudeLongitudeFormat.DecimalDegrees, 15);
+			string temp = CoordinateFormatter.ToLatitudeLongitude (e.Position, LatitudeLongitudeFormat.DecimalDegrees, 5);
 			this.convertCoordinates (temp);
 		}
 

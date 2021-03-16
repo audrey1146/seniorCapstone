@@ -6,7 +6,9 @@
  *				of a specific stopped field
  ****************************************************************************/
 
+using Rg.Plugins.Popup.Services;
 using seniorCapstone.Tables;
+using seniorCapstone.Views;
 using SQLite;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,6 +24,7 @@ namespace seniorCapstone.ViewModels
 
 		// Public Properties
 		public ICommand RunPivotCommand { get; set; }
+		public ICommand EditFieldCommand { get; set; }
 		public FieldTable StoppedField
 		{
 			get => this.stoppedField;
@@ -46,6 +49,7 @@ namespace seniorCapstone.ViewModels
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
+			this.EditFieldCommand = new Command (this.EditFieldButton_Clicked);
 		}
 
 
@@ -75,6 +79,15 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
+		public void EditFieldButton_Clicked ()
+		{
+			var popupPage = new EditStoppedFieldPopupPage ();
+
+			// the method where you do whatever you want to after the popup is closed
+			popupPage.CallbackEvent += (object sender, object e) => this.loadStoppedFieldInfo ();
+
+			PopupNavigation.Instance.PushAsync (popupPage);
+		}
 
 		/// <summary>
 		/// Query the database for the selected field

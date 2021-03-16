@@ -26,23 +26,16 @@
 
 				<Entry Grid.Row="0"
 					x:Name="fieldname"
-					Placeholder="Field Name"
-					IsPassword="True" />
+					Placeholder="Field Name"/>
 
 				<Picker Grid.Row="1"
 					x:Name="pivotlength" 
-					Title="Select Pivot Length" 
-					FontSize="Large"
-					ItemsSource="{Binding PivotOptions}" 
-					SelectedIndex="{Binding PivotIndex}">
+					Title="Select Pivot Length">
 				</Picker>
 
 				<Picker Grid.Row="2"
 					x:Name="soiltype" 
-					Title="Select Soil Type" 
-					FontSize="Large"
-					ItemsSource="{Binding SoilOptions}" 
-					SelectedIndex="{Binding SoilIndex}">
+					Title="Select Soil Type">
 				</Picker>
 			</Grid>
 
