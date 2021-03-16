@@ -5,11 +5,8 @@
  * Purpose		Helper class to get the response of the Api
  ****************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace seniorCapstone.Helpers
@@ -38,7 +35,10 @@ namespace seniorCapstone.Helpers
                     return new ApiResponse { Response = await request.Content.ReadAsStringAsync () };
                 }
                 else
+				{
                     return new ApiResponse { ErrorMessage = request.ReasonPhrase };
+                }
+                    
             }
         }
     }

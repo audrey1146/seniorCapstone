@@ -18,6 +18,9 @@ namespace seniorCapstone.Tables
         [Column("PivotLength")]
         public int PivotLength { get; set; }
 
+        [Column ("SoilType")]
+        public string SoilType { get; set; }
+
         // BELOW IS FROM HARDWARE / SOFTWARE LOCALIZATION
         [Column ("Latitude")]
         public string Latitude { get; set; }

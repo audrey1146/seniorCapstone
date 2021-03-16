@@ -34,7 +34,7 @@
 			</Grid>-->
 
 			<StackLayout 
-                AbsoluteLayout.LayoutBounds="0,.3,1,.6"
+                AbsoluteLayout.LayoutBounds="0,.5,1,.6"
                 AbsoluteLayout.LayoutFlags="All"
                 Spacing="15"
                 VerticalOptions="EndAndExpand">
@@ -52,6 +52,14 @@
 					FontSize="Large"
 					ItemsSource="{Binding PivotOptions}" 
 					SelectedIndex="{Binding PivotIndex}">
+				</Picker>
+
+				<Picker 
+					x:Name="soilType" 
+					Title="Select Soil Type" 
+					FontSize="Large"
+					ItemsSource="{Binding SoilOptions}" 
+					SelectedIndex="{Binding SoilIndex}">
 				</Picker>
 
 				<!--<Label

@@ -7,8 +7,6 @@ namespace seniorCapstone.Helpers
 {
 	public class RainCat
 	{
-		private SoilType mcSoilType;
-
 		public RainCat ()
 		{
 
@@ -17,23 +15,11 @@ namespace seniorCapstone.Helpers
 		/// <summary>
 		/// 
 		/// </summary>
-		public float InstantaneousInfiltrationRate (string soil)
+		public double InstantaneousInfiltrationRate (string soil)
 		{
-			float IR = 0;
+			double IR = 0;
 
-			switch (soil)
-			{
-				case (SoilType.SAND):
-					break;
-				case (SoilType.SANDY_LOAM):
-					break;
-				case (SoilType.CLAY):
-					break;
-				case (SoilType.CLAY_LOAM):
-					break;
-				case (SoilType.LOAM):
-					break;
-			}
+			
 
 			return (IR);
 		}

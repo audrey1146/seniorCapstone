@@ -21,12 +21,14 @@ namespace seniorCapstone.ViewModels
 		//Private Varibales
 		private string fieldName = string.Empty;
 		private int pivotIndex = -1;
+		private int soilIndex = -1;
 
 		// Public Properties
 		public ICommand AddFieldCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
 		public ICommand SyncToPanelCommand { get; set; }
 		public IList<int> PivotOptions { get; set; }
+		public IList<string> SoilOptions { get; set; }
 		public string FieldName
 		{
 			get => this.fieldName;
@@ -51,7 +53,18 @@ namespace seniorCapstone.ViewModels
 				}
 			}
 		}
-
+		public int SoilIndex
+		{
+			get => this.soilIndex;
+			set
+			{
+				if (this.soilIndex != value)
+				{
+					this.soilIndex = value;
+					this.OnPropertyChanged (nameof (this.SoilIndex));
+				}
+			}
+		}
 
 		/// <summary>
 		/// Constructor for the AddField VM. Sets the list of 
@@ -59,12 +72,9 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public AddFieldViewModel ()
 		{
-			PivotOptions = new ObservableCollection<int> ()
-			{
-				400,
-				300,
-				60
-			};
+			PivotOptions = (IList<int>)Helpers.CenterPivotSpecs.PivotTypes;
+			SoilOptions = (IList<string>)Helpers.CenterPivotSpecs.SoilTypes;
+
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.AddFieldCommand = new Command (this.AddFieldButton_Clicked);
 			this.SyncToPanelCommand = new Command (this.SyncToPanelButton_Clicked);
@@ -104,6 +114,7 @@ namespace seniorCapstone.ViewModels
 						UID = App.UserID,
 						FieldName = this.FieldName,
 						PivotLength = this.PivotOptions[this.PivotIndex],
+						SoilType = this.SoilOptions[this.SoilIndex],
 						Latitude = this.Latitude,
 						Longitude = this.Longitude,
 						PivotAngle = 0,
@@ -212,7 +223,8 @@ namespace seniorCapstone.ViewModels
 			return (false == string.IsNullOrEmpty (this.FieldName) &&
 					false == string.IsNullOrEmpty (this.Latitude) &&
 					false == string.IsNullOrEmpty (this.Longitude) &&
-					-1 != this.PivotIndex);
+					-1 != this.PivotIndex &&
+					-1 != this.SoilIndex);
 		}
 
 	}
