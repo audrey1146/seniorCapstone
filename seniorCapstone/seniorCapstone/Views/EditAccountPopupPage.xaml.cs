@@ -65,7 +65,7 @@ namespace seniorCapstone.Views
 			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
 			{
 				dbConnection.CreateTable<UserTable> ();
-
+				bool bPopOff = true;
 
 				// Update based on which entries got filled out
 				if (false == string.IsNullOrEmpty (password.Text))
@@ -88,7 +88,7 @@ namespace seniorCapstone.Views
 				}
 				if (false == string.IsNullOrEmpty (email.Text))
 				{
-					// Before insert check that the unique values don't already exist
+					// Before update check that the unique values don't already exist
 					List<UserTable> uniqueCheck = dbConnection.Query<UserTable>
 						("SELECT * FROM UserTable WHERE Email=?",
 						email.Text);
@@ -101,11 +101,15 @@ namespace seniorCapstone.Views
 					}
 					else
 					{
-						await App.Current.MainPage.DisplayAlert ("UpdateAccount Alert", "Email Already Exists", "OK");
+						await App.Current.MainPage.DisplayAlert ("Update Account Alert", "Email Already Exists", "OK");
+						bPopOff = false;
 					}
 				}
-				await PopupNavigation.Instance.PopAsync (true);
-				CallbackEvent?.Invoke (this, EventArgs.Empty);
+				if (true == bPopOff)
+				{
+					await PopupNavigation.Instance.PopAsync (true);
+					CallbackEvent?.Invoke (this, EventArgs.Empty);
+				}
 			}
 		}
 
