@@ -24,8 +24,8 @@ namespace seniorCapstone.Views
         private async void Initialize ()
         {
 			Map fieldMap;
-			MapPoint mapPointCoordinates;
-			string coordinates;
+			double latitude; ;
+			double longitude;
 
 			
 
@@ -62,18 +62,48 @@ namespace seniorCapstone.Views
 						3.	If this doesn't work I drop out
 					 */
 
-
+					latitude = this.convertToDouble (currentField[0].Latitude);
+					longitude = this.convertToDouble (currentField[0].Longitude);
 
 					// Create a map with 'Imagery with Labels' basemap and an initial location
-					Map myMap = new Map (BasemapType.ImageryWithLabels, -33.173240, -64.256609, 16);
+					//fieldMap = new Map (BasemapType.ImageryWithLabels, -33.173240, -64.256609, 16);
+					fieldMap = new Map (BasemapType.ImageryWithLabels, latitude, longitude, 16);
 
 					// Assign the map to the MapView
-					MyMapView.Map = myMap;
+					MyMapView.Map = fieldMap;
 
 				}
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="coord"></param>
+		/// <returns></returns>
+		private double convertToDouble (string coord)
+		{
+			double convertedCoord = 0;
+			bool bIsNegative = false;
+			int poleIndex = coord.Length - 1;
 
+			if ('S' == coord[poleIndex] || 'W' == coord[poleIndex])
+			{
+				bIsNegative = true;
+			}
+
+			// Remove pole at the end
+			coord = coord.Remove (poleIndex);
+
+			// Parse string
+			double.TryParse (coord, out convertedCoord);
+
+			if (bIsNegative)
+			{
+				convertedCoord *= -1;
+			}
+
+			return (convertedCoord);
+		}
 	}
 }
