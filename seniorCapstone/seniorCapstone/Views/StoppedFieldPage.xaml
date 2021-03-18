@@ -161,17 +161,45 @@
 				AbsoluteLayout.LayoutBounds="0, .9, 1, .1" 
 				AbsoluteLayout.LayoutFlags="All"
 				Spacing="5">
-				<Button
-					x:Name="runpivot"
-					Padding="10"
-					Text="Run Pivot" 
-					CornerRadius="10"
-					BackgroundColor="CornflowerBlue"				
-					TextColor="White" 
-					VerticalOptions="End" 
-					HorizontalOptions="Start"
-					Command="{Binding RunPivotCommand}">
-				</Button>
+
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+
+					<Button Grid.Row="0" Grid.Column="0"
+						x:Name="runpivot"
+						Padding="10"
+						Text="Run Pivot" 
+						CornerRadius="10"
+						BackgroundColor="#87baed"				
+						TextColor="White" 
+						VerticalOptions="End" 
+						HorizontalOptions="Start"
+						Command="{Binding RunPivotCommand}">
+					</Button>
+
+					<Button Grid.Row="0" Grid.Column="1"
+						x:Name="viewmap"
+						Padding="10"
+						Text="View Map" 
+						CornerRadius="10"
+						BackgroundColor="#ccb187"				
+						TextColor="White" 
+						VerticalOptions="End" 
+						HorizontalOptions="Start"
+						Command="{Binding ViewMapCommand}">
+					</Button>
+				</Grid>
+
+
+				
 			</StackLayout>
 		</AbsoluteLayout>
 	</ContentPage.Content>

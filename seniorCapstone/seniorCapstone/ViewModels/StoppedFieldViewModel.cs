@@ -25,6 +25,7 @@ namespace seniorCapstone.ViewModels
 		// Public Properties
 		public ICommand RunPivotCommand { get; set; }
 		public ICommand EditFieldCommand { get; set; }
+		public ICommand ViewMapCommand { get; set; }
 		public FieldTable StoppedField
 		{
 			get => this.stoppedField;
@@ -50,6 +51,7 @@ namespace seniorCapstone.ViewModels
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
 			this.EditFieldCommand = new Command (this.EditFieldButton_Clicked);
+			this.ViewMapCommand = new Command (this.ViewMapButton_Clicked);
 		}
 
 
@@ -74,11 +76,13 @@ namespace seniorCapstone.ViewModels
 				else
 				{
 					await Application.Current.MainPage.Navigation.PopAsync ();
-					//await Application.Current.MainPage.Navigation.PushAsync (new RunningFieldPage ());
 				}
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void EditFieldButton_Clicked ()
 		{
 			var popupPage = new EditStoppedFieldPopupPage ();
@@ -87,6 +91,14 @@ namespace seniorCapstone.ViewModels
 			popupPage.CallbackEvent += (object sender, object e) => this.loadStoppedFieldInfo ();
 
 			PopupNavigation.Instance.PushAsync (popupPage);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public async void ViewMapButton_Clicked ()
+		{
+			await Application.Current.MainPage.Navigation.PushAsync (new ArcGISFieldMap ());
 		}
 
 		/// <summary>
