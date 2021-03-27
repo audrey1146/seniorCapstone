@@ -24,7 +24,7 @@ namespace seniorCapstone.Views
         private async void Initialize ()
         {
 			Map fieldMap;
-			double latitude; ;
+			double latitude;
 			double longitude;
 
 			
@@ -44,29 +44,10 @@ namespace seniorCapstone.Views
 				}
 				else
 				{
-					/*coordinates = currentField[0].Latitude + ' ' + currentField[0].Longitude;
-					mapPointCoordinates = CoordinateFormatter.FromLatitudeLongitude (coordinates, SpatialReferences.Wgs84);
-					
-
-					// Create a map with 'Imagery with Labels' basemap and an initial location
-					fieldMap = new Map (BasemapType.ImageryWithLabels, mapPointCoordinates.X, mapPointCoordinates.Y, 16);
-
-					MyMapView.Map = fieldMap;*/
-
-					/*
-						TO DO:
-						-----------
-						1.	Write my own converter to take the lat/long and make it a double
-							Idea: char array, 6 decimals, S/W convert to negative
-						2.	Once we have this, then new Map () will take it in lat long order
-						3.	If this doesn't work I drop out
-					 */
-
 					latitude = this.convertToDouble (currentField[0].Latitude);
 					longitude = this.convertToDouble (currentField[0].Longitude);
 
 					// Create a map with 'Imagery with Labels' basemap and an initial location
-					//fieldMap = new Map (BasemapType.ImageryWithLabels, -33.173240, -64.256609, 16);
 					fieldMap = new Map (BasemapType.ImageryWithLabels, latitude, longitude, 16);
 
 					// Assign the map to the MapView
