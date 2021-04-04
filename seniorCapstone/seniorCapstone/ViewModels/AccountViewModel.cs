@@ -6,9 +6,12 @@
  ****************************************************************************/
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Services;
+using seniorCapstone.Services;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
 using SQLite;
@@ -19,10 +22,22 @@ namespace seniorCapstone.ViewModels
 	public class AccountViewModel : PageNavViewModel
 	{
 		// Private Variables
+		readonly IUserDataService userDataService;
+		ObservableCollection<UserTable> userEntries;
 		private UserTable user = null;
 
 		// Public Properties
-		public ICommand DeleteAccountCommand { get; set; }
+		public ObservableCollection<UserTable> UserEntries
+		{
+			get => this.userEntries;
+			set
+			{
+				this.userEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		//public ICommand DeleteAccountCommand { get; set; }
 		public ICommand EditAccountCommand { get; set; }
 		public ICommand LogoutCommand { get; set; }
 		public UserTable User
@@ -48,7 +63,7 @@ namespace seniorCapstone.ViewModels
 			this.loadAccountInfo ();
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
-			this.DeleteAccountCommand = new Command (this.DeleteAccountButton_Clicked);
+			//this.DeleteAccountCommand = new Command (this.DeleteAccountButton_Clicked);
 			this.EditAccountCommand = new Command (this.EditAccountButton_Clicked);
 			this.LogoutCommand = new Command (this.LogoutButton_Clicked);
 		}
@@ -57,28 +72,27 @@ namespace seniorCapstone.ViewModels
 		/// <summary>
 		/// Read from the database and bind that information to a UserTable variable
 		/// </summary>
-		private async void loadAccountInfo ()
+		private async Task loadAccountInfo ()
 		{
-			// Reading from Database
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			bool bFound = false;
+
+			var entries = await userDataService.GetEntriesAsync ();
+			this.UserEntries = new ObservableCollection<UserTable> (entries);
+
+			foreach (UserTable user in this.UserEntries)
 			{
-				dbConnection.CreateTable<UserTable> ();
-
-				// Query for the current user
-				List<UserTable> currentUser = dbConnection.Query<UserTable>
-					("SELECT * FROM UserTable WHERE UID=?",
-					App.UserID);
-
-				// If query fails then pop this page off the stack
-				if (null == currentUser || currentUser.Count != 1)
+				if (user.UID == App.UserID)
 				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					Debug.WriteLine ("Finding Current User Failed");
+					this.User = user;
+					bFound = true;
 				}
-				else
-				{
-					this.User = currentUser[0];
-				}
+			}
+
+			// If query fails then pop this page off the stack
+			if (false == bFound)
+			{
+				await Application.Current.MainPage.Navigation.PopAsync ();
+				Debug.WriteLine ("Finding Current User Failed");
 			}
 		}
 
@@ -86,14 +100,31 @@ namespace seniorCapstone.ViewModels
 		/// <summary>
 		/// Display a popup to edit the users account.
 		/// </summary>
-		public void EditAccountButton_Clicked ()
+		public async void EditAccountButton_Clicked ()
 		{
 			var popupPage = new EditAccountPopupPage ();
 
 			// the method where you do whatever you want to after the popup is closed
-			popupPage.CallbackEvent += (object sender, object e) => this.loadAccountInfo ();
+			popupPage.CallbackEvent += async (object sender, object e) => await this.loadAccountInfo ();
 
-			PopupNavigation.Instance.PushAsync (popupPage);
+			await PopupNavigation.Instance.PushAsync (popupPage);
+		}
+
+
+		/// <summary>
+		/// Verify that the use wants to log out, and then logs them out
+		/// </summary>
+		public async void LogoutButton_Clicked ()
+		{
+			bool answer = await App.Current.MainPage.DisplayAlert ("Logging Out?",
+				"Are you sure you want to logout?", "Yes", "No");
+
+			if (true == answer)
+			{
+				App.IsUserLoggedIn = false;
+				App.UserID = string.Empty;
+				Application.Current.MainPage = new NavigationPage (new LoginPage ());
+			}
 		}
 
 
@@ -101,13 +132,15 @@ namespace seniorCapstone.ViewModels
 		/// Verify that the use wishes to delete their accout, then deletes all information from the 
 		/// database connected to that account and logs the use out.
 		/// </summary>
-		public async void DeleteAccountButton_Clicked ()
+		/*public async void DeleteAccountButton_Clicked ()
 		{
 			bool answer = await App.Current.MainPage.DisplayAlert ("Delete Account?", 
 				"Are you sure you want to delete your account? \nThis cannot be undone.", "Yes", "No");
 
 			if (true == answer)
 			{
+
+
 				using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
 				{
 					dbConnection.CreateTable<UserTable> ();
@@ -138,25 +171,11 @@ namespace seniorCapstone.ViewModels
 				}
 
 				App.IsUserLoggedIn = false;
-				App.UserID = -1;
+				App.UserID = string.Empty;
 				Application.Current.MainPage = new NavigationPage (new LoginPage ());
 			}
-		}
+		}*/
 
-		/// <summary>
-		/// Verify that the use wants to log out, and then logs them out
-		/// </summary>
-		public async void LogoutButton_Clicked ()
-		{
-			bool answer = await App.Current.MainPage.DisplayAlert ("Logging Out?",
-				"Are you sure you want to logout?", "Yes", "No");
 
-			if (true == answer)
-			{
-				App.IsUserLoggedIn = false;
-				App.UserID = -1;
-				Application.Current.MainPage = new NavigationPage (new LoginPage ());
-			}
-		}
 	}
 }

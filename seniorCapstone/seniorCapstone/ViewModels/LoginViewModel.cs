@@ -5,14 +5,17 @@
  * Purpose		Functions and binding for the Login functionality
  ****************************************************************************/
 
-using System.Collections.Generic;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using seniorCapstone.Helpers;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
-using SQLite;
+using seniorCapstone.Services;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace seniorCapstone.ViewModels
 {
@@ -20,11 +23,24 @@ namespace seniorCapstone.ViewModels
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		// Private Varibales
+		// Private Variables
+		readonly IUserDataService userDataService;
+		ObservableCollection<UserTable> userEntries;
+
 		private string username = string.Empty;
 		private string password = string.Empty;
 
 		// Public Properties
+		public ObservableCollection<UserTable> UserEntries
+		{
+			get => this.userEntries;
+			set
+			{
+				this.userEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
 		public ICommand LoginCommand { get; set; }
 		public ICommand RegistrationCommand { get; set; }
 		public string UserName
@@ -55,11 +71,15 @@ namespace seniorCapstone.ViewModels
 		/// <summary>
 		/// Constructor that sets up the login and registration commands
 		/// </summary>
-		public LoginViewModel()
+		public LoginViewModel ()
 		{
+			this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.UserEntries = new ObservableCollection<UserTable> ();
+
 			this.LoginCommand = new Command (this.LoginButton_Clicked);
 			this.RegistrationCommand = new Command (this.RegistrationButton_Clicked);
 		}
+
 
 		/// <summary>
 		/// When the login button is pressed, the input credntials must be checked.
@@ -67,6 +87,8 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void LoginButton_Clicked ()
 		{
+			await this.LoadEntries ();
+
 			if (false == areEntiresFilledOut ())
 			{
 				await App.Current.MainPage.DisplayAlert ("Login Alert", "Please Fill Out All Fields", "OK");
@@ -80,7 +102,7 @@ namespace seniorCapstone.ViewModels
 				}
 				else
 				{
-					await App.Current.MainPage.DisplayAlert ("Login Alert", 
+					await App.Current.MainPage.DisplayAlert ("Login Alert",
 						"The username and password you entered did not match our records. \nPlease double-check and try again.", "OK");
 					this.Password = string.Empty;
 				}
@@ -122,6 +144,23 @@ namespace seniorCapstone.ViewModels
 
 
 		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await userDataService.GetEntriesAsync ();
+				this.UserEntries = new ObservableCollection<UserTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Login Alert", ex.Message, "OK");
+			}
+		}
+
+
+		/// <summary>
 		/// Verifies whether the credentials the user input are correct by querying 
 		/// into the user table.
 		/// </summary>
@@ -129,27 +168,18 @@ namespace seniorCapstone.ViewModels
 		/// <param name="PasswordEntry"></param>
 		/// <returns></returns>
 		private bool areCredentialsCorrect (string UserNameEntry, string PasswordEntry)
-		{
-			bool isUser = false;
-
-			// Verify input by a query to the databse
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+		{	
+			foreach (UserTable user in this.UserEntries)
 			{
-				dbConnection.CreateTable<UserTable> ();
-
-				// Query to get a single entry with specific Username and Password
-				List<UserTable> userID = dbConnection.Query<UserTable>
-					("SELECT UID FROM UserTable WHERE UserName=? AND Password=?",
-					UserNameEntry, PasswordEntry);
-
-				if (null != userID && userID.Count == 1)
+				if (user.UserName == UserNameEntry && user.Password == PasswordEntry)
 				{
-					isUser = true;
-					App.UserID = userID[0].UID; // Other entries null because I am only returning the UID
-					App.FieldID = -1;
+					App.UserID = user.UID;
+					return (true);
 				}
 			}
-			return isUser;
+
+			return (false);
 		}
+
 	}
 }

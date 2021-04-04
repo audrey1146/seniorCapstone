@@ -4,7 +4,7 @@ using System.Text;
 
 namespace seniorCapstone.Helpers
 {
-	public abstract class BaseHttpService
+	class FieldDataChecker
 	{
 	}
 }

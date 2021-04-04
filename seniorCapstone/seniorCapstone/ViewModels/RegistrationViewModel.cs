@@ -5,12 +5,13 @@
  * Purpose		Functions and binding for the Registration functionality
  ****************************************************************************/
 
-using System.Collections.Generic;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using seniorCapstone.Services;
 using seniorCapstone.Tables;
-using SQLite;
 using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
@@ -20,6 +21,9 @@ namespace seniorCapstone.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		// Private Varibales
+		readonly IUserDataService userDataService;
+		ObservableCollection<UserTable> userEntries;
+
 		private string username = string.Empty;
 		private string password = string.Empty;
 		private string firstname = string.Empty;
@@ -27,6 +31,16 @@ namespace seniorCapstone.ViewModels
 		private string email = string.Empty;
 
 		// Public Properties
+		public ObservableCollection<UserTable> UserEntries
+		{
+			get => this.userEntries;
+			set
+			{
+				this.userEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
 		public ICommand RegisterCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
 		public string UserName
@@ -96,6 +110,10 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public RegistrationViewModel ()
 		{
+			this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.UserEntries = new ObservableCollection<UserTable> ();
+			this.LoadEntries ();
+
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.RegisterCommand = new Command (this.RegisterButton_Clicked);
 		}
@@ -107,11 +125,13 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void RegisterButton_Clicked ()
 		{
-			int returnValue = 0;
-
 			if (false == areEntiresFilledOut ())
 			{
 				await App.Current.MainPage.DisplayAlert ("Registration Alert", "Please Fill Out All Fields", "OK");
+			}
+			else if (false == areEntiresUnique ())
+			{
+				await App.Current.MainPage.DisplayAlert ("Registration Alert", "Username or Email Already Exists", "OK");
 			}
 			else
 			{
@@ -119,35 +139,13 @@ namespace seniorCapstone.ViewModels
 				{
 					UserName = this.UserName,
 					Password = this.Password,
-					FirstName =this.FirstName,
+					FirstName = this.FirstName,
 					LastName = this.LastName,
 					Email = this.Email
-
 				};
 
-				using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
-				{
-					dbConnection.CreateTable<UserTable> ();
-
-					// Before insert check that the unique values don't already exist
-					List<UserTable> uniqueCheck = dbConnection.Query<UserTable>
-						("SELECT * FROM UserTable WHERE UserName=? OR Email=?",
-						this.UserName, this.Email);
-
-					if (null != uniqueCheck && uniqueCheck.Count == 0)
-					{
-						returnValue = dbConnection.Insert (newUser);
-					}
-
-					if (1 == returnValue)
-					{
-						await Application.Current.MainPage.Navigation.PopModalAsync ();
-					}
-					else
-					{
-						await App.Current.MainPage.DisplayAlert ("Registration Alert", "Username or Email Already Exists", "OK");
-					}
-				}
+				await this.userDataService.AddEntryAsync (newUser);
+				await Application.Current.MainPage.Navigation.PopModalAsync ();
 			}
 		}
 
@@ -172,6 +170,23 @@ namespace seniorCapstone.ViewModels
 
 
 		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async void LoadEntries ()
+		{
+			try
+			{
+				var entries = await userDataService.GetEntriesAsync ();
+				this.UserEntries = new ObservableCollection<UserTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Registration Alert", ex.Message, "OK");
+			}
+		}
+
+
+		/// <summary>
 		/// Verfies that the user input data for all entries
 		/// </summary>
 		/// <returns>
@@ -185,6 +200,26 @@ namespace seniorCapstone.ViewModels
 					false == string.IsNullOrEmpty (this.LastName) &&
 					false == string.IsNullOrEmpty (this.Password) &&
 					false == string.IsNullOrEmpty (this.Email));
+		}
+
+
+		/// <summary>
+		/// Verfies that the user input unqiue data for the Email and Username
+		/// </summary>
+		/// <returns>
+		/// True if the values are unique; otherwise false
+		/// </returns>
+		private bool areEntiresUnique ()
+		{
+			foreach (UserTable user in this.UserEntries)
+			{
+				if (user.UserName == UserName || user.Email == Email)
+				{
+					return (false);
+				}
+			}
+
+			return (true);
 		}
 	}
 }

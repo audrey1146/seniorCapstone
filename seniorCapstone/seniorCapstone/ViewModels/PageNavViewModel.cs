@@ -46,7 +46,7 @@ namespace seniorCapstone.ViewModels
 					break;
 				case "Logout":
 					App.IsUserLoggedIn = false;
-					App.UserID = -1;
+					App.UserID = string.Empty;
 					Application.Current.MainPage = new NavigationPage (new LoginPage ());
 					break;
 			}

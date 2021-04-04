@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace seniorCapstone.Helpers
+namespace seniorCapstone.Services
 {
     public class ApiCaller
     {

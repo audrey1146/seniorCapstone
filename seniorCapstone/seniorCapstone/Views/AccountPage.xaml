@@ -123,7 +123,7 @@
 					Command="{Binding LogoutCommand}">
 				</Button>
 				
-				<Button
+				<!--<Button
 					Padding="0"
 					x:Name="deleteaccount"
 					Text="Delete Account"
@@ -132,7 +132,7 @@
 					VerticalOptions="Center" 
 					HorizontalOptions="Center"
 					Command="{Binding DeleteAccountCommand}">
-				</Button>
+				</Button>-->
 			</StackLayout>
 		</AbsoluteLayout>
 	</ContentPage.Content>

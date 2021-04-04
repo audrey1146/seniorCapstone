@@ -16,6 +16,7 @@
     <PackageReference Include="Esri.ArcGISRuntime.Xamarin.Forms" Version="100.9.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
+    <PackageReference Include="Portable.Ninject" Version="3.3.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.6" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
@@ -66,5 +67,6 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="Modules\" />
   </ItemGroup>
 </Project>

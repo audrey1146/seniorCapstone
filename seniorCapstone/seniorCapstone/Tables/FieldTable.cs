@@ -7,10 +7,10 @@ namespace seniorCapstone.Tables
 	{
         [PrimaryKey, AutoIncrement]
         [Column("FID")]
-        public int FID { get; set; }
+        public string FID { get; set; }
 
         [Column("UID")]
-        public int UID { get; set; }
+        public string UID { get; set; }
 
         [Column("FieldName")]
         public string FieldName { get; set; }
