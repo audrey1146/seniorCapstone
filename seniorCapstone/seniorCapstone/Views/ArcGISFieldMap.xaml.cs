@@ -1,61 +1,97 @@
 ﻿
 using seniorCapstone.Tables;
-using SQLite;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Esri.ArcGISRuntime.Mapping;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Esri.ArcGISRuntime.Geometry;
-using Esri.ArcGISRuntime.Xamarin.Forms;
-using Esri.ArcGISRuntime.UI;
+using System.Collections.ObjectModel;
+using seniorCapstone.Services;
+using System.Threading.Tasks;
+using System;
 
 namespace seniorCapstone.Views
 {
 	[XamlCompilation (XamlCompilationOptions.Compile)]
 	public partial class ArcGISFieldMap : ContentPage
 	{
+		// Private Variables
+		readonly IFieldDataService fieldDataService;
+		ObservableCollection<FieldTable> fieldEntries;
+
+		// Public Properties
+		public ObservableCollection<FieldTable> FieldEntries
+		{
+			get => this.fieldEntries;
+			set
+			{
+				this.fieldEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public ArcGISFieldMap ()
 		{
             InitializeComponent ();
-            Initialize ();
+            initMap ();
         }
 
-        private async void Initialize ()
+		/// <summary>
+		/// 
+		/// </summary>
+        private async void initMap ()
         {
 			Map fieldMap;
-			double latitude;
-			double longitude;
+			int count = 0;
+			double latitude = 0;
+			double longitude = 0;
 
-			
+			await LoadEntries ();
 
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			foreach (FieldTable field in this.FieldEntries)
 			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				List<FieldTable> currentField = dbConnection.Query<FieldTable>
-					("SELECT * FROM FieldTable WHERE UID=? AND FID=?", App.UserID, App.FieldID);
-
-				// If query fails then pop this page off the stack
-				if (null == currentField)
+				if (field.FID == App.FieldID && field.UID == App.UserID)
 				{
-					Debug.WriteLine ("Failed to Find Current Field");
-					await Application.Current.MainPage.Navigation.PopAsync ();
-				}
-				else
-				{
-					latitude = this.convertToDouble (currentField[0].Latitude);
-					longitude = this.convertToDouble (currentField[0].Longitude);
-
-					// Create a map with 'Imagery with Labels' basemap and an initial location
-					fieldMap = new Map (BasemapType.ImageryWithLabels, latitude, longitude, 16);
-
-					// Assign the map to the MapView
-					MyMapView.Map = fieldMap;
-
+					count++;
+					latitude = this.convertToDouble (field.Latitude);
+					longitude = this.convertToDouble (field.Longitude);
 				}
 			}
+
+			if (count != 1)
+			{
+				Debug.WriteLine ("Failed to Find Current Field");
+				await Application.Current.MainPage.Navigation.PopAsync ();
+			}
+			else
+			{
+				// Create a map with 'Imagery with Labels' basemap and an initial location
+				fieldMap = new Map (BasemapType.ImageryWithLabels, latitude, longitude, 16);
+
+				// Assign the map to the MapView
+				MyMapView.Map = fieldMap;
+			}
 		}
+
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Map Alert", ex.Message, "OK");
+			}
+		}
+
 
 		/// <summary>
 		/// 

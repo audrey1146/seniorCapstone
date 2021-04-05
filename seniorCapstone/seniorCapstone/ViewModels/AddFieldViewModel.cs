@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Services;
+using seniorCapstone.Services;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
-using SQLite;
 using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
@@ -19,11 +19,24 @@ namespace seniorCapstone.ViewModels
 	class AddFieldViewModel : Helpers.Geolocation
 	{
 		//Private Varibales
+		readonly IFieldDataService fieldDataService;
+		ObservableCollection<FieldTable> fieldEntries;
+
 		private string fieldName = string.Empty;
 		private int pivotIndex = -1;
 		private int soilIndex = -1;
 
 		// Public Properties
+		public ObservableCollection<FieldTable> FieldEntries
+		{
+			get => this.fieldEntries;
+			set
+			{
+				this.fieldEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
 		public ICommand AddFieldCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
 		public ICommand SyncToPanelCommand { get; set; }
@@ -95,8 +108,6 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void AddFieldButton_Clicked ()
 		{
-			int returnValue = 0;
-
 			if (true == this.areEntiresFilledOut ())
 			{
 				if (true == doesFieldNameExist ())
@@ -121,22 +132,8 @@ namespace seniorCapstone.ViewModels
 						PivotRunning = 0
 					};
 
-					// Insert into DB (using closes the DB for me)
-					using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
-					{
-						dbConnection.CreateTable<FieldTable> ();
-
-						returnValue = dbConnection.Insert (newField);
-
-						if (1 == returnValue)
-						{
-							await Application.Current.MainPage.Navigation.PopModalAsync ();
-						}
-						else
-						{
-							await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Did Not Insert Correctly", "Ok");
-						}
-					}
+					await this.fieldDataService.AddEntryAsync (newField);
+					await Application.Current.MainPage.Navigation.PopModalAsync ();
 				}
 			}
 			else
@@ -166,23 +163,15 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		private bool doesFieldNameExist ()
 		{
-			bool isField = false;
-
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			foreach (FieldTable field in this.FieldEntries)
 			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				// Make sure the name doesn't already exist
-				List<FieldTable> fieldID = dbConnection.Query<FieldTable>
-				("SELECT FID FROM FieldTable WHERE FieldName=? AND UID=?",
-				this.FieldName, App.UserID);
-
-				if (null == fieldID || fieldID.Count != 0)
+				if (field.FieldName == this.FieldName)
 				{
-					isField = true;
+					return (false);
 				}
 			}
-			return isField;
+
+			return (true);
 		}
 
 
@@ -192,22 +181,15 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		private bool doesFieldLocationExist ()
 		{
-			bool isField = false;
-
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			foreach (FieldTable field in this.FieldEntries)
 			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				List<FieldTable> fieldID = dbConnection.Query<FieldTable>
-				("SELECT FID FROM FieldTable WHERE Latitude=? AND Longitude=? AND UID=?",
-				this.Latitude, this.Longitude, App.UserID);
-
-				if (null == fieldID || fieldID.Count != 0)
+				if (field.Latitude == this.Latitude && field.Longitude == this.Longitude)
 				{
-					isField = true;
+					return (false);
 				}
 			}
-			return isField;
+
+			return (true);
 		}
 
 
@@ -226,6 +208,5 @@ namespace seniorCapstone.ViewModels
 					-1 != this.PivotIndex &&
 					-1 != this.SoilIndex);
 		}
-
 	}
 }

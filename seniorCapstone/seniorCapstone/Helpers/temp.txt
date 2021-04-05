@@ -1,0 +1,304 @@
+﻿// Private Variables
+		readonly IFieldDataService fieldDataService;
+		ObservableCollection<FieldTable> fieldEntries;
+
+
+// Public Properties
+		public ObservableCollection<FieldTable> FieldEntries
+		{
+			get => this.fieldEntries;
+			set
+			{
+				this.fieldEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
+
+// Constructor
+		this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+		this.FieldEntries = new ObservableCollection<FieldTable> ();
+		this.LoadEntries
+
+
+// Loading
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Login Alert", ex.Message, "OK");
+			}
+		}
+
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async void LoadEntries ()
+		{
+			try
+			{
+				var entries = await userDataService.GetEntriesAsync ();
+				this.UserEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Registration Alert", ex.Message, "OK");
+			}
+		}
+
+
+
+		/// <summary>
+		/// Read from the database and bind that information to a UserTable variable
+		/// </summary>
+		private async Task loadAccountInfo ()
+		{
+			bool bFound = false;
+
+			var entries = await userDataService.GetEntriesAsync ();
+			this.UserEntries = new ObservableCollection<FieldTable> (entries);
+
+			foreach (FieldTable field in this.FieldEntries)
+			{
+				if (field.FID == App.FieldID)
+				{
+					
+				}
+			}
+
+			// If query fails then pop this page off the stack
+			if (false == bFound)
+			{
+				await Application.Current.MainPage.Navigation.PopAsync ();
+				Debug.WriteLine ("Finding Current User Failed");
+			}
+		}
+
+
+
+		/// <summary>
+		/// When the register button is clicked this command with verify that all fields are filled
+		/// out, and that the email/username don't already exist
+		/// </summary>
+		public async void RegisterButton_Clicked ()
+		{
+			if (false == areEntiresFilledOut ())
+			{
+				await App.Current.MainPage.DisplayAlert ("Registration Alert", "Please Fill Out All Fields", "OK");
+			}
+			else if (false == areEntiresUnique ())
+			{
+				await App.Current.MainPage.DisplayAlert ("Registration Alert", "Username or Email Already Exists", "OK");
+			}
+			else
+			{
+				FieldTable newField = new FieldTable ()
+				{
+					
+
+
+				};
+
+				await this.userDataService.AddEntryAsync (newUser);
+				await Application.Current.MainPage.Navigation.PopModalAsync ();
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Private Variables
+		readonly IUserDataService userDataService;
+		ObservableCollection<UserTable> userEntries;
+
+
+// Public Properties
+		public ObservableCollection<UserTable> UserEntries
+		{
+			get => this.userEntries;
+			set
+			{
+				this.userEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
+
+// Constructor
+		this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+		this.UserEntries = new ObservableCollection<UserTable> ();
+		this.LoadEntries
+
+
+// Loading
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await userDataService.GetEntriesAsync ();
+				this.UserEntries = new ObservableCollection<UserTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Login Alert", ex.Message, "OK");
+			}
+		}
+
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async void LoadEntries ()
+		{
+			try
+			{
+				var entries = await userDataService.GetEntriesAsync ();
+				this.UserEntries = new ObservableCollection<UserTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Registration Alert", ex.Message, "OK");
+			}
+		}
+
+
+
+		/// <summary>
+		/// Read from the database and bind that information to a UserTable variable
+		/// </summary>
+		private async Task loadAccountInfo ()
+		{
+			bool bFound = false;
+
+			var entries = await userDataService.GetEntriesAsync ();
+			this.UserEntries = new ObservableCollection<UserTable> (entries);
+
+			foreach (UserTable user in this.UserEntries)
+			{
+				if (user.UID == App.UserID)
+				{
+					this.User = user;
+					bFound = true;
+				}
+			}
+
+			// If query fails then pop this page off the stack
+			if (false == bFound)
+			{
+				await Application.Current.MainPage.Navigation.PopAsync ();
+				Debug.WriteLine ("Finding Current User Failed");
+			}
+		}
+
+
+
+		/// <summary>
+		/// When the register button is clicked this command with verify that all fields are filled
+		/// out, and that the email/username don't already exist
+		/// </summary>
+		public async void RegisterButton_Clicked ()
+		{
+			if (false == areEntiresFilledOut ())
+			{
+				await App.Current.MainPage.DisplayAlert ("Registration Alert", "Please Fill Out All Fields", "OK");
+			}
+			else if (false == areEntiresUnique ())
+			{
+				await App.Current.MainPage.DisplayAlert ("Registration Alert", "Username or Email Already Exists", "OK");
+			}
+			else
+			{
+				UserTable newUser = new UserTable ()
+				{
+					UserName = this.UserName,
+					Password = this.Password,
+					FirstName = this.FirstName,
+					LastName = this.LastName,
+					Email = this.Email
+				};
+
+				await this.userDataService.AddEntryAsync (newUser);
+				await Application.Current.MainPage.Navigation.PopModalAsync ();
+			}
+		}

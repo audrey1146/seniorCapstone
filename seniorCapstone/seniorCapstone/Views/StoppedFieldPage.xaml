@@ -51,7 +51,7 @@
 				AbsoluteLayout.LayoutFlags="All"
 				Spacing="10">
 
-				<Button
+				<!--<Button
 					x:Name="editField"
 					Padding="10"
 					Text="Edit Field" 
@@ -61,7 +61,7 @@
 					VerticalOptions="End" 
 					HorizontalOptions="Center"
 					Command="{Binding EditFieldCommand}">
-				</Button>
+				</Button>-->
 
 				<Grid>
 					<Grid.RowDefinitions>
@@ -173,7 +173,7 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 
-					<Button Grid.Row="0" Grid.Column="0"
+					<!--<Button Grid.Row="0" Grid.Column="0"
 						x:Name="runpivot"
 						Padding="10"
 						Text="Run Pivot" 
@@ -183,7 +183,7 @@
 						VerticalOptions="End" 
 						HorizontalOptions="Start"
 						Command="{Binding RunPivotCommand}">
-					</Button>
+					</Button>-->
 
 					<Button Grid.Row="0" Grid.Column="1"
 						x:Name="viewmap"

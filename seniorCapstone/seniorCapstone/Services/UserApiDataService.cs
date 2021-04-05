@@ -11,7 +11,6 @@ using seniorCapstone.Tables;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace seniorCapstone.Services
@@ -41,6 +40,22 @@ namespace seniorCapstone.Services
 		{
 			var url = new Uri (baseUri, "/api/userEntry");
 			var response = await SendRequestAsync<UserTable> (url, HttpMethod.Post, headers, entry);
+
+			return response;
+		}
+
+		public async Task<UserTable> DeleteEntryAsync (UserTable entry)
+		{
+			var url = new Uri (baseUri, "/api/userEntry");
+			var response = await SendRequestAsync<UserTable> (url, HttpMethod.Delete, headers, entry);
+
+			return response;
+		}
+
+		public async Task<UserTable> EditEntryAsync (UserTable entry)
+		{
+			var url = new Uri (baseUri, "/api/userEntry");
+			var response = await SendRequestAsync<UserTable> (url, HttpMethod.Put, headers, entry);
 
 			return response;
 		}

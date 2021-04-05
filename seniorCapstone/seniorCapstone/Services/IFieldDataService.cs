@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
- * File			IUserDataService.cs
+ * File			IFieldDataService.cs
  * Author		Audrey Lincoln + 'Mastering Xamarin.Forms' Book
  * Date			4/3/2021
  * Purpose		Interface for the data service that can be injected into 
@@ -14,11 +14,11 @@ using seniorCapstone.Tables;
 
 namespace seniorCapstone.Services
 {
-	public interface IUserDataService
+	public interface IFieldDataService
 	{
-		Task<IList<UserTable>> GetEntriesAsync ();
-		Task<UserTable> AddEntryAsync (UserTable entry);
-		Task<UserTable> DeleteEntryAsync (UserTable entry);
-		Task<UserTable> EditEntryAsync (UserTable entry);
+		Task<IList<FieldTable>> GetEntriesAsync ();
+		Task<FieldTable> AddEntryAsync (FieldTable entry);
+		Task<FieldTable> DeleteEntryAsync (FieldTable entry);
+		Task<FieldTable> EditEntryAsync (FieldTable entry);
 	}
 }

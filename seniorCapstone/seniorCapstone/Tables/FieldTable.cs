@@ -3,7 +3,7 @@
 namespace seniorCapstone.Tables
 {
 	[Table("FieldTable")]
-	class FieldTable
+	public class FieldTable
 	{
         [PrimaryKey, AutoIncrement]
         [Column("FID")]
@@ -21,19 +21,17 @@ namespace seniorCapstone.Tables
         [Column ("SoilType")]
         public string SoilType { get; set; }
 
-        // BELOW IS FROM HARDWARE / SOFTWARE LOCALIZATION
         [Column ("Latitude")]
         public string Latitude { get; set; }
 
         [Column("Longitude")]
         public string Longitude { get; set; }
 
-        // BELOW DEFAULT ZERO
-        [Column("PivotAngle")]
-        public int PivotAngle { get; set; }
-
         [Column("PivotRunning")]
-        public int PivotRunning { get; set; }
+        public bool PivotRunning { get; set; }
+
+        [Column ("StopTime")]
+        public string StopTime { get; set; }
 
         /* What to add to field table?
         

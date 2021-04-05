@@ -7,11 +7,13 @@
  ****************************************************************************/
 
 using Rg.Plugins.Popup.Services;
+using seniorCapstone.Services;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
-using SQLite;
-using System.Collections.Generic;
+using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -20,11 +22,23 @@ namespace seniorCapstone.ViewModels
 	class StoppedFieldViewModel : PageNavViewModel
 	{
 		// Private Variables
+		readonly IFieldDataService fieldDataService;
+		ObservableCollection<FieldTable> fieldEntries;
+
 		private FieldTable stoppedField = null;
 
 		// Public Properties
+		public ObservableCollection<FieldTable> FieldEntries
+		{
+			get => this.fieldEntries;
+			set
+			{
+				this.fieldEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
 		public ICommand RunPivotCommand { get; set; }
-		public ICommand EditFieldCommand { get; set; }
 		public ICommand ViewMapCommand { get; set; }
 		public FieldTable StoppedField
 		{
@@ -46,12 +60,65 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public StoppedFieldViewModel ()
 		{
+			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.FieldEntries = new ObservableCollection<FieldTable> ();
 			this.loadStoppedFieldInfo ();
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
-			this.EditFieldCommand = new Command (this.EditFieldButton_Clicked);
 			this.ViewMapCommand = new Command (this.ViewMapButton_Clicked);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public async void ViewMapButton_Clicked ()
+		{
+			await Application.Current.MainPage.Navigation.PushAsync (new ArcGISFieldMap ());
+		}
+
+
+		/// <summary>
+		/// Query the database for the selected field
+		/// </summary>
+		private async void loadStoppedFieldInfo ()
+		{
+			int count = 0;
+
+			await this.LoadEntries ();
+
+			foreach (FieldTable field in this.FieldEntries)
+			{
+				if (field.FID == App.FieldID && field.UID == App.UserID)
+				{
+					count++;
+					this.StoppedField = field;
+				}
+			}
+
+			if (count != 1)
+			{
+				await Application.Current.MainPage.Navigation.PopAsync ();
+				Debug.WriteLine ("Finding Current Field Failed");
+			}
+		}
+
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Field Alert", ex.Message, "OK");
+			}
 		}
 
 
@@ -60,7 +127,7 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void RunPivotButton_Clicked ()
 		{
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			/*using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
 			{
 				dbConnection.CreateTable<FieldTable> ();
 
@@ -77,10 +144,21 @@ namespace seniorCapstone.ViewModels
 				{
 					await Application.Current.MainPage.Navigation.PopAsync ();
 				}
-			}
+			}*/
 		}
 
-		/// <summary>
+		
+		
+
+		
+
+
+
+
+		/* LOST DUE TO MOVE TO AZURE AND NOT ENOUGH TIME TO IMPLEMENT ALL CRUD CAPABILITIES 
+		 
+		 
+		 /// <summary>
 		/// 
 		/// </summary>
 		public void EditFieldButton_Clicked ()
@@ -92,41 +170,22 @@ namespace seniorCapstone.ViewModels
 
 			PopupNavigation.Instance.PushAsync (popupPage);
 		}
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 */
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public async void ViewMapButton_Clicked ()
-		{
-			await Application.Current.MainPage.Navigation.PushAsync (new ArcGISFieldMap ());
-		}
-
-		/// <summary>
-		/// Query the database for the selected field
-		/// </summary>
-		private async void loadStoppedFieldInfo ()
-		{
-			// Reading from Database
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
-			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				// Query for the current field
-				List<FieldTable> currentField = dbConnection.Query<FieldTable>
-					("SELECT * FROM FieldTable WHERE UID=? AND FID=?",
-					App.UserID, App.FieldID);
-
-				// If query fails then pop this page off the stack
-				if (null == currentField || currentField.Count != 1)
-				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					Debug.WriteLine ("Finding Current Field Failed");
-				}
-				else
-				{
-					this.StoppedField = currentField[0];
-				}
-			}
-		}
 	}
 }

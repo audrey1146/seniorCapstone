@@ -1,9 +1,10 @@
-﻿using seniorCapstone.Tables;
-using SQLite;
+﻿using seniorCapstone.Services;
+using seniorCapstone.Tables;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,9 +13,27 @@ namespace seniorCapstone.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FieldListPage : ContentPage
 	{
+		// Private Variables
+		readonly IFieldDataService fieldDataService;
+		ObservableCollection<FieldTable> fieldEntries;
+
 		private IList<FieldTable> RunningFields;
 		private IList<FieldTable> RemainingFields;
 
+		// Public Properties
+		public ObservableCollection<FieldTable> FieldEntries
+		{
+			get => this.fieldEntries;
+			set
+			{
+				this.fieldEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public FieldListPage()
 		{
 			InitializeComponent();
@@ -24,35 +43,48 @@ namespace seniorCapstone.Views
 		{
 			base.OnAppearing ();
 
-			// Reading from Database
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			await this.LoadEntries ();
+
+			foreach (FieldTable field in this.FieldEntries)
 			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				// Query for the fields
-				this.RunningFields = dbConnection.Query<FieldTable>
-					("SELECT * FROM FieldTable WHERE UID=? AND PivotRunning=1", App.UserID);
-
-				this.RemainingFields = dbConnection.Query<FieldTable>
-					("SELECT * FROM FieldTable WHERE UID=? AND PivotRunning=0", App.UserID);
-
-				// If query fails then pop this page off the stack
-				if (null == this.RunningFields || null == this.RemainingFields)
+				if (field.PivotRunning == false && field.UID == App.UserID)
 				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					Debug.WriteLine ("Finding User Fields Failed");
+					this.RemainingFields.Add (field);
 				}
-				else
+				else if (field.PivotRunning == true && field.UID == App.UserID)
 				{
-					this.RunningFields = this.RunningFields.OrderBy (x => x.FieldName).ToList ();
-					this.RemainingFields = this.RemainingFields.OrderBy (x => x.FieldName).ToList ();
-
-					runningListView.ItemsSource = this.RunningFields;
-					remainingListView.ItemsSource = this.RemainingFields;
+					this.RunningFields.Add (field);
 				}
+			}
+
+			this.RunningFields = this.RunningFields.OrderBy (x => x.FieldName).ToList ();
+			this.RemainingFields = this.RemainingFields.OrderBy (x => x.FieldName).ToList ();
+
+			runningListView.ItemsSource = this.RunningFields;
+			remainingListView.ItemsSource = this.RemainingFields;
+		}
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Login Alert", ex.Message, "OK");
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public async void OnRunningPivot_Selected (object sender, ItemTappedEventArgs e)
 		{
 			if (e.Item != null)
@@ -62,6 +94,11 @@ namespace seniorCapstone.Views
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public async void OnStoppedPivot_Selected (object sender, ItemTappedEventArgs e)
 		{
 			if (e.Item != null)
@@ -71,6 +108,12 @@ namespace seniorCapstone.Views
 			}
 		}
 
+
+
+
+
+		/* LOST DUE TO MOVE TO AZURE AND NOT ENOUGH TIME TO IMPLEMENT ALL CRUD CAPABILITIES
+		 
 		public async void OnDelete_Selected (object sender, EventArgs e)
 		{
 			FieldTable fieldMenuItem = ((MenuItem)sender).CommandParameter as FieldTable;
@@ -99,5 +142,8 @@ namespace seniorCapstone.Views
 				}
 			}
 		}
+		
+		 */
+
 	}
 }

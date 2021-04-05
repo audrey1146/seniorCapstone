@@ -7,6 +7,9 @@ using seniorCapstone.Tables;
 using SQLite;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections.ObjectModel;
+using seniorCapstone.Services;
+using System.Threading.Tasks;
 
 namespace seniorCapstone.Views
 {
@@ -16,40 +19,80 @@ namespace seniorCapstone.Views
 		// event callback
 		public event EventHandler<object> CallbackEvent;
 
+		// Private Variables
+		readonly IUserDataService userDataService;
+		ObservableCollection<UserTable> userEntries;
+		UserTable singleUser;
 
+		// Public Properties
+		public ObservableCollection<UserTable> UserEntries
+		{
+			get => this.userEntries;
+			set
+			{
+				this.userEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public EditAccountPopupPage ()
 		{
 			InitializeComponent ();
-			this.setPlaceholder ();
+			this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.UserEntries = new ObservableCollection<UserTable> ();
+			this.setPlaceholders ();
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private async void setPlaceholders ()
+		{
+			int count = 0;
+
+			await this.LoadEntries ();
+
+			foreach (UserTable user in this.UserEntries)
+			{
+				if (user.UID == App.UserID)
+				{
+					count++;
+					singleUser = user;
+					firstname.Placeholder = user.FirstName;
+					lastname.Placeholder = user.LastName;
+					email.Placeholder = user.Email;
+				}
+			}
+
+			if (count != 1)
+			{
+				await Application.Current.MainPage.Navigation.PopAsync ();
+				Debug.WriteLine ("Finding Current User Failed");
+				await PopupNavigation.Instance.PopAsync (true);
+			}
+		}
+
 
 		/// <summary>
 		/// Get the current user data to display as place holders
 		/// </summary>
-		private async void setPlaceholder ()
+		private async Task LoadEntries ()
 		{
-			// Reading from Database
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			try
 			{
-				dbConnection.CreateTable<UserTable> ();
-
-				// Query for the current user
-				List<UserTable> currentUser = dbConnection.Query<UserTable>
-					("SELECT * FROM UserTable WHERE UID=?", App.UserID);
-
-				// If query fails then pop this page off the stack
-				if (null == currentUser || currentUser.Count != 1)
-				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					Debug.WriteLine ("Finding Current User Failed");
-					await PopupNavigation.Instance.PopAsync (true);
-				}
-				else
-				{
-					firstname.Placeholder = currentUser[0].FirstName;
-					lastname.Placeholder = currentUser[0].LastName;
-					email.Placeholder = currentUser[0].Email;
-				}
+				var entries = await userDataService.GetEntriesAsync ();
+				this.UserEntries = new ObservableCollection<UserTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await Application.Current.MainPage.Navigation.PopAsync ();
+				Debug.WriteLine ("Finding Current User Failed");
+				await PopupNavigation.Instance.PopAsync (true);
 			}
 		}
 
@@ -62,54 +105,62 @@ namespace seniorCapstone.Views
 		/// <param name="args"></param>
 		public async void SubmitButton_Clicked (object sender, EventArgs args)
 		{
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			UserTable newUser = new UserTable ();
+			bool bPopOff = true;
+			int count = 0;
+
+			newUser.UID = this.singleUser.UID;
+			newUser.UserName = this.singleUser.UserName;
+			newUser.Password = this.singleUser.Password;
+			newUser.FirstName = this.singleUser.FirstName;
+			newUser.LastName = this.singleUser.LastName;
+			newUser.Email = this.singleUser.Email;
+
+			// Update based on which entries got filled out
+			if (false == string.IsNullOrEmpty (password.Text))
 			{
-				dbConnection.CreateTable<UserTable> ();
-				bool bPopOff = true;
-
-				// Update based on which entries got filled out
-				if (false == string.IsNullOrEmpty (password.Text))
+				newUser.Password = password.Text;
+			}
+			if (false == string.IsNullOrEmpty (firstname.Text))
+			{
+				newUser.FirstName = firstname.Text;
+			}
+			if (false == string.IsNullOrEmpty (lastname.Text))
+			{
+				newUser.LastName = lastname.Text;
+			}
+			if (false == string.IsNullOrEmpty (email.Text))
+			{
+				// Before update check that the unique values don't already exist
+				foreach (UserTable user in this.UserEntries)
 				{
-					List<UserTable> updateFirstName = dbConnection.Query<UserTable>
-						("UPDATE UserTable SET Password=? WHERE UID=?",
-						password.Text, App.UserID);
-				}
-				if (false == string.IsNullOrEmpty (firstname.Text))
-				{
-					List<UserTable> updateFirstName = dbConnection.Query<UserTable>
-						("UPDATE UserTable SET FirstName=? WHERE UID=?",
-						firstname.Text, App.UserID);
-				}
-				if (false == string.IsNullOrEmpty (lastname.Text))
-				{
-					List<UserTable> updateLastName = dbConnection.Query<UserTable>
-						("UPDATE UserTable SET LastName=? WHERE UID=?",
-						lastname.Text, App.UserID);
-				}
-				if (false == string.IsNullOrEmpty (email.Text))
-				{
-					// Before update check that the unique values don't already exist
-					List<UserTable> uniqueCheck = dbConnection.Query<UserTable>
-						("SELECT * FROM UserTable WHERE Email=?",
-						email.Text);
-
-					if (null != uniqueCheck && uniqueCheck.Count == 0)
+					if (user.Email == email.Text)
 					{
-						List<UserTable> updateEmail = dbConnection.Query<UserTable>
-							("UPDATE UserTable SET Email=? WHERE UID=?",
-							email.Text, App.UserID);
-					}
-					else
-					{
-						await App.Current.MainPage.DisplayAlert ("Update Account Alert", "Email Already Exists", "OK");
-						bPopOff = false;
+						count++;
+						singleUser = user;
+						firstname.Placeholder = user.FirstName;
+						lastname.Placeholder = user.LastName;
+						email.Placeholder = user.Email;
 					}
 				}
-				if (true == bPopOff)
+
+				if (count > 0)
 				{
-					await PopupNavigation.Instance.PopAsync (true);
-					CallbackEvent?.Invoke (this, EventArgs.Empty);
+					await App.Current.MainPage.DisplayAlert ("Update Account Alert", "Email Already Exists", "OK");
+					bPopOff = false;
 				}
+				else
+				{
+					newUser.Email = email.Text;
+				}
+			}
+
+			if (true == bPopOff)
+			{
+				await this.userDataService.EditEntryAsync (newUser);
+
+				await PopupNavigation.Instance.PopAsync (true);
+				CallbackEvent?.Invoke (this, EventArgs.Empty);
 			}
 		}
 

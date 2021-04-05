@@ -6,10 +6,14 @@
  *				of a specific running field
  ****************************************************************************/
 
+using seniorCapstone.Services;
 using seniorCapstone.Tables;
 using SQLite;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -18,9 +22,20 @@ namespace seniorCapstone.ViewModels
 	class RunningFieldViewModel : PageNavViewModel
 	{
 		// Private Variables
+		readonly IFieldDataService fieldDataService;
+		ObservableCollection<FieldTable> fieldEntries;
 		private FieldTable runningField = null;
 
 		// Public Properties
+		public ObservableCollection<FieldTable> FieldEntries
+		{
+			get => this.fieldEntries;
+			set
+			{
+				this.fieldEntries = value;
+				OnPropertyChanged ();
+			}
+		}
 		public ICommand StopPivotCommand { get; set; }
 		public FieldTable RunningField
 		{
@@ -42,6 +57,8 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public RunningFieldViewModel ()
 		{
+			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.FieldEntries = new ObservableCollection<FieldTable> ();
 			this.loadRunningFieldInfo ();
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
@@ -54,7 +71,7 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void StopPivotButton_Clicked ()
 		{
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			/*using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
 			{
 				dbConnection.CreateTable<FieldTable> ();
 
@@ -72,7 +89,7 @@ namespace seniorCapstone.ViewModels
 					await Application.Current.MainPage.Navigation.PopAsync ();
 					//await Application.Current.MainPage.Navigation.PushAsync (new StoppedFieldPage ());
 				}
-			}
+			}*/
 		}
 
 
@@ -81,28 +98,41 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		private async void loadRunningFieldInfo ()
 		{
-			// Reading from Database
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			int count = 0;
+
+			await this.LoadEntries ();
+
+			foreach (FieldTable field in this.FieldEntries)
 			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				// Query for the current field
-				List<FieldTable> currentField = dbConnection.Query<FieldTable>
-					("SELECT * FROM FieldTable WHERE UID=? AND FID=?",
-					App.UserID, App.FieldID);
-
-				// If query fails then pop this page off the stack
-				if (null == currentField || currentField.Count != 1)
+				if (field.FID == App.FieldID && field.UID == App.UserID)
 				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					Debug.WriteLine ("Finding Current Field Failed");
+					count++;
+					this.RunningField = field;
 				}
-				else
-				{
-					this.RunningField = currentField[0];
-				}
+			}
+
+			if (count != 1)
+			{
+				await Application.Current.MainPage.Navigation.PopAsync ();
+				Debug.WriteLine ("Finding Current Field Failed");
 			}
 		}
 
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Field Alert", ex.Message, "OK");
+			}
+		}
 	}
 }

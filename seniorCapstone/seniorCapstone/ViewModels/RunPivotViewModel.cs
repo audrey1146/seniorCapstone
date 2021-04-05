@@ -5,13 +5,16 @@
  * Purpose		Functions and binding for the ability to run a pivot page
  ****************************************************************************/
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using seniorCapstone.Services;
 using seniorCapstone.Tables;
 using SQLite;
 using Xamarin.Forms;
@@ -23,9 +26,20 @@ namespace seniorCapstone.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		// Private Varibales
+		readonly IFieldDataService fieldDataService;
+		ObservableCollection<FieldTable> fieldEntries;
 		private int fieldIndex = -1;
 
 		// Public Properties
+		public ObservableCollection<FieldTable> FieldEntries
+		{
+			get => this.fieldEntries;
+			set
+			{
+				this.fieldEntries = value;
+				OnPropertyChanged ();
+			}
+		}
 		public ICommand RunPivotCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
 		public IList<string> FieldOptions { get; set; }
@@ -65,6 +79,8 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void GetPivots ()
 		{
+			await this.LoadEntries ();
+
 			// Reading from Database
 			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
 			{
@@ -86,6 +102,23 @@ namespace seniorCapstone.ViewModels
 					this.FieldOptions.Add (FieldList[i].FieldName);
 				}
 				this.FieldOptions = this.FieldOptions.OrderBy (q => q).ToList ();
+			}
+		}
+
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				await App.Current.MainPage.DisplayAlert ("Login Alert", ex.Message, "OK");
 			}
 		}
 
