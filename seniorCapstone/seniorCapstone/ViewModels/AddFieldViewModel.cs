@@ -5,8 +5,10 @@
  * Purpose		Functions and binding for the Add Field functionality
  ****************************************************************************/
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Services;
@@ -85,6 +87,10 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public AddFieldViewModel ()
 		{
+			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.FieldEntries = new ObservableCollection<FieldTable> ();
+			this.LoadEntries ();
+
 			PivotOptions = (IList<int>)Helpers.CenterPivotSpecs.PivotTypes;
 			SoilOptions = (IList<string>)Helpers.CenterPivotSpecs.SoilTypes;
 
@@ -128,9 +134,12 @@ namespace seniorCapstone.ViewModels
 						SoilType = this.SoilOptions[this.SoilIndex],
 						Latitude = this.Latitude,
 						Longitude = this.Longitude,
-						PivotAngle = 0,
-						PivotRunning = 0
+						PivotRunning = false,
+						StopTime = string.Empty,
+						WaterUsage = 0
 					};
+
+					// TODO call RainCat to set the WaterUsage
 
 					await this.fieldDataService.AddEntryAsync (newField);
 					await Application.Current.MainPage.Navigation.PopModalAsync ();
@@ -154,6 +163,25 @@ namespace seniorCapstone.ViewModels
 			popupPage.CallbackEvent += (object sender, object e) => this.getUserLocation ();
 
 			PopupNavigation.Instance.PushAsync (popupPage);
+		}
+
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async void LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine ("Loading Fields Failed");
+				Debug.WriteLine (ex.Message);
+				await Application.Current.MainPage.Navigation.PopModalAsync ();
+			}
 		}
 
 

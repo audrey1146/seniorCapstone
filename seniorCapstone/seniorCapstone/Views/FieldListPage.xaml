@@ -113,11 +113,11 @@
 						<DataTemplate>
 							<ViewCell>
 								<ViewCell.ContextActions>
-									<!--<MenuItem Clicked="OnDelete_Selected" 
+									<MenuItem Clicked="OnDelete_Selected" 
 											  Text="Delete" 
 											  IsDestructive="True" 
 											  CommandParameter="{Binding .}">
-									</MenuItem>-->
+									</MenuItem>
 								</ViewCell.ContextActions>
 								<StackLayout Orientation="Horizontal">
 									<Image Source="FieldLogo" WidthRequest="55" HeightRequest="55"/>

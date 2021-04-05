@@ -3,6 +3,8 @@ using seniorCapstone.Tables;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -37,13 +39,20 @@ namespace seniorCapstone.Views
 		public FieldListPage()
 		{
 			InitializeComponent();
+			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.FieldEntries = new ObservableCollection<FieldTable> ();
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
 		protected override async void OnAppearing ()
 		{
 			base.OnAppearing ();
 
 			await this.LoadEntries ();
+			await this.updateStoppedPivots ();
 
 			foreach (FieldTable field in this.FieldEntries)
 			{
@@ -64,21 +73,28 @@ namespace seniorCapstone.Views
 			remainingListView.ItemsSource = this.RemainingFields;
 		}
 
+
 		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
+		/// 
 		/// </summary>
-		private async Task LoadEntries ()
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public async void OnDelete_Selected (object sender, EventArgs e)
 		{
-			try
+			FieldTable fieldMenuItem = ((MenuItem)sender).CommandParameter as FieldTable;
+
+			bool answer = await App.Current.MainPage.DisplayAlert ("Delete Field?",
+				"Are you sure you want to delete:  " + fieldMenuItem.FieldName + "? \nThis cannot be undone.",
+				"Yes", "No");
+
+			if (true == answer)
 			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				await App.Current.MainPage.DisplayAlert ("Login Alert", ex.Message, "OK");
+				await this.fieldDataService.DeleteEntryAsync (fieldMenuItem);
+				Debug.WriteLine ("Field Deleted");
+				this.OnAppearing ();
 			}
 		}
+
 
 		/// <summary>
 		/// 
@@ -109,41 +125,57 @@ namespace seniorCapstone.Views
 		}
 
 
-
-
-
-		/* LOST DUE TO MOVE TO AZURE AND NOT ENOUGH TIME TO IMPLEMENT ALL CRUD CAPABILITIES
-		 
-		public async void OnDelete_Selected (object sender, EventArgs e)
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
 		{
-			FieldTable fieldMenuItem = ((MenuItem)sender).CommandParameter as FieldTable;
-
-			bool answer = await App.Current.MainPage.DisplayAlert ("Delete Field?",
-				"Are you sure you want to delete:  " +  fieldMenuItem.FieldName + "? \nThis cannot be undone.", 
-				"Yes", "No");
-
-			if (true == answer)
+			try
 			{
-				using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine ("Loading Fields Failed");
+				Debug.WriteLine (ex.Message);
+				await Application.Current.MainPage.Navigation.PopAsync ();
+			}
+		}
+
+
+		/// <summary>
+		/// If any of the pivots are past their stop time then update the database
+		/// </summary>
+		private async Task updateStoppedPivots ()
+		{
+			/*
+				YYYY MM DD hh:mm:ss
+				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7, 123);
+				String.Format("{0:s}", dt);  // "2008-03-09T16:05:07"  SortableDateTime
+			 */
+
+			FieldTable updatedField = new FieldTable ();
+			DateTime currentTime = DateTime.Now;
+			DateTime stopTime;
+
+			foreach (FieldTable field in this.FieldEntries)
+			{
+				if (field.PivotRunning == true && field.UID == App.UserID)
 				{
-					dbConnection.CreateTable<FieldTable> ();
+					stopTime = DateTime.ParseExact (field.StopTime, "{0:s}", CultureInfo.InvariantCulture);
 
-					List<FieldTable> deleteCheck = dbConnection.Query<FieldTable>
-					("DELETE FROM FieldTable WHERE UID=? AND FID=?", App.UserID, fieldMenuItem.FID);
-
-					deleteCheck = dbConnection.Query<FieldTable>
-					("SELECT * FROM FieldTable WHERE UID=? AND FID=?", App.UserID, fieldMenuItem.FID);
-
-					if (null == deleteCheck || deleteCheck.Count == 0)
+					if (DateTime.Compare (currentTime, stopTime) <= 0)
 					{
-						Debug.WriteLine ("Field Deleted");
-						this.OnAppearing ();
+						updatedField.assignTo (field);
+						updatedField.PivotRunning = false;
+						updatedField.StopTime = string.Empty;
+
+						await this.fieldDataService.EditEntryAsync (updatedField);
+						await Application.Current.MainPage.Navigation.PopAsync ();
 					}
 				}
 			}
 		}
-		
-		 */
-
 	}
 }

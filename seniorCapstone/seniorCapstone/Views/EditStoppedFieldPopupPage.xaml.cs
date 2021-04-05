@@ -7,6 +7,9 @@ using seniorCapstone.Tables;
 using SQLite;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using seniorCapstone.Services;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace seniorCapstone.Views
 {
@@ -16,9 +19,31 @@ namespace seniorCapstone.Views
 		// event callback
 		public event EventHandler<object> CallbackEvent;
 
+		// Private Variables
+		readonly IFieldDataService fieldDataService;
+		ObservableCollection<FieldTable> fieldEntries;
+		FieldTable singleField;
+
+		// Public Properties
+		public ObservableCollection<FieldTable> FieldEntries
+		{
+			get => this.fieldEntries;
+			set
+			{
+				this.fieldEntries = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public EditStoppedFieldPopupPage ()
 		{
 			InitializeComponent ();
+
+			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.FieldEntries = new ObservableCollection<FieldTable> ();
 			this.setPlaceholder ();
 
 			soiltype.ItemsSource = (System.Collections.IList)Helpers.CenterPivotSpecs.SoilTypes;
@@ -31,26 +56,30 @@ namespace seniorCapstone.Views
 		/// </summary>
 		private async void setPlaceholder ()
 		{
-			// Reading from Database
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			int count = 0;
+
+			await this.LoadEntries ();
+
+			foreach (FieldTable field in this.FieldEntries)
 			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				// Query for the current user
-				List<FieldTable> currentField = dbConnection.Query<FieldTable>
-					("SELECT * FROM FieldTable WHERE UID=? AND FID=?", App.UserID, App.FieldID);
-
-				// If query fails then pop this page off the stack
-				if (null == currentField || currentField.Count != 1)
+				if (field.UID == App.FieldID && field.UID == App.UserID)
 				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					Debug.WriteLine ("Finding Current Field Failed");
-					await PopupNavigation.Instance.PopAsync (true);
+					this.singleField = field;
+					fieldname.Placeholder = field.FieldName;
+					count++;
 				}
-				else
-				{
-					fieldname.Placeholder = currentField[0].FieldName;
-				}
+			}
+
+			// If query fails then pop this page off the stack
+			if (count != 1)
+			{
+				Debug.WriteLine ("Finding Current Field Failed");
+				await PopupNavigation.Instance.PopAsync (true);
+
+
+				//await Application.Current.MainPage.Navigation.PopAsync ();
+				//Debug.WriteLine ("Finding Current Field Failed");
+				//await PopupNavigation.Instance.PopAsync (true);
 			}
 		}
 
@@ -63,49 +92,51 @@ namespace seniorCapstone.Views
 		/// <param name="args"></param>
 		public async void SubmitButton_Clicked (object sender, EventArgs args)
 		{
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			FieldTable updatedField = new FieldTable ();
+			bool bPopOff = true;
+
+			updatedField.FID = singleField.FID;
+			updatedField.UID = singleField.UID;
+			updatedField.FieldName = singleField.FieldName;
+			updatedField.PivotLength = singleField.PivotLength;
+			updatedField.SoilType = singleField.SoilType;
+			updatedField.Latitude = singleField.Latitude;
+			updatedField.Longitude = singleField.Longitude;
+			updatedField.PivotRunning = singleField.PivotRunning;
+			updatedField.StopTime = singleField.StopTime;
+			updatedField.WaterUsage = singleField.WaterUsage;
+
+
+			// Update based on which entries got filled out
+			if (false == string.IsNullOrEmpty (fieldname.Text))
 			{
-				dbConnection.CreateTable<FieldTable> ();
-				bool bPopOff = true;
+				// Verify Unique field name
+				if (true == doesFieldNameExist ())
+				{
+					await App.Current.MainPage.DisplayAlert ("Update Field Alert", "Field Name Already Exists", "OK");
+					bPopOff = false;
+				}
+				else
+				{
+					updatedField.FieldName = fieldname.Text;
+				}
+			}
+			if (-1 != pivotlength.SelectedIndex)
+			{
+				updatedField.PivotLength = (int)pivotlength.ItemsSource[pivotlength.SelectedIndex];
+			}
+			if (-1 != soiltype.SelectedIndex)
+			{
+				updatedField.SoilType = (string)soiltype.ItemsSource[soiltype.SelectedIndex];
+			}
 
-				// Update based on which entries got filled out
-				if (false == string.IsNullOrEmpty (fieldname.Text))
-				{
-					// Before update check that the unique values don't already exist
-					List<FieldTable> uniqueCheck = dbConnection.Query<FieldTable>
-						("SELECT * FROM FieldTable WHERE FieldName=? AND UID=?",
-						fieldname.Text, App.UserID);
+			// If valid new field then edit existing
+			if (true == bPopOff)
+			{
+				await this.fieldDataService.EditEntryAsync (updatedField);
 
-					if (null != uniqueCheck && uniqueCheck.Count == 0)
-					{
-						List<FieldTable> updateFieldName = dbConnection.Query<FieldTable>
-							("UPDATE FieldTable SET FieldName=? WHERE UID=? AND FID=?",
-							fieldname.Text, App.UserID, App.FieldID);
-					}
-					else
-					{
-						await App.Current.MainPage.DisplayAlert ("Update Field Alert", "Field Name Already Exists", "OK");
-						bPopOff = false;
-					}
-				}
-				if (-1 != pivotlength.SelectedIndex)
-				{
-					List<FieldTable> updatePivotLength = dbConnection.Query<FieldTable>
-						("UPDATE FieldTable SET PivotLength=? WHERE UID=? AND FID=?",
-						pivotlength.ItemsSource[pivotlength.SelectedIndex], App.UserID, App.FieldID);
-				}
-				if (-1 != soiltype.SelectedIndex)
-				{
-					List<FieldTable> updateSoilType = dbConnection.Query<FieldTable>
-						("UPDATE FieldTable SET SoilType=? WHERE UID=? AND FID=?",
-						soiltype.ItemsSource[soiltype.SelectedIndex], App.UserID, App.FieldID);
-				}
-
-				if (true == bPopOff)
-				{
-					await PopupNavigation.Instance.PopAsync (true);
-					CallbackEvent?.Invoke (this, EventArgs.Empty);
-				}
+				await PopupNavigation.Instance.PopAsync (true);
+				CallbackEvent?.Invoke (this, EventArgs.Empty);
 			}
 		}
 
@@ -118,6 +149,44 @@ namespace seniorCapstone.Views
 		public async void CancelButton_Clicked (object sender, EventArgs args)
 		{
 			await PopupNavigation.Instance.PopAsync (true);
+		}
+
+
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine ("Loading Fields Failed");
+				Debug.WriteLine (ex.Message);
+				await PopupNavigation.Instance.PopAsync (true);
+			}
+		}
+
+
+		/// <summary>
+		/// Query the database to check whether the field name already exists for the 
+		/// current user
+		/// </summary>
+		private bool doesFieldNameExist ()
+		{
+			foreach (FieldTable field in this.FieldEntries)
+			{
+				if (field.FieldName == fieldname.Text && field.UID == App.UserID)
+				{
+					return (false);
+				}
+			}
+
+			return (true);
 		}
 
 	}

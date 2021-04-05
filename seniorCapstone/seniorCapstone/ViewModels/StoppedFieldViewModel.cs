@@ -7,6 +7,7 @@
  ****************************************************************************/
 
 using Rg.Plugins.Popup.Services;
+using seniorCapstone.Helpers;
 using seniorCapstone.Services;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
@@ -39,6 +40,7 @@ namespace seniorCapstone.ViewModels
 		}
 
 		public ICommand RunPivotCommand { get; set; }
+		public ICommand EditFieldCommand { get; set; }
 		public ICommand ViewMapCommand { get; set; }
 		public FieldTable StoppedField
 		{
@@ -66,6 +68,7 @@ namespace seniorCapstone.ViewModels
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
+			this.EditFieldCommand = new Command (this.EditFieldButton_Clicked);
 			this.ViewMapCommand = new Command (this.ViewMapButton_Clicked);
 		}
 
@@ -76,6 +79,37 @@ namespace seniorCapstone.ViewModels
 		public async void ViewMapButton_Clicked ()
 		{
 			await Application.Current.MainPage.Navigation.PushAsync (new ArcGISFieldMap ());
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void EditFieldButton_Clicked ()
+		{
+			var popupPage = new EditStoppedFieldPopupPage ();
+
+			// the method where you do whatever you want to after the popup is closed
+			popupPage.CallbackEvent += (object sender, object e) => this.loadStoppedFieldInfo ();
+
+			PopupNavigation.Instance.PushAsync (popupPage);
+		}
+
+
+		/// <summary>
+		/// Update the database then pop off the current page
+		/// </summary>
+		public async void RunPivotButton_Clicked ()
+		{
+			RainCat algorithmCalc = new RainCat ();
+			FieldTable updatedField = new FieldTable (ref this.stoppedField);
+
+			updatedField.PivotRunning = true;
+			updatedField.StopTime = algorithmCalc.TotalRunTime (ref this.stoppedField);
+
+			await this.fieldDataService.EditEntryAsync (updatedField);
+			await Application.Current.MainPage.Navigation.PopAsync ();
 		}
 
 
@@ -99,8 +133,8 @@ namespace seniorCapstone.ViewModels
 
 			if (count != 1)
 			{
-				await Application.Current.MainPage.Navigation.PopAsync ();
 				Debug.WriteLine ("Finding Current Field Failed");
+				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
 
@@ -118,74 +152,8 @@ namespace seniorCapstone.ViewModels
 			catch (Exception ex)
 			{
 				await App.Current.MainPage.DisplayAlert ("Field Alert", ex.Message, "OK");
+				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
-
-
-		/// <summary>
-		/// Update the database then pop off the current page
-		/// </summary>
-		public async void RunPivotButton_Clicked ()
-		{
-			/*using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
-			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				List<FieldTable> runPivot = dbConnection.Query<FieldTable>
-				("UPDATE FieldTable SET PivotRunning=1 WHERE UID=? AND FID=? AND PivotRunning=0", App.UserID, App.FieldID);
-
-				// If query fails then pop this page off the stack
-				if (null == runPivot)
-				{
-					Debug.WriteLine ("Running Pivot Failed From the Field Page");
-					await Application.Current.MainPage.Navigation.PopAsync ();
-				}
-				else
-				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-				}
-			}*/
-		}
-
-		
-		
-
-		
-
-
-
-
-		/* LOST DUE TO MOVE TO AZURE AND NOT ENOUGH TIME TO IMPLEMENT ALL CRUD CAPABILITIES 
-		 
-		 
-		 /// <summary>
-		/// 
-		/// </summary>
-		public void EditFieldButton_Clicked ()
-		{
-			var popupPage = new EditStoppedFieldPopupPage ();
-
-			// the method where you do whatever you want to after the popup is closed
-			popupPage.CallbackEvent += (object sender, object e) => this.loadStoppedFieldInfo ();
-
-			PopupNavigation.Instance.PushAsync (popupPage);
-		}
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 */
-
 	}
 }

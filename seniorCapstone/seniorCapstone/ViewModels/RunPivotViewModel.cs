@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using seniorCapstone.Helpers;
 using seniorCapstone.Services;
 using seniorCapstone.Tables;
-using SQLite;
 using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
@@ -63,8 +64,8 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public RunPivotViewModel ()
 		{
-
-			// TODO		CHECK ALL RUNNING FIELDS AND STOP IF PAST END TIME
+			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.FieldEntries = new ObservableCollection<FieldTable> ();
 
 			this.FieldOptions = new ObservableCollection<string> ();
 			this.GetPivots ();
@@ -80,59 +81,16 @@ namespace seniorCapstone.ViewModels
 		public async void GetPivots ()
 		{
 			await this.LoadEntries ();
+			await this.updateStoppedPivots ();
 
-			// Reading from Database
-			using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			foreach (FieldTable field in this.FieldEntries)
 			{
-				dbConnection.CreateTable<FieldTable> ();
-
-				// Query for the fields
-				List <FieldTable> FieldList = dbConnection.Query<FieldTable>
-					("SELECT FieldName FROM FieldTable WHERE UID=? AND PivotRunning=0", App.UserID);
-
-				// If query fails then pop this page off the stack
-				if (null == FieldList)
+				if (field.PivotRunning == false && field.UID == App.UserID)
 				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					Debug.WriteLine ("Finding User Fields Failed");
+					this.FieldOptions.Add (field.FieldName);
 				}
-
-				for (int i = 0; i < FieldList.Count; i++)
-				{
-					this.FieldOptions.Add (FieldList[i].FieldName);
-				}
-				this.FieldOptions = this.FieldOptions.OrderBy (q => q).ToList ();
 			}
-		}
-
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async Task LoadEntries ()
-		{
-			try
-			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				await App.Current.MainPage.DisplayAlert ("Login Alert", ex.Message, "OK");
-			}
-		}
-
-
-		/// <summary>
-		/// Verfies that the user input data for all entries
-		/// </summary>
-		/// <returns>
-		/// True if all of the entries have some text in them, otherwise false 
-		/// if any are empty or null
-		/// </returns>
-		public bool AreEntiresFilledOut ()
-		{
-			return (-1 != this.FieldIndex);
+			this.FieldOptions = this.FieldOptions.OrderBy (q => q).ToList ();
 		}
 
 
@@ -152,22 +110,23 @@ namespace seniorCapstone.ViewModels
 		public async void RunPivotButton_Clicked ()
 		{
 			if (true == this.AreEntiresFilledOut ())
-			{ 
-				using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
+			{
+				RainCat algorithmCalc = new RainCat ();
+				FieldTable updatedField = this.getSelectedField ();
+
+				if (updatedField != null)
 				{
-					dbConnection.CreateTable<FieldTable> ();
+					updatedField.PivotRunning = true;
+					updatedField.StopTime = algorithmCalc.TotalRunTime (ref updatedField);
 
-					List<FieldTable> runPivot = dbConnection.Query<FieldTable>
-						("UPDATE FieldTable SET PivotRunning=1 WHERE UID=? AND FieldName=? AND PivotRunning=0", 
-						App.UserID, this.FieldOptions[FieldIndex]);
-
-					// If query fails then pop this page off the stack
-					if (null == runPivot)
-					{
-						Debug.WriteLine ("Running Pivot Failed");
-					}
+					await this.fieldDataService.EditEntryAsync (updatedField);
+					await Application.Current.MainPage.Navigation.PopModalAsync ();
 				}
-				await Application.Current.MainPage.Navigation.PopModalAsync ();
+				else
+				{
+					await App.Current.MainPage.DisplayAlert ("Run Pivot Alert", "Could Not Run Field", "Ok");
+					await Application.Current.MainPage.Navigation.PopModalAsync ();
+				}
 			}
 			else
 			{
@@ -185,5 +144,92 @@ namespace seniorCapstone.ViewModels
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
 		}
 
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadEntries ()
+		{
+			try
+			{
+				var entries = await fieldDataService.GetEntriesAsync ();
+				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine ("Loading Fields Failed");
+				Debug.WriteLine (ex.Message);
+				await Application.Current.MainPage.Navigation.PopModalAsync ();
+			}
+		}
+
+
+		/// <summary>
+		/// If any of the pivots are past their stop time then update the database
+		/// </summary>
+		private async Task updateStoppedPivots ()
+		{
+			/*
+				YYYY MM DD hh:mm:ss
+				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7, 123);
+				String.Format("{0:s}", dt);  // "2008-03-09T16:05:07"  SortableDateTime
+			 */
+
+			FieldTable updatedField = new FieldTable ();
+			DateTime currentTime = DateTime.Now;
+			DateTime stopTime;
+
+			foreach (FieldTable field in this.FieldEntries)
+			{
+				if (field.PivotRunning == true && field.UID == App.UserID)
+				{
+					stopTime = DateTime.ParseExact (field.StopTime, "{0:s}", CultureInfo.InvariantCulture);
+
+					if (DateTime.Compare (currentTime, stopTime) <= 0)
+					{
+						updatedField.assignTo (field);
+						updatedField.PivotRunning = false;
+						updatedField.StopTime = string.Empty;
+
+						await this.fieldDataService.EditEntryAsync (updatedField);
+						await Application.Current.MainPage.Navigation.PopAsync ();
+					}
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// Verfies that the user input data for all entries
+		/// </summary>
+		/// <returns>
+		/// True if all of the entries have some text in them, otherwise false 
+		/// if any are empty or null
+		/// </returns>
+		private bool AreEntiresFilledOut ()
+		{
+			return (-1 != this.FieldIndex);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private FieldTable getSelectedField ()
+		{
+			FieldTable selected = null;
+
+			foreach (FieldTable field in this.FieldEntries)
+			{
+				if (field.FieldName == this.FieldOptions[FieldIndex] 
+					&& field.PivotRunning == false && field.UID == App.UserID)
+				{
+					selected = field;
+				}
+			}
+
+			return (selected);
+		}
 	}
 }

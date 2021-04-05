@@ -8,9 +8,7 @@
 
 using seniorCapstone.Services;
 using seniorCapstone.Tables;
-using SQLite;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -71,25 +69,23 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void StopPivotButton_Clicked ()
 		{
-			/*using (SQLiteConnection dbConnection = new SQLiteConnection (App.DatabasePath))
-			{
-				dbConnection.CreateTable<FieldTable> ();
+			FieldTable updatedField = new FieldTable (ref this.runningField);
+			updatedField.PivotRunning = false;
+			updatedField.StopTime = string.Empty;
 
-				List<FieldTable> runPivot = dbConnection.Query<FieldTable>
-				("UPDATE FieldTable SET PivotRunning=0 WHERE UID=? AND FID=? AND PivotRunning=1", App.UserID, App.FieldID);
+			/*updatedField.FID = this.RunningField.FID;
+			updatedField.UID = this.RunningField.UID;
+			updatedField.FieldName = this.RunningField.FieldName;
+			updatedField.PivotLength = this.RunningField.PivotLength;
+			updatedField.SoilType = this.RunningField.SoilType;
+			updatedField.Latitude = this.RunningField.Latitude;
+			updatedField.Longitude = this.RunningField.Longitude;
+			updatedField.PivotRunning = false;
+			updatedField.StopTime = this.RunningField.StopTime;
+			updatedField.WaterUsage = this.RunningField.WaterUsage;*/
 
-				// If query fails then pop this page off the stack
-				if (null == runPivot)
-				{
-					Debug.WriteLine ("Stopping Pivot Failed From the Field Page");
-					await Application.Current.MainPage.Navigation.PopAsync ();
-				}
-				else
-				{
-					await Application.Current.MainPage.Navigation.PopAsync ();
-					//await Application.Current.MainPage.Navigation.PushAsync (new StoppedFieldPage ());
-				}
-			}*/
+			await this.fieldDataService.EditEntryAsync (updatedField);
+			await Application.Current.MainPage.Navigation.PopAsync ();
 		}
 
 
@@ -113,8 +109,8 @@ namespace seniorCapstone.ViewModels
 
 			if (count != 1)
 			{
-				await Application.Current.MainPage.Navigation.PopAsync ();
 				Debug.WriteLine ("Finding Current Field Failed");
+				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
 
@@ -132,6 +128,7 @@ namespace seniorCapstone.ViewModels
 			catch (Exception ex)
 			{
 				await App.Current.MainPage.DisplayAlert ("Field Alert", ex.Message, "OK");
+				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
 	}

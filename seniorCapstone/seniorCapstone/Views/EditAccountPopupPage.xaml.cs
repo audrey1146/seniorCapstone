@@ -71,7 +71,6 @@ namespace seniorCapstone.Views
 
 			if (count != 1)
 			{
-				await Application.Current.MainPage.Navigation.PopAsync ();
 				Debug.WriteLine ("Finding Current User Failed");
 				await PopupNavigation.Instance.PopAsync (true);
 			}
@@ -90,8 +89,8 @@ namespace seniorCapstone.Views
 			}
 			catch (Exception ex)
 			{
-				await Application.Current.MainPage.Navigation.PopAsync ();
 				Debug.WriteLine ("Finding Current User Failed");
+				Debug.WriteLine (ex.Message);
 				await PopupNavigation.Instance.PopAsync (true);
 			}
 		}
@@ -107,7 +106,6 @@ namespace seniorCapstone.Views
 		{
 			UserTable newUser = new UserTable ();
 			bool bPopOff = true;
-			int count = 0;
 
 			newUser.UID = this.singleUser.UID;
 			newUser.UserName = this.singleUser.UserName;
@@ -132,19 +130,7 @@ namespace seniorCapstone.Views
 			if (false == string.IsNullOrEmpty (email.Text))
 			{
 				// Before update check that the unique values don't already exist
-				foreach (UserTable user in this.UserEntries)
-				{
-					if (user.Email == email.Text)
-					{
-						count++;
-						singleUser = user;
-						firstname.Placeholder = user.FirstName;
-						lastname.Placeholder = user.LastName;
-						email.Placeholder = user.Email;
-					}
-				}
-
-				if (count > 0)
+				if (true == doesEmailExist ())
 				{
 					await App.Current.MainPage.DisplayAlert ("Update Account Alert", "Email Already Exists", "OK");
 					bPopOff = false;
@@ -173,6 +159,24 @@ namespace seniorCapstone.Views
 		public async void CancelButton_Clicked (object sender, EventArgs args)
 		{
 			await PopupNavigation.Instance.PopAsync (true);
+		}
+
+
+		/// <summary>
+		/// Query the database to check whether the email exists
+		/// in the entire system
+		/// </summary>
+		private bool doesEmailExist ()
+		{
+			foreach (UserTable user in this.UserEntries)
+			{
+				if (user.Email == email.Text)
+				{
+					return (false);
+				}
+			}
+
+			return (true);
 		}
 	}
 }

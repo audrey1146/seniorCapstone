@@ -107,7 +107,7 @@ namespace seniorCapstone.Helpers
 				{
 					// Prompt the user to turn on in settings
 					// On iOS once a permission has been denied it may not be requested again from the application
-					await App.Current.MainPage.DisplayAlert ("Add Field Alert",
+					await App.Current.MainPage.DisplayAlert ("Geolocation Alert",
 						"Please naviagte to your app settings and allow EvenStreamin to access your location.", "Ok");
 					return;
 				}
@@ -118,7 +118,7 @@ namespace seniorCapstone.Helpers
 
 				if (status != PermissionStatus.Granted)
 				{
-					await App.Current.MainPage.DisplayAlert ("Add Field Alert",
+					await App.Current.MainPage.DisplayAlert ("Geolocation Alert",
 						"EvenStreamin requires access to your location in order to locate the center pivot.", "Ok");
 					return;
 				}

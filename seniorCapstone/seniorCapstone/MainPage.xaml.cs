@@ -18,14 +18,16 @@ namespace seniorCapstone
 		private const string OWM_APPID = "3ea77495368d801751fbd9266236f508";
 		private Location userLocation;
 
-
+		/// <summary>
+		/// 
+		/// </summary>
 		public MainPage()
 		{
 			InitializeComponent ();
 			getUserLocation ();
 
 
-			if (userLocation != null)
+			if (this.userLocation != null)
 			{
 				this.GetWeatherInfo ();
 			}
@@ -36,6 +38,9 @@ namespace seniorCapstone
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public async void getUserLocation ()
 		{
 			var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse> ();
@@ -70,6 +75,9 @@ namespace seniorCapstone
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
 		private async void GetWeatherInfo ()
 		{
 			var url = $"https://api.openweathermap.org/data/2.5/weather?lat={userLocation.Latitude}&lon={userLocation.Longitude}&appid={OWM_APPID}&units=imperial";

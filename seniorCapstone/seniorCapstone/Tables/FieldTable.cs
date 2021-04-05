@@ -33,6 +33,9 @@ namespace seniorCapstone.Tables
         [Column ("StopTime")]
         public string StopTime { get; set; }
 
+        [Column ("WaterUsage")]
+        public double WaterUsage { get; set; }
+
         /* What to add to field table?
         
         [Column("SoilType")]
@@ -43,5 +46,47 @@ namespace seniorCapstone.Tables
             (Empty, ...?) 
          
          */
+
+        public FieldTable ()
+		{
+            this.FID = string.Empty;
+            this.UID = string.Empty;
+            this.FieldName = string.Empty;
+            this.PivotLength = 0;
+            this.SoilType = string.Empty;
+            this.Latitude = string.Empty;
+            this.Longitude = string.Empty;
+            this.PivotRunning = false;
+            this.StopTime = string.Empty;
+            this.WaterUsage = 0;
+        }
+
+        public FieldTable (ref FieldTable fieldEntry)
+		{
+            this.FID = fieldEntry.FID;
+            this.UID = fieldEntry.UID;
+            this.FieldName = fieldEntry.FieldName;
+            this.PivotLength = fieldEntry.PivotLength;
+            this.SoilType = fieldEntry.SoilType;
+            this.Latitude = fieldEntry.Latitude;
+			this.Longitude = fieldEntry.Longitude;
+			this.PivotRunning = fieldEntry.PivotRunning;
+			this.StopTime = fieldEntry.StopTime;
+            this.WaterUsage = fieldEntry.WaterUsage;
+        }
+
+        public void assignTo (FieldTable fieldEntry)
+		{
+            this.FID = fieldEntry.FID;
+            this.UID = fieldEntry.UID;
+            this.FieldName = fieldEntry.FieldName;
+            this.PivotLength = fieldEntry.PivotLength;
+            this.SoilType = fieldEntry.SoilType;
+            this.Latitude = fieldEntry.Latitude;
+            this.Longitude = fieldEntry.Longitude;
+            this.PivotRunning = fieldEntry.PivotRunning;
+            this.StopTime = fieldEntry.StopTime;
+            this.WaterUsage = fieldEntry.WaterUsage;
+        }
     }
 }

@@ -26,5 +26,27 @@ namespace seniorCapstone.Tables
         [Unique]
         [Column ("Email")]
         public string Email { get; set; }
+
+
+        public UserTable ()
+		{
+            this.UID = string.Empty;
+            this.UserName = string.Empty;
+            this.Password = string.Empty;
+            this.FirstName = string.Empty;
+            this.LastName = string.Empty;
+            this.Email = string.Empty;
+        }
+
+
+		public UserTable (ref UserTable userEntry)
+		{
+            this.UID = userEntry.UID;
+            this.UserName = userEntry.UserName;
+            this.Password = userEntry.Password;
+            this.FirstName = userEntry.FirstName;
+            this.LastName = userEntry.LastName;
+            this.Email = userEntry.Email;
+		}
     }
 }

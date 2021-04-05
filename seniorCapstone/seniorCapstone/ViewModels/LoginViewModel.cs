@@ -10,7 +10,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using seniorCapstone.Helpers;
 using seniorCapstone.Tables;
 using seniorCapstone.Views;
 using seniorCapstone.Services;
@@ -168,17 +167,25 @@ namespace seniorCapstone.ViewModels
 		/// <param name="PasswordEntry"></param>
 		/// <returns></returns>
 		private bool areCredentialsCorrect (string UserNameEntry, string PasswordEntry)
-		{	
+		{
+			int count = 0;
+
 			foreach (UserTable user in this.UserEntries)
 			{
 				if (user.UserName == UserNameEntry && user.Password == PasswordEntry)
 				{
 					App.UserID = user.UID;
-					return (true);
+					count++;
 				}
 			}
 
-			return (false);
+			if (count != 1)
+			{
+				App.UserID = string.Empty;
+				return (false);
+			}
+
+			return (true);
 		}
 
 	}

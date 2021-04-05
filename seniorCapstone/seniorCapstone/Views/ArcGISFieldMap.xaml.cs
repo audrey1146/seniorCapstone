@@ -29,13 +29,17 @@ namespace seniorCapstone.Views
 			}
 		}
 
+
 		/// <summary>
 		/// 
 		/// </summary>
 		public ArcGISFieldMap ()
 		{
             InitializeComponent ();
-            initMap ();
+
+			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
+			this.FieldEntries = new ObservableCollection<FieldTable> ();
+			initMap ();
         }
 
 		/// <summary>
@@ -48,7 +52,7 @@ namespace seniorCapstone.Views
 			double latitude = 0;
 			double longitude = 0;
 
-			await LoadEntries ();
+			await this.LoadEntries ();
 
 			foreach (FieldTable field in this.FieldEntries)
 			{
@@ -88,7 +92,9 @@ namespace seniorCapstone.Views
 			}
 			catch (Exception ex)
 			{
-				await App.Current.MainPage.DisplayAlert ("Map Alert", ex.Message, "OK");
+				Debug.WriteLine ("Loading Fields Failed");
+				Debug.WriteLine (ex.Message);
+				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
 

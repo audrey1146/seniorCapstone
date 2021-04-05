@@ -36,10 +36,10 @@
     <EmbeddedResource Update="Views\ArcGISFieldMap.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Depricated\EditAccountPopupPage.xaml">
+    <EmbeddedResource Update="Views\EditAccountPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Depricated\EditStoppedFieldPopupPage.xaml">
+    <EmbeddedResource Update="Views\EditStoppedFieldPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FieldListPage.xaml">
@@ -63,9 +63,5 @@
     <EmbeddedResource Update="Views\SyncPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\Depricated\" />
   </ItemGroup>
 </Project>

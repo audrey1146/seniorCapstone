@@ -182,6 +182,7 @@ namespace seniorCapstone.ViewModels
 			catch (Exception ex)
 			{
 				await App.Current.MainPage.DisplayAlert ("Registration Alert", ex.Message, "OK");
+				await Application.Current.MainPage.Navigation.PopModalAsync ();
 			}
 		}
 

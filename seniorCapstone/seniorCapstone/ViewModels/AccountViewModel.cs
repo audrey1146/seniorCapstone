@@ -93,7 +93,7 @@ namespace seniorCapstone.ViewModels
 			var popupPage = new EditAccountPopupPage ();
 
 			// the method where you do whatever you want to after the popup is closed
-			popupPage.CallbackEvent += async (object sender, object e) => await this.loadAccountInfo ();
+			popupPage.CallbackEvent += (object sender, object e) => this.loadAccountInfo ();
 
 			await PopupNavigation.Instance.PushAsync (popupPage);
 		}
@@ -151,7 +151,7 @@ namespace seniorCapstone.ViewModels
 		/// <summary>
 		/// Read from the database and bind that information to a UserTable variable
 		/// </summary>
-		private async Task loadAccountInfo ()
+		private async void loadAccountInfo ()
 		{
 			int count = 0;
 
@@ -169,8 +169,8 @@ namespace seniorCapstone.ViewModels
 			// If query fails then pop this page off the stack
 			if (count != 1)
 			{
-				await Application.Current.MainPage.Navigation.PopAsync ();
 				Debug.WriteLine ("Finding Current User Failed");
+				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
 
@@ -187,8 +187,9 @@ namespace seniorCapstone.ViewModels
 			}
 			catch (Exception ex)
 			{
-				await Application.Current.MainPage.Navigation.PopAsync ();
 				Debug.WriteLine ("Loading Fields Failed");
+				Debug.WriteLine (ex.Message);
+				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
 
@@ -205,8 +206,9 @@ namespace seniorCapstone.ViewModels
 			}
 			catch (Exception ex)
 			{
-				await Application.Current.MainPage.Navigation.PopAsync ();
 				Debug.WriteLine ("Loading Accounts Failed");
+				Debug.WriteLine (ex.Message);
+				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
 
