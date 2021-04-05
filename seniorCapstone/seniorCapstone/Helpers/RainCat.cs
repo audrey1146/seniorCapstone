@@ -22,7 +22,7 @@ namespace seniorCapstone.Helpers
 				String.Format("{0:s}", dt);  // "2008-03-09T16:05:07"  SortableDateTime
 			 */
 
-			DateTime tempTime = new DateTime (2021, 4, 15, 10, 52, 123);
+			DateTime tempTime = new DateTime (2021, 4, 15, 10, 52, 123); //"2021-04-15T10:52:07" 
 
 			return (String.Format ("{0:s}", tempTime));
 		}
