@@ -62,7 +62,7 @@ namespace seniorCapstone.Views
 
 			foreach (FieldTable field in this.FieldEntries)
 			{
-				if (field.UID == App.FieldID && field.UID == App.UserID)
+				if (field.FID == App.FieldID && field.UID == App.UserID)
 				{
 					this.singleField = field;
 					fieldname.Placeholder = field.FieldName;
@@ -92,43 +92,40 @@ namespace seniorCapstone.Views
 		/// <param name="args"></param>
 		public async void SubmitButton_Clicked (object sender, EventArgs args)
 		{
-			FieldTable updatedField = new FieldTable ();
+			FieldTable updatedField = new FieldTable (ref singleField);
 			bool bPopOff = true;
 
-			updatedField.FID = singleField.FID;
-			updatedField.UID = singleField.UID;
-			updatedField.FieldName = singleField.FieldName;
-			updatedField.PivotLength = singleField.PivotLength;
-			updatedField.SoilType = singleField.SoilType;
-			updatedField.Latitude = singleField.Latitude;
-			updatedField.Longitude = singleField.Longitude;
-			updatedField.PivotRunning = singleField.PivotRunning;
-			updatedField.StopTime = singleField.StopTime;
-			updatedField.WaterUsage = singleField.WaterUsage;
-
-
-			// Update based on which entries got filled out
-			if (false == string.IsNullOrEmpty (fieldname.Text))
+			if (false == this.areEntriesFilled ())
 			{
-				// Verify Unique field name
-				if (true == doesFieldNameExist ())
+				await App.Current.MainPage.DisplayAlert ("Update Field Alert", "No New Entries", "OK");
+				bPopOff = false;
+			}
+			else
+			{
+				// Update based on which entries got filled out
+				if (false == string.IsNullOrEmpty (fieldname.Text))
 				{
-					await App.Current.MainPage.DisplayAlert ("Update Field Alert", "Field Name Already Exists", "OK");
-					bPopOff = false;
+					// Verify Unique field name
+					if (true == doesFieldNameExist ())
+					{
+						await App.Current.MainPage.DisplayAlert ("Update Field Alert", "Field Name Already Exists", "OK");
+						bPopOff = false;
+					}
+					else
+					{
+						updatedField.FieldName = fieldname.Text;
+					}
 				}
-				else
+				if (-1 != pivotlength.SelectedIndex)
 				{
-					updatedField.FieldName = fieldname.Text;
+					updatedField.PivotLength = (int)pivotlength.ItemsSource[pivotlength.SelectedIndex];
+				}
+				if (-1 != soiltype.SelectedIndex)
+				{
+					updatedField.SoilType = (string)soiltype.ItemsSource[soiltype.SelectedIndex];
 				}
 			}
-			if (-1 != pivotlength.SelectedIndex)
-			{
-				updatedField.PivotLength = (int)pivotlength.ItemsSource[pivotlength.SelectedIndex];
-			}
-			if (-1 != soiltype.SelectedIndex)
-			{
-				updatedField.SoilType = (string)soiltype.ItemsSource[soiltype.SelectedIndex];
-			}
+			
 
 			// If valid new field then edit existing
 			if (true == bPopOff)
@@ -182,12 +179,22 @@ namespace seniorCapstone.Views
 			{
 				if (field.FieldName == fieldname.Text && field.UID == App.UserID)
 				{
-					return (false);
+					return (true);
 				}
 			}
 
-			return (true);
+			return (false);
 		}
 
+
+		/// <summary>
+		/// Check that at least one field is filled
+		/// </summary>
+		private bool areEntriesFilled ()
+		{
+			return (false == string.IsNullOrEmpty (fieldname.Text)
+				|| -1 != pivotlength.SelectedIndex
+				|| -1 != soiltype.SelectedIndex);
+		}
 	}
 }

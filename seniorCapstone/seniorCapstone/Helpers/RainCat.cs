@@ -13,19 +13,30 @@ namespace seniorCapstone.Helpers
 
 		}
 
-
+		/// <summary>
+		/// Total Run time is currently set at 24 hours from start time
+		/// in the format: "2008-03-09T16:05:07" 
+		/// </summary>
+		/// <param name="fieldTable"></param>
+		/// <returns> The time that the pivot will shut off </returns>
 		public string TotalRunTime (ref FieldTable fieldTable)
 		{
-			/*
-				YYYY MM DD hh:mm:ss
-				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7, 123);
-				String.Format("{0:s}", dt);  // "2008-03-09T16:05:07"  SortableDateTime
-			 */
-
-			DateTime tempTime = new DateTime (2021, 4, 15, 10, 52, 123); //"2021-04-15T10:52:07" 
-
-			return (String.Format ("{0:s}", tempTime));
+			DateTime endTime = DateTime.Now.AddHours (24);
+			return (String.Format ("{0:s}", endTime));
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="fieldTable"></param>
+		/// <returns></returns>
+		public double WaterUsage (ref FieldTable fieldTable)
+		{
+			
+			return (0);
+		}
+
 
 		/// <summary>
 		/// 

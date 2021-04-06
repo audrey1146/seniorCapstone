@@ -19,8 +19,8 @@ namespace seniorCapstone.Views
 		readonly IFieldDataService fieldDataService;
 		ObservableCollection<FieldTable> fieldEntries;
 
-		private IList<FieldTable> RunningFields;
-		private IList<FieldTable> RemainingFields;
+		private List<FieldTable> RunningFields;
+		private List<FieldTable> RemainingFields;
 
 		// Public Properties
 		public ObservableCollection<FieldTable> FieldEntries
@@ -41,6 +41,9 @@ namespace seniorCapstone.Views
 			InitializeComponent();
 			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
 			this.FieldEntries = new ObservableCollection<FieldTable> ();
+
+			this.RunningFields = new List<FieldTable>();
+			this.RemainingFields = new List<FieldTable>();
 		}
 
 
@@ -54,20 +57,30 @@ namespace seniorCapstone.Views
 			await this.LoadEntries ();
 			await this.updateStoppedPivots ();
 
+			this.RunningFields.Clear ();
+			this.RemainingFields.Clear ();
+
 			foreach (FieldTable field in this.FieldEntries)
 			{
-				if (field.PivotRunning == false && field.UID == App.UserID)
-				{
-					this.RemainingFields.Add (field);
-				}
-				else if (field.PivotRunning == true && field.UID == App.UserID)
+				if (field.PivotRunning == true && field.UID == App.UserID)
 				{
 					this.RunningFields.Add (field);
 				}
+				else if (field.PivotRunning == false && field.UID == App.UserID)
+				{
+					this.RemainingFields.Add (field);
+				}
 			}
 
-			this.RunningFields = this.RunningFields.OrderBy (x => x.FieldName).ToList ();
-			this.RemainingFields = this.RemainingFields.OrderBy (x => x.FieldName).ToList ();
+			if (this.RemainingFields != null)
+			{
+				this.RemainingFields = this.RemainingFields.OrderBy (x => x.FieldName).ToList ();
+			}
+			if (this.RunningFields != null)
+			{
+				this.RunningFields = this.RunningFields.OrderBy (x => x.FieldName).ToList ();
+			}
+			
 
 			runningListView.ItemsSource = this.RunningFields;
 			remainingListView.ItemsSource = this.RemainingFields;
@@ -151,21 +164,22 @@ namespace seniorCapstone.Views
 		{
 			/*
 				YYYY MM DD hh:mm:ss
-				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7, 123);
+				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7);
 				String.Format("{0:s}", dt);  // "2008-03-09T16:05:07"  SortableDateTime
 			 */
 
 			FieldTable updatedField = new FieldTable ();
 			DateTime currentTime = DateTime.Now;
 			DateTime stopTime;
+			string format = "s";
 
 			foreach (FieldTable field in this.FieldEntries)
 			{
 				if (field.PivotRunning == true && field.UID == App.UserID)
 				{
-					stopTime = DateTime.ParseExact (field.StopTime, "{0:s}", CultureInfo.InvariantCulture);
+					stopTime = DateTime.ParseExact (field.StopTime, format, CultureInfo.InvariantCulture);
 
-					if (DateTime.Compare (currentTime, stopTime) <= 0)
+					if (DateTime.Compare (currentTime, stopTime) >= 0)
 					{
 						updatedField.assignTo (field);
 						updatedField.PivotRunning = false;

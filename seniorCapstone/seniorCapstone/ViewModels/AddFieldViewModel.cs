@@ -193,13 +193,13 @@ namespace seniorCapstone.ViewModels
 		{
 			foreach (FieldTable field in this.FieldEntries)
 			{
-				if (field.FieldName == this.FieldName)
+				if (field.FieldName == this.FieldName && field.UID == App.UserID)
 				{
-					return (false);
+					return (true);
 				}
 			}
 
-			return (true);
+			return (false);
 		}
 
 
@@ -213,11 +213,11 @@ namespace seniorCapstone.ViewModels
 			{
 				if (field.Latitude == this.Latitude && field.Longitude == this.Longitude)
 				{
-					return (false);
+					return (true);
 				}
 			}
 
-			return (true);
+			return (false);
 		}
 
 

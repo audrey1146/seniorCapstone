@@ -104,43 +104,44 @@ namespace seniorCapstone.Views
 		/// <param name="args"></param>
 		public async void SubmitButton_Clicked (object sender, EventArgs args)
 		{
-			UserTable newUser = new UserTable ();
+			UserTable newUser = new UserTable (ref this.singleUser);
 			bool bPopOff = true;
 
-			newUser.UID = this.singleUser.UID;
-			newUser.UserName = this.singleUser.UserName;
-			newUser.Password = this.singleUser.Password;
-			newUser.FirstName = this.singleUser.FirstName;
-			newUser.LastName = this.singleUser.LastName;
-			newUser.Email = this.singleUser.Email;
-
-			// Update based on which entries got filled out
-			if (false == string.IsNullOrEmpty (password.Text))
+			if (false == this.areEntriesFilled ())
 			{
-				newUser.Password = password.Text;
+				await App.Current.MainPage.DisplayAlert ("Update Account Alert", "No New Entries", "OK");
+				bPopOff = false;
 			}
-			if (false == string.IsNullOrEmpty (firstname.Text))
+			else
 			{
-				newUser.FirstName = firstname.Text;
-			}
-			if (false == string.IsNullOrEmpty (lastname.Text))
-			{
-				newUser.LastName = lastname.Text;
-			}
-			if (false == string.IsNullOrEmpty (email.Text))
-			{
-				// Before update check that the unique values don't already exist
-				if (true == doesEmailExist ())
+				// Update based on which entries got filled out
+				if (false == string.IsNullOrEmpty (password.Text))
 				{
-					await App.Current.MainPage.DisplayAlert ("Update Account Alert", "Email Already Exists", "OK");
-					bPopOff = false;
+					newUser.Password = password.Text;
 				}
-				else
+				if (false == string.IsNullOrEmpty (firstname.Text))
 				{
-					newUser.Email = email.Text;
+					newUser.FirstName = firstname.Text;
+				}
+				if (false == string.IsNullOrEmpty (lastname.Text))
+				{
+					newUser.LastName = lastname.Text;
+				}
+				if (false == string.IsNullOrEmpty (email.Text))
+				{
+					// Before update check that the unique values don't already exist
+					if (true == doesEmailExist ())
+					{
+						await App.Current.MainPage.DisplayAlert ("Update Account Alert", "Email Already Exists", "OK");
+						bPopOff = false;
+					}
+					else
+					{
+						newUser.Email = email.Text;
+					}
 				}
 			}
-
+			
 			if (true == bPopOff)
 			{
 				await this.userDataService.EditEntryAsync (newUser);
@@ -177,6 +178,18 @@ namespace seniorCapstone.Views
 			}
 
 			return (true);
+		}
+
+
+		/// <summary>
+		/// Check that at least one field is filled
+		/// </summary>
+		private bool areEntriesFilled ()
+		{
+			return (false == string.IsNullOrEmpty (password.Text)
+				|| false == string.IsNullOrEmpty (firstname.Text)
+				|| false == string.IsNullOrEmpty (lastname.Text)
+				|| false == string.IsNullOrEmpty (email.Text));
 		}
 	}
 }
