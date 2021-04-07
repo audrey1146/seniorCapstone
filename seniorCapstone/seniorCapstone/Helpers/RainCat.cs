@@ -22,8 +22,8 @@ namespace seniorCapstone.Helpers
 		/// <returns> The time that the pivot will shut off </returns>
 		public string TotalRunTime (ref FieldTable fieldTable)
 		{
-			DateTime endTime = DateTime.Now.AddHours (CenterPivotModel.RevolutionTime);
-			return (String.Format ("{0:s}", endTime));
+			DateTime runTime = DateTime.Now.AddHours (CenterPivotModel.RevolutionTime);
+			return (String.Format ("{0:s}", runTime));
 		}
 
 
@@ -53,14 +53,14 @@ namespace seniorCapstone.Helpers
 			double totalSlice = 0;
 			double integration = 0;
 
-
+			// For each sprinkler in the pivot
 			for (int i = CenterPivotModel.Spacing; i < fieldTable.PivotLength; i *= CenterPivotModel.Spacing)
 			{
+				// Get sprinkler specific data
 				t_a = (CenterPivotModel.RevolutionTime) * (CenterPivotModel.WettedDiameter / (2 * Math.PI * i));
-
 				da_dt_max = (4 / Math.PI) * (CenterPivotModel.WettedSoilDepth / t_a);
 
-				// Find intersection 1
+				// Find first intersection by incrementing through small time increments starting at zero
 				for (double t = .005; t < t_a && bInt1Found == false; t += .002)
 				{
 					da_dt = (da_dt_max) * Math.Sqrt (1 - (Math.Pow ((t - (t_a / 2)), 2) / Math.Pow (t_a / 2, 2)));
@@ -73,10 +73,11 @@ namespace seniorCapstone.Helpers
 					}
 				}
 
+				// If first intersection is found then we need to search for the second
 				if (true == bInt1Found)
 				{
-					// Find intersection 2
-					for (double t = t_a; t > intersect1 && bInt2Found == false; t -= .002)
+					// Find second intersection by incrementing through small time increments starting at the end of the interval
+					for (double t = t_a; t > intersect1 + .005 && bInt2Found == false; t -= .002)
 					{
 						da_dt = (da_dt_max) * Math.Sqrt (1 - (Math.Pow ((t - (t_a / 2)), 2) / Math.Pow (t_a / 2, 2)));
 						di_dt = 600 * constA * constB * Math.Pow (t, constB - 1);
@@ -87,30 +88,25 @@ namespace seniorCapstone.Helpers
 							bInt2Found = true;
 						}
 					}
-
-
-					if (true == bInt2Found)
-					{
-						// Get distance traveled then integrate to get amount of water used from t_0 to t_1
-						circumference = 2 * Math.PI * i;
-						totalSlice = (circumference / CenterPivotModel.RevolutionTime) * (intersect2 - intersect1);
-
-						integration = SimpsonRule.IntegrateComposite (x => (da_dt_max) * Math.Sqrt (1 - (Math.Pow ((x - (t_a / 2)), 2) / Math.Pow (t_a / 2, 2))), 0, intersect1, 4);
-						totalWater += integration * (circumference / totalSlice);
-					}
-					// If no second intersection then ????
-					else
-					{
-
-					}
-
-
 				}
-				// If no intersection then da_dt over entire field
-				else
+
+				// If both intersections are found then we have enough information to get the water usage stats
+				if (true == bInt1Found && true == bInt2Found)
 				{
-
+					// Get distance traveled then integrate to get amount of water used from t_0 to t_1
+					circumference = 2 * Math.PI * i;
+					totalSlice = (circumference / CenterPivotModel.RevolutionTime) * (intersect2 - intersect1);
 				}
+				// If first intersection was not found, OR if second intersection was not found then assume pivot will run entire time
+				else if (false == bInt1Found || false == bInt2Found)
+				{
+					circumference = 2 * Math.PI * i;
+					totalSlice = (circumference / CenterPivotModel.RevolutionTime) * (t_a - 0);	
+				}
+
+				integration = SimpsonRule.IntegrateComposite (x => (da_dt_max) *
+						Math.Sqrt (1 - (Math.Pow ((x - (t_a / 2)), 2) / Math.Pow (t_a / 2, 2))), 0, intersect1, 4);
+				totalWater += integration * (circumference / totalSlice);
 
 
 				// Reset Values
@@ -123,22 +119,7 @@ namespace seniorCapstone.Helpers
 				totalSlice = 0;
 			}
 
-
-
 			return (totalWater);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public double InstantaneousInfiltrationRate (string soil)
-		{
-			double IR = 0;
-
-			
-
-			return (IR);
 		}
 	}
 }
