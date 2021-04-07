@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Rg.Plugins.Popup.Services;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using SQLite;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -46,8 +46,8 @@ namespace seniorCapstone.Views
 			this.FieldEntries = new ObservableCollection<FieldTable> ();
 			this.setPlaceholder ();
 
-			soiltype.ItemsSource = (System.Collections.IList)Helpers.CenterPivotSpecs.SoilTypes;
-			pivotlength.ItemsSource = (System.Collections.IList)Helpers.CenterPivotSpecs.PivotTypes;
+			soiltype.ItemsSource = (System.Collections.IList)Models.SoilModel.SoilNames;
+			pivotlength.ItemsSource = (System.Collections.IList)Models.CenterPivotModel.PivotTypes;
 		}
 
 

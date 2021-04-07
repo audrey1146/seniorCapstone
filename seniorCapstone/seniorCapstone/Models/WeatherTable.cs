@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace seniorCapstone.Tables
+namespace seniorCapstone.Models
 {
     public class ForecastInfo
     {

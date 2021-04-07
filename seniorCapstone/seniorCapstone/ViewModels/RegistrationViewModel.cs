@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using seniorCapstone.Services;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels

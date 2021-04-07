@@ -1,5 +1,5 @@
 ﻿
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using System.Diagnostics;
 using Esri.ArcGISRuntime.Mapping;
 using Xamarin.Forms;

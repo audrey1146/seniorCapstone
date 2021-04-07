@@ -1,5 +1,5 @@
 ﻿using seniorCapstone.Services;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

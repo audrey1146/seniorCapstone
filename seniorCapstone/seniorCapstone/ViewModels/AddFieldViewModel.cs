@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Services;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using seniorCapstone.Views;
 using Xamarin.Forms;
 
@@ -91,8 +91,8 @@ namespace seniorCapstone.ViewModels
 			this.FieldEntries = new ObservableCollection<FieldTable> ();
 			this.LoadEntries ();
 
-			PivotOptions = (IList<int>)Helpers.CenterPivotSpecs.PivotTypes;
-			SoilOptions = (IList<string>)Helpers.CenterPivotSpecs.SoilTypes;
+			PivotOptions = (IList<int>)Models.CenterPivotModel.PivotTypes;
+			SoilOptions = (IList<string>)Models.SoilModel.SoilNames;
 
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.AddFieldCommand = new Command (this.AddFieldButton_Clicked);

@@ -9,7 +9,7 @@
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Helpers;
 using seniorCapstone.Services;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using seniorCapstone.Views;
 using System;
 using System.Collections.ObjectModel;

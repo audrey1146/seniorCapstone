@@ -1,4 +1,4 @@
-﻿using seniorCapstone.Tables;
+﻿using seniorCapstone.Models;
 using SQLite;
 using System.Collections.Generic;
 using System.Diagnostics;

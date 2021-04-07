@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 
 namespace seniorCapstone.Services
 {

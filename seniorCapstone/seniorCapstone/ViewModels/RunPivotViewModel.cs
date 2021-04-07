@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using seniorCapstone.Helpers;
 using seniorCapstone.Services;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using Xamarin.Forms;
 
 namespace seniorCapstone.ViewModels
@@ -171,21 +171,22 @@ namespace seniorCapstone.ViewModels
 		{
 			/*
 				YYYY MM DD hh:mm:ss
-				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7, 123);
+				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7);
 				String.Format("{0:s}", dt);  // "2008-03-09T16:05:07"  SortableDateTime
 			 */
 
 			FieldTable updatedField = new FieldTable ();
 			DateTime currentTime = DateTime.Now;
 			DateTime stopTime;
+			string format = "s";
 
 			foreach (FieldTable field in this.FieldEntries)
 			{
 				if (field.PivotRunning == true && field.UID == App.UserID)
 				{
-					stopTime = DateTime.ParseExact (field.StopTime, "{0:s}", CultureInfo.InvariantCulture);
+					stopTime = DateTime.ParseExact (field.StopTime, format, CultureInfo.InvariantCulture);
 
-					if (DateTime.Compare (currentTime, stopTime) <= 0)
+					if (DateTime.Compare (currentTime, stopTime) >= 0)
 					{
 						updatedField.assignTo (field);
 						updatedField.PivotRunning = false;

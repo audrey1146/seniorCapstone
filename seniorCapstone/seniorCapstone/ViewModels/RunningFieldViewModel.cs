@@ -7,7 +7,7 @@
  ****************************************************************************/
 
 using seniorCapstone.Services;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;

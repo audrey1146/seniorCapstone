@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Services;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using seniorCapstone.Views;
 using Xamarin.Forms;
 

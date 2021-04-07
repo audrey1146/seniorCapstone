@@ -7,7 +7,7 @@
  * Note         Defined in Chapter 6 page 116 in the book
  ****************************************************************************/
 
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;

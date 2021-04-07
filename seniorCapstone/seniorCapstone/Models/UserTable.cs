@@ -1,7 +1,7 @@
 ﻿using SQLite;
 using SQLiteNetExtensions.Attributes;
 
-namespace seniorCapstone.Tables
+namespace seniorCapstone.Models
 {
     [Table ("UserTable")]
     public class UserTable

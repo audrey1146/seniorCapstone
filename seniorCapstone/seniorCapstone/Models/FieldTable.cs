@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace seniorCapstone.Tables
+namespace seniorCapstone.Models
 {
 	[Table("FieldTable")]
 	public class FieldTable

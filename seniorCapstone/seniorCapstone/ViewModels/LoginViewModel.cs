@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using seniorCapstone.Tables;
+using seniorCapstone.Models;
 using seniorCapstone.Views;
 using seniorCapstone.Services;
 using Xamarin.Forms;
