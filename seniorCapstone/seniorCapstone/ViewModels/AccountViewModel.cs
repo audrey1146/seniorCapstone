@@ -21,32 +21,12 @@ namespace seniorCapstone.ViewModels
 	public class AccountViewModel : PageNavViewModel
 	{
 		// Private Variables
-		readonly IUserDataService userDataService;
-		ObservableCollection<UserTable> userEntries;
-		readonly IFieldDataService fieldDataService;
-		ObservableCollection<FieldTable> fieldEntries;
+		private UserSingleton userBackend = UserSingleton.Instance;
+		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 
 		private UserTable user = null;
 
 		// Public Properties
-		public ObservableCollection<UserTable> UserEntries
-		{
-			get => this.userEntries;
-			set
-			{
-				this.userEntries = value;
-				OnPropertyChanged ();
-			}
-		}
-		public ObservableCollection<FieldTable> FieldEntries
-		{
-			get => this.fieldEntries;
-			set
-			{
-				this.fieldEntries = value;
-				OnPropertyChanged ();
-			}
-		}
 		public ICommand EditAccountCommand { get; set; }
 		public ICommand LogoutCommand { get; set; }
 		public ICommand DeleteAccountCommand { get; set; }
@@ -70,12 +50,6 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public AccountViewModel ()
 		{
-			this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.UserEntries = new ObservableCollection<UserTable> ();
-
-			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.FieldEntries = new ObservableCollection<FieldTable> ();
-
 			this.loadAccountInfo ();
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
@@ -128,18 +102,10 @@ namespace seniorCapstone.ViewModels
 			if (true == answer)
 			{
 				// Delete Account
-				await this.userDataService.DeleteEntryAsync (this.User);
+				await this.userBackend.DeleteUser (this.User);
 
 				// Delete Fields of Account
-				await this.LoadFieldEntries ();
-
-				foreach (FieldTable field in this.FieldEntries)
-				{
-					if (field.UID == App.UserID)
-					{
-						await this.fieldDataService.DeleteEntryAsync (field);
-					}
-				}
+				await this.fieldBackend.DeleteAllFieldsOfUser (App.UserID);
 
 				App.IsUserLoggedIn = false;
 				App.UserID = string.Empty;
@@ -153,64 +119,12 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		private async void loadAccountInfo ()
 		{
-			int count = 0;
-
-			await this.LoadAccountEntries ();
-
-			foreach (UserTable user in this.UserEntries)
-			{
-				if (user.UID == App.UserID)
-				{
-					this.User = user;
-					count++;
-				}
-			}
-
-			// If query fails then pop this page off the stack
-			if (count != 1)
+			this.User = this.userBackend.getSpecificUser (App.UserID);
+			if (this.User == null)
 			{
 				Debug.WriteLine ("Finding Current User Failed");
 				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}
-
-
-		/// <summary>
-		/// Read from the database and bind that information to a FieldTable variable
-		/// </summary>
-		private async Task LoadFieldEntries ()
-		{
-			try
-			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine ("Loading Fields Failed");
-				Debug.WriteLine (ex.Message);
-				await Application.Current.MainPage.Navigation.PopAsync ();
-			}
-		}
-
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async Task LoadAccountEntries ()
-		{
-			try
-			{
-				var entries = await userDataService.GetEntriesAsync ();
-				this.UserEntries = new ObservableCollection<UserTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine ("Loading Accounts Failed");
-				Debug.WriteLine (ex.Message);
-				await Application.Current.MainPage.Navigation.PopAsync ();
-			}
-		}
-
 	}
 }

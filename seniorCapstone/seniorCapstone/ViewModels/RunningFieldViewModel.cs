@@ -8,10 +8,7 @@
 
 using seniorCapstone.Services;
 using seniorCapstone.Models;
-using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -20,20 +17,10 @@ namespace seniorCapstone.ViewModels
 	class RunningFieldViewModel : PageNavViewModel
 	{
 		// Private Variables
-		readonly IFieldDataService fieldDataService;
-		ObservableCollection<FieldTable> fieldEntries;
+		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 		private FieldTable runningField = null;
 
 		// Public Properties
-		public ObservableCollection<FieldTable> FieldEntries
-		{
-			get => this.fieldEntries;
-			set
-			{
-				this.fieldEntries = value;
-				OnPropertyChanged ();
-			}
-		}
 		public ICommand StopPivotCommand { get; set; }
 		public FieldTable RunningField
 		{
@@ -55,8 +42,6 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public RunningFieldViewModel ()
 		{
-			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.FieldEntries = new ObservableCollection<FieldTable> ();
 			this.loadRunningFieldInfo ();
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
@@ -73,18 +58,7 @@ namespace seniorCapstone.ViewModels
 			updatedField.PivotRunning = false;
 			updatedField.StopTime = string.Empty;
 
-			/*updatedField.FID = this.RunningField.FID;
-			updatedField.UID = this.RunningField.UID;
-			updatedField.FieldName = this.RunningField.FieldName;
-			updatedField.PivotLength = this.RunningField.PivotLength;
-			updatedField.SoilType = this.RunningField.SoilType;
-			updatedField.Latitude = this.RunningField.Latitude;
-			updatedField.Longitude = this.RunningField.Longitude;
-			updatedField.PivotRunning = false;
-			updatedField.StopTime = this.RunningField.StopTime;
-			updatedField.WaterUsage = this.RunningField.WaterUsage;*/
-
-			await this.fieldDataService.EditEntryAsync (updatedField);
+			await this.fieldBackend.UpdateField (updatedField);
 			await Application.Current.MainPage.Navigation.PopAsync ();
 		}
 
@@ -94,40 +68,10 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		private async void loadRunningFieldInfo ()
 		{
-			int count = 0;
-
-			await this.LoadEntries ();
-
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.FID == App.FieldID && field.UID == App.UserID)
-				{
-					count++;
-					this.RunningField = field;
-				}
-			}
-
-			if (count != 1)
+			this.RunningField = this.fieldBackend.getSpecificField (App.FieldID);
+			if (this.RunningField == null)
 			{
 				Debug.WriteLine ("Finding Current Field Failed");
-				await Application.Current.MainPage.Navigation.PopAsync ();
-			}
-		}
-
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async Task LoadEntries ()
-		{
-			try
-			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				await App.Current.MainPage.DisplayAlert ("Field Alert", ex.Message, "OK");
 				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}

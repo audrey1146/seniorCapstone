@@ -1,15 +1,10 @@
 ﻿using Rg.Plugins.Popup.Pages;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Models;
-using SQLite;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using seniorCapstone.Services;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace seniorCapstone.Views
 {
@@ -20,20 +15,9 @@ namespace seniorCapstone.Views
 		public event EventHandler<object> CallbackEvent;
 
 		// Private Variables
-		readonly IFieldDataService fieldDataService;
-		ObservableCollection<FieldTable> fieldEntries;
+		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 		FieldTable singleField;
 
-		// Public Properties
-		public ObservableCollection<FieldTable> FieldEntries
-		{
-			get => this.fieldEntries;
-			set
-			{
-				this.fieldEntries = value;
-				OnPropertyChanged ();
-			}
-		}
 
 		/// <summary>
 		/// 
@@ -41,9 +25,6 @@ namespace seniorCapstone.Views
 		public EditStoppedFieldPopupPage ()
 		{
 			InitializeComponent ();
-
-			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.FieldEntries = new ObservableCollection<FieldTable> ();
 			this.setPlaceholder ();
 
 			soiltype.ItemsSource = (System.Collections.IList)Models.SoilModel.SoilNames;
@@ -56,22 +37,8 @@ namespace seniorCapstone.Views
 		/// </summary>
 		private async void setPlaceholder ()
 		{
-			int count = 0;
-
-			await this.LoadEntries ();
-
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.FID == App.FieldID && field.UID == App.UserID)
-				{
-					this.singleField = field;
-					fieldname.Placeholder = field.FieldName;
-					count++;
-				}
-			}
-
-			// If query fails then pop this page off the stack
-			if (count != 1)
+			this.singleField = this.fieldBackend.getSpecificField (App.FieldID);
+			if (singleField == null)
 			{
 				Debug.WriteLine ("Finding Current Field Failed");
 				await PopupNavigation.Instance.PopAsync (true);
@@ -106,7 +73,7 @@ namespace seniorCapstone.Views
 				if (false == string.IsNullOrEmpty (fieldname.Text))
 				{
 					// Verify Unique field name
-					if (true == doesFieldNameExist ())
+					if (true == this.fieldBackend.DoesFieldNameExist (fieldname.Text))
 					{
 						await App.Current.MainPage.DisplayAlert ("Update Field Alert", "Field Name Already Exists", "OK");
 						bPopOff = false;
@@ -130,7 +97,14 @@ namespace seniorCapstone.Views
 			// If valid new field then edit existing
 			if (true == bPopOff)
 			{
-				await this.fieldDataService.EditEntryAsync (updatedField);
+				// If pivot length or soil type were changed need to redo equation
+				if (-1 != pivotlength.SelectedIndex || -1 != soiltype.SelectedIndex)
+				{
+					// TODO call RainCat to set the WaterUsage
+					// updatedField.WaterUsage = RainCat.WaterUsage (ref updatedField);
+				}
+
+				await this.fieldBackend.UpdateField (updatedField);
 
 				await PopupNavigation.Instance.PopAsync (true);
 				CallbackEvent?.Invoke (this, EventArgs.Empty);
@@ -146,44 +120,6 @@ namespace seniorCapstone.Views
 		public async void CancelButton_Clicked (object sender, EventArgs args)
 		{
 			await PopupNavigation.Instance.PopAsync (true);
-		}
-
-
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async Task LoadEntries ()
-		{
-			try
-			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine ("Loading Fields Failed");
-				Debug.WriteLine (ex.Message);
-				await PopupNavigation.Instance.PopAsync (true);
-			}
-		}
-
-
-		/// <summary>
-		/// Query the database to check whether the field name already exists for the 
-		/// current user
-		/// </summary>
-		private bool doesFieldNameExist ()
-		{
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.FieldName == fieldname.Text && field.UID == App.UserID)
-				{
-					return (true);
-				}
-			}
-
-			return (false);
 		}
 
 

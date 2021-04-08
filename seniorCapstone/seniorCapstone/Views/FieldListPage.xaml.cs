@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,22 +14,10 @@ namespace seniorCapstone.Views
 	public partial class FieldListPage : ContentPage
 	{
 		// Private Variables
-		readonly IFieldDataService fieldDataService;
-		ObservableCollection<FieldTable> fieldEntries;
+		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 
 		private List<FieldTable> RunningFields;
 		private List<FieldTable> RemainingFields;
-
-		// Public Properties
-		public ObservableCollection<FieldTable> FieldEntries
-		{
-			get => this.fieldEntries;
-			set
-			{
-				this.fieldEntries = value;
-				OnPropertyChanged ();
-			}
-		}
 
 		/// <summary>
 		/// 
@@ -39,8 +25,6 @@ namespace seniorCapstone.Views
 		public FieldListPage()
 		{
 			InitializeComponent();
-			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.FieldEntries = new ObservableCollection<FieldTable> ();
 
 			this.RunningFields = new List<FieldTable>();
 			this.RemainingFields = new List<FieldTable>();
@@ -53,14 +37,14 @@ namespace seniorCapstone.Views
 		protected override async void OnAppearing ()
 		{
 			base.OnAppearing ();
+			await this.fieldBackend.updateStoppedPivots ();
 
-			await this.LoadEntries ();
-			await this.updateStoppedPivots ();
+			ObservableCollection<FieldTable> fieldEntries = this.fieldBackend.getAllUsersFields (App.UserID);
 
 			this.RunningFields.Clear ();
 			this.RemainingFields.Clear ();
 
-			foreach (FieldTable field in this.FieldEntries)
+			foreach (FieldTable field in fieldEntries)
 			{
 				if (field.PivotRunning == true && field.UID == App.UserID)
 				{
@@ -102,7 +86,7 @@ namespace seniorCapstone.Views
 
 			if (true == answer)
 			{
-				await this.fieldDataService.DeleteEntryAsync (fieldMenuItem);
+				await this.fieldBackend.DeleteField (fieldMenuItem);
 				Debug.WriteLine ("Field Deleted");
 				this.OnAppearing ();
 			}
@@ -134,61 +118,6 @@ namespace seniorCapstone.Views
 			{
 				App.FieldID = this.RemainingFields[e.ItemIndex].FID;
 				await Application.Current.MainPage.Navigation.PushAsync (new StoppedFieldPage ());
-			}
-		}
-
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async Task LoadEntries ()
-		{
-			try
-			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine ("Loading Fields Failed");
-				Debug.WriteLine (ex.Message);
-				await Application.Current.MainPage.Navigation.PopAsync ();
-			}
-		}
-
-
-		/// <summary>
-		/// If any of the pivots are past their stop time then update the database
-		/// </summary>
-		private async Task updateStoppedPivots ()
-		{
-			/*
-				YYYY MM DD hh:mm:ss
-				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7);
-				String.Format("{0:s}", dt);  // "2008-03-09T16:05:07"  SortableDateTime
-			 */
-
-			FieldTable updatedField = new FieldTable ();
-			DateTime currentTime = DateTime.Now;
-			DateTime stopTime;
-			string format = "s";
-
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.PivotRunning == true && field.UID == App.UserID)
-				{
-					stopTime = DateTime.ParseExact (field.StopTime, format, CultureInfo.InvariantCulture);
-
-					if (DateTime.Compare (currentTime, stopTime) >= 0)
-					{
-						updatedField.assignTo (field);
-						updatedField.PivotRunning = false;
-						updatedField.StopTime = string.Empty;
-
-						await this.fieldDataService.EditEntryAsync (updatedField);
-						await Application.Current.MainPage.Navigation.PopAsync ();
-					}
-				}
 			}
 		}
 	}

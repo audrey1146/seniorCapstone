@@ -23,22 +23,11 @@ namespace seniorCapstone.ViewModels
 	class StoppedFieldViewModel : PageNavViewModel
 	{
 		// Private Variables
-		readonly IFieldDataService fieldDataService;
-		ObservableCollection<FieldTable> fieldEntries;
+		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 
 		private FieldTable stoppedField = null;
 
 		// Public Properties
-		public ObservableCollection<FieldTable> FieldEntries
-		{
-			get => this.fieldEntries;
-			set
-			{
-				this.fieldEntries = value;
-				OnPropertyChanged ();
-			}
-		}
-
 		public ICommand RunPivotCommand { get; set; }
 		public ICommand EditFieldCommand { get; set; }
 		public ICommand ViewMapCommand { get; set; }
@@ -62,8 +51,6 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public StoppedFieldViewModel ()
 		{
-			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.FieldEntries = new ObservableCollection<FieldTable> ();
 			this.loadStoppedFieldInfo ();
 
 			base.ChangePageCommand = new Command<string> (base.ChangePage);
@@ -106,9 +93,9 @@ namespace seniorCapstone.ViewModels
 			FieldTable updatedField = new FieldTable (ref this.stoppedField);
 
 			updatedField.PivotRunning = true;
-			updatedField.StopTime = algorithmCalc.TotalRunTime (ref this.stoppedField);
+			updatedField.StopTime = RainCat.TotalRunTime (ref this.stoppedField);
 
-			await this.fieldDataService.EditEntryAsync (updatedField);
+			await this.fieldBackend.UpdateField (updatedField);
 			await Application.Current.MainPage.Navigation.PopAsync ();
 		}
 
@@ -118,40 +105,10 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		private async void loadStoppedFieldInfo ()
 		{
-			int count = 0;
-
-			await this.LoadEntries ();
-
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.FID == App.FieldID && field.UID == App.UserID)
-				{
-					count++;
-					this.StoppedField = field;
-				}
-			}
-
-			if (count != 1)
+			this.StoppedField = this.fieldBackend.getSpecificField (App.FieldID);
+			if (this.StoppedField == null)
 			{
 				Debug.WriteLine ("Finding Current Field Failed");
-				await Application.Current.MainPage.Navigation.PopAsync ();
-			}
-		}
-
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async Task LoadEntries ()
-		{
-			try
-			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				await App.Current.MainPage.DisplayAlert ("Field Alert", ex.Message, "OK");
 				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
 		}

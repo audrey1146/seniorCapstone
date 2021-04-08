@@ -27,20 +27,10 @@ namespace seniorCapstone.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		// Private Varibales
-		readonly IFieldDataService fieldDataService;
-		ObservableCollection<FieldTable> fieldEntries;
+		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 		private int fieldIndex = -1;
 
 		// Public Properties
-		public ObservableCollection<FieldTable> FieldEntries
-		{
-			get => this.fieldEntries;
-			set
-			{
-				this.fieldEntries = value;
-				OnPropertyChanged ();
-			}
-		}
 		public ICommand RunPivotCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
 		public IList<string> FieldOptions { get; set; }
@@ -64,10 +54,6 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public RunPivotViewModel ()
 		{
-			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.FieldEntries = new ObservableCollection<FieldTable> ();
-
-			this.FieldOptions = new ObservableCollection<string> ();
 			this.GetPivots ();
 
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
@@ -80,16 +66,8 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void GetPivots ()
 		{
-			await this.LoadEntries ();
-			await this.updateStoppedPivots ();
-
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.PivotRunning == false && field.UID == App.UserID)
-				{
-					this.FieldOptions.Add (field.FieldName);
-				}
-			}
+			await this.fieldBackend.updateStoppedPivots ();
+			this.FieldOptions = (IList<string>)this.fieldBackend.getAllUsersStoppedFields ();
 			this.FieldOptions = this.FieldOptions.OrderBy (q => q).ToList ();
 		}
 
@@ -112,14 +90,14 @@ namespace seniorCapstone.ViewModels
 			if (true == this.AreEntiresFilledOut ())
 			{
 				RainCat algorithmCalc = new RainCat ();
-				FieldTable updatedField = this.getSelectedField ();
+				FieldTable updatedField = this.fieldBackend.getSpecificFieldByName (this.FieldOptions[this.FieldIndex]);
 
 				if (updatedField != null)
 				{
 					updatedField.PivotRunning = true;
-					updatedField.StopTime = algorithmCalc.TotalRunTime (ref updatedField);
+					updatedField.StopTime = RainCat.TotalRunTime (ref updatedField);
 
-					await this.fieldDataService.EditEntryAsync (updatedField);
+					await this.fieldBackend.UpdateField (updatedField);
 					await Application.Current.MainPage.Navigation.PopModalAsync ();
 				}
 				else
@@ -146,61 +124,6 @@ namespace seniorCapstone.ViewModels
 
 
 		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async Task LoadEntries ()
-		{
-			try
-			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine ("Loading Fields Failed");
-				Debug.WriteLine (ex.Message);
-				await Application.Current.MainPage.Navigation.PopModalAsync ();
-			}
-		}
-
-
-		/// <summary>
-		/// If any of the pivots are past their stop time then update the database
-		/// </summary>
-		private async Task updateStoppedPivots ()
-		{
-			/*
-				YYYY MM DD hh:mm:ss
-				DateTime dt = new DateTime(2008, 3, 9, 16, 5, 7);
-				String.Format("{0:s}", dt);  // "2008-03-09T16:05:07"  SortableDateTime
-			 */
-
-			FieldTable updatedField = new FieldTable ();
-			DateTime currentTime = DateTime.Now;
-			DateTime stopTime;
-			string format = "s";
-
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.PivotRunning == true && field.UID == App.UserID)
-				{
-					stopTime = DateTime.ParseExact (field.StopTime, format, CultureInfo.InvariantCulture);
-
-					if (DateTime.Compare (currentTime, stopTime) >= 0)
-					{
-						updatedField.assignTo (field);
-						updatedField.PivotRunning = false;
-						updatedField.StopTime = string.Empty;
-
-						await this.fieldDataService.EditEntryAsync (updatedField);
-						await Application.Current.MainPage.Navigation.PopAsync ();
-					}
-				}
-			}
-		}
-
-
-		/// <summary>
 		/// Verfies that the user input data for all entries
 		/// </summary>
 		/// <returns>
@@ -210,27 +133,6 @@ namespace seniorCapstone.ViewModels
 		private bool AreEntiresFilledOut ()
 		{
 			return (-1 != this.FieldIndex);
-		}
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		private FieldTable getSelectedField ()
-		{
-			FieldTable selected = null;
-
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.FieldName == this.FieldOptions[FieldIndex] 
-					&& field.PivotRunning == false && field.UID == App.UserID)
-				{
-					selected = field;
-				}
-			}
-
-			return (selected);
 		}
 	}
 }

@@ -21,8 +21,7 @@ namespace seniorCapstone.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		// Private Varibales
-		readonly IUserDataService userDataService;
-		ObservableCollection<UserTable> userEntries;
+		private UserSingleton userBackend = UserSingleton.Instance;
 
 		private string username = string.Empty;
 		private string password = string.Empty;
@@ -31,16 +30,6 @@ namespace seniorCapstone.ViewModels
 		private string email = string.Empty;
 
 		// Public Properties
-		public ObservableCollection<UserTable> UserEntries
-		{
-			get => this.userEntries;
-			set
-			{
-				this.userEntries = value;
-				OnPropertyChanged ();
-			}
-		}
-
 		public ICommand RegisterCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
 		public string UserName
@@ -110,10 +99,6 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public RegistrationViewModel ()
 		{
-			this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.UserEntries = new ObservableCollection<UserTable> ();
-			this.LoadEntries ();
-
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.RegisterCommand = new Command (this.RegisterButton_Clicked);
 		}
@@ -129,7 +114,7 @@ namespace seniorCapstone.ViewModels
 			{
 				await App.Current.MainPage.DisplayAlert ("Registration Alert", "Please Fill Out All Fields", "OK");
 			}
-			else if (false == areEntiresUnique ())
+			else if (false == userBackend.AreEntiresUnique (this.UserName, this.Email))
 			{
 				await App.Current.MainPage.DisplayAlert ("Registration Alert", "Username or Email Already Exists", "OK");
 			}
@@ -144,7 +129,7 @@ namespace seniorCapstone.ViewModels
 					Email = this.Email
 				};
 
-				await this.userDataService.AddEntryAsync (newUser);
+				await this.userBackend.AddUser (newUser);
 				await Application.Current.MainPage.Navigation.PopModalAsync ();
 			}
 		}
@@ -170,24 +155,6 @@ namespace seniorCapstone.ViewModels
 
 
 		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async void LoadEntries ()
-		{
-			try
-			{
-				var entries = await userDataService.GetEntriesAsync ();
-				this.UserEntries = new ObservableCollection<UserTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				await App.Current.MainPage.DisplayAlert ("Registration Alert", ex.Message, "OK");
-				await Application.Current.MainPage.Navigation.PopModalAsync ();
-			}
-		}
-
-
-		/// <summary>
 		/// Verfies that the user input data for all entries
 		/// </summary>
 		/// <returns>
@@ -201,26 +168,6 @@ namespace seniorCapstone.ViewModels
 					false == string.IsNullOrEmpty (this.LastName) &&
 					false == string.IsNullOrEmpty (this.Password) &&
 					false == string.IsNullOrEmpty (this.Email));
-		}
-
-
-		/// <summary>
-		/// Verfies that the user input unqiue data for the Email and Username
-		/// </summary>
-		/// <returns>
-		/// True if the values are unique; otherwise false
-		/// </returns>
-		private bool areEntiresUnique ()
-		{
-			foreach (UserTable user in this.UserEntries)
-			{
-				if (user.UserName == UserName || user.Email == Email)
-				{
-					return (false);
-				}
-			}
-
-			return (true);
 		}
 	}
 }

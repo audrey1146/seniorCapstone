@@ -20,20 +20,8 @@ namespace seniorCapstone.Views
 		public event EventHandler<object> CallbackEvent;
 
 		// Private Variables
-		readonly IUserDataService userDataService;
-		ObservableCollection<UserTable> userEntries;
+		private UserSingleton userBackend = UserSingleton.Instance;
 		UserTable singleUser;
-
-		// Public Properties
-		public ObservableCollection<UserTable> UserEntries
-		{
-			get => this.userEntries;
-			set
-			{
-				this.userEntries = value;
-				OnPropertyChanged ();
-			}
-		}
 
 
 		/// <summary>
@@ -42,8 +30,6 @@ namespace seniorCapstone.Views
 		public EditAccountPopupPage ()
 		{
 			InitializeComponent ();
-			this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.UserEntries = new ObservableCollection<UserTable> ();
 			this.setPlaceholders ();
 		}
 
@@ -53,45 +39,17 @@ namespace seniorCapstone.Views
 		/// </summary>
 		private async void setPlaceholders ()
 		{
-			int count = 0;
-
-			await this.LoadEntries ();
-
-			foreach (UserTable user in this.UserEntries)
-			{
-				if (user.UID == App.UserID)
-				{
-					count++;
-					singleUser = user;
-					firstname.Placeholder = user.FirstName;
-					lastname.Placeholder = user.LastName;
-					email.Placeholder = user.Email;
-				}
-			}
-
-			if (count != 1)
+			this.singleUser = this.userBackend.getSpecificUser (App.UserID);
+			if (this.singleUser == null)
 			{
 				Debug.WriteLine ("Finding Current User Failed");
 				await PopupNavigation.Instance.PopAsync (true);
 			}
-		}
-
-
-		/// <summary>
-		/// Get the current user data to display as place holders
-		/// </summary>
-		private async Task LoadEntries ()
-		{
-			try
+			else
 			{
-				var entries = await userDataService.GetEntriesAsync ();
-				this.UserEntries = new ObservableCollection<UserTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine ("Finding Current User Failed");
-				Debug.WriteLine (ex.Message);
-				await PopupNavigation.Instance.PopAsync (true);
+				firstname.Placeholder = singleUser.FirstName;
+				lastname.Placeholder = singleUser.LastName;
+				email.Placeholder = singleUser.Email;
 			}
 		}
 
@@ -130,7 +88,7 @@ namespace seniorCapstone.Views
 				if (false == string.IsNullOrEmpty (email.Text))
 				{
 					// Before update check that the unique values don't already exist
-					if (true == doesEmailExist ())
+					if (true == this.userBackend.IsEmailUnique (email.Text))
 					{
 						await App.Current.MainPage.DisplayAlert ("Update Account Alert", "Email Already Exists", "OK");
 						bPopOff = false;
@@ -144,7 +102,7 @@ namespace seniorCapstone.Views
 			
 			if (true == bPopOff)
 			{
-				await this.userDataService.EditEntryAsync (newUser);
+				await this.userBackend.UpdateUser (newUser);
 
 				await PopupNavigation.Instance.PopAsync (true);
 				CallbackEvent?.Invoke (this, EventArgs.Empty);
@@ -160,24 +118,6 @@ namespace seniorCapstone.Views
 		public async void CancelButton_Clicked (object sender, EventArgs args)
 		{
 			await PopupNavigation.Instance.PopAsync (true);
-		}
-
-
-		/// <summary>
-		/// Query the database to check whether the email exists
-		/// in the entire system
-		/// </summary>
-		private bool doesEmailExist ()
-		{
-			foreach (UserTable user in this.UserEntries)
-			{
-				if (user.Email == email.Text)
-				{
-					return (false);
-				}
-			}
-
-			return (true);
 		}
 
 

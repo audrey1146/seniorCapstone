@@ -22,24 +22,13 @@ namespace seniorCapstone.ViewModels
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		// Private Variables
-		readonly IUserDataService userDataService;
-		ObservableCollection<UserTable> userEntries;
 
+		// Private Variables
+		private UserSingleton userBackend = UserSingleton.Instance;
 		private string username = string.Empty;
 		private string password = string.Empty;
 
 		// Public Properties
-		public ObservableCollection<UserTable> UserEntries
-		{
-			get => this.userEntries;
-			set
-			{
-				this.userEntries = value;
-				OnPropertyChanged ();
-			}
-		}
-
 		public ICommand LoginCommand { get; set; }
 		public ICommand RegistrationCommand { get; set; }
 		public string UserName
@@ -72,9 +61,6 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public LoginViewModel ()
 		{
-			this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.UserEntries = new ObservableCollection<UserTable> ();
-
 			this.LoginCommand = new Command (this.LoginButton_Clicked);
 			this.RegistrationCommand = new Command (this.RegistrationButton_Clicked);
 		}
@@ -86,15 +72,13 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public async void LoginButton_Clicked ()
 		{
-			await this.LoadEntries ();
-
 			if (false == areEntiresFilledOut ())
 			{
 				await App.Current.MainPage.DisplayAlert ("Login Alert", "Please Fill Out All Fields", "OK");
 			}
 			else
 			{
-				if (true == areCredentialsCorrect (UserName, Password))
+				if (true == userBackend.areCredentialsCorrect (UserName, Password))
 				{
 					App.IsUserLoggedIn = true;
 					Application.Current.MainPage = new NavigationPage (new MainPage ());
@@ -140,53 +124,5 @@ namespace seniorCapstone.ViewModels
 			return (false == string.IsNullOrEmpty (this.UserName) &&
 					false == string.IsNullOrEmpty (this.Password));
 		}
-
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async Task LoadEntries ()
-		{
-			try
-			{
-				var entries = await userDataService.GetEntriesAsync ();
-				this.UserEntries = new ObservableCollection<UserTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				await App.Current.MainPage.DisplayAlert ("Login Alert", ex.Message, "OK");
-			}
-		}
-
-
-		/// <summary>
-		/// Verifies whether the credentials the user input are correct by querying 
-		/// into the user table.
-		/// </summary>
-		/// <param name="UserNameEntry"></param>
-		/// <param name="PasswordEntry"></param>
-		/// <returns></returns>
-		private bool areCredentialsCorrect (string UserNameEntry, string PasswordEntry)
-		{
-			int count = 0;
-
-			foreach (UserTable user in this.UserEntries)
-			{
-				if (user.UserName == UserNameEntry && user.Password == PasswordEntry)
-				{
-					App.UserID = user.UID;
-					count++;
-				}
-			}
-
-			if (count != 1)
-			{
-				App.UserID = string.Empty;
-				return (false);
-			}
-
-			return (true);
-		}
-
 	}
 }

@@ -15,17 +15,17 @@ namespace seniorCapstone.Models
 		public static Dictionary<string, Tuple<double, double>> InfiltrationConstants = new Dictionary<string, Tuple<double, double>> ()
 		{
 			{ "Clay", new Tuple<double, double>(.0620, .661) },
-			{ "SiltyClay", new Tuple<double, double>(.0701, .683) },
-			{ "SiltyClayLoam", new Tuple<double, double>(.0925, .720) },
-			{ "SandyClay", new Tuple<double, double>(.0996, .729) },
-			{ "ClayLoam", new Tuple<double, double>(.1064, .736) },
-			{ "SandyClayLoam", new Tuple<double, double>(.1130, .742) },
-			{ "FineSandyLoam", new Tuple<double, double>(.1196, .748) },
+			{ "Silty Clay", new Tuple<double, double>(.0701, .683) },
+			{ "Silty Clay Loam", new Tuple<double, double>(.0925, .720) },
+			{ "Sandy Clay", new Tuple<double, double>(.0996, .729) },
+			{ "Clay Loam", new Tuple<double, double>(.1064, .736) },
+			{ "Sandy Clay Loam", new Tuple<double, double>(.1130, .742) },
+			{ "Fine Sandy Loam", new Tuple<double, double>(.1196, .748) },
 			{ "Loam", new Tuple<double, double>(.1321, .757) },
-			{ "FineSand", new Tuple<double, double>(.1443, .766) },
-			{ "LoamyFineSand", new Tuple<double, double>(.1560, .773) },
-			{ "LoamySand", new Tuple<double, double>(.1674, .779) },
-			{ "CourseSand", new Tuple<double, double>(.1768, .785) },
+			{ "Fine Sand", new Tuple<double, double>(.1443, .766) },
+			{ "Loamy Fine Sand", new Tuple<double, double>(.1560, .773) },
+			{ "Loamy Sand", new Tuple<double, double>(.1674, .779) },
+			{ "Course Sand", new Tuple<double, double>(.1768, .785) },
 			{ "Sand", new Tuple<double, double>(.2283, .799) },
 
 		};
@@ -37,17 +37,17 @@ namespace seniorCapstone.Models
 		public static ObservableCollection<string> SoilNames = new ObservableCollection<string> ()
 		{
 			"Clay",
-			"SiltyClay",
-			"SiltyClayLoam",
-			"SandyClay",
-			"ClayLoam",
-			"SandyClayLoam",
-			"FineSandyLoam",
+			"Silty Clay",
+			"Silty Clay Loam",
+			"Sandy Clay",
+			"Clay Loam",
+			"Sandy Clay Loam",
+			"Fine Sandy Loam",
 			"Loam",
-			"FineSand",
-			"LoamyFineSand",
-			"LoamySand",
-			"CourseSand",
+			"Fine Sand",
+			"Loamy Fine Sand",
+			"Loamy Sand",
+			"Course Sand",
 			"Sand"
 		};
 	}

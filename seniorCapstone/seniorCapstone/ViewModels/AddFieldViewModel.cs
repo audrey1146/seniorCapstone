@@ -7,38 +7,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Services;
 using seniorCapstone.Models;
 using seniorCapstone.Views;
 using Xamarin.Forms;
+using seniorCapstone.Helpers;
 
 namespace seniorCapstone.ViewModels
 {
 	class AddFieldViewModel : Helpers.Geolocation
 	{
 		//Private Varibales
-		readonly IFieldDataService fieldDataService;
-		ObservableCollection<FieldTable> fieldEntries;
-
+		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 		private string fieldName = string.Empty;
 		private int pivotIndex = -1;
 		private int soilIndex = -1;
 
 		// Public Properties
-		public ObservableCollection<FieldTable> FieldEntries
-		{
-			get => this.fieldEntries;
-			set
-			{
-				this.fieldEntries = value;
-				OnPropertyChanged ();
-			}
-		}
-
 		public ICommand AddFieldCommand { get; set; }
 		public ICommand CancelCommand { get; set; }
 		public ICommand SyncToPanelCommand { get; set; }
@@ -87,10 +74,6 @@ namespace seniorCapstone.ViewModels
 		/// </summary>
 		public AddFieldViewModel ()
 		{
-			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
-			this.FieldEntries = new ObservableCollection<FieldTable> ();
-			this.LoadEntries ();
-
 			PivotOptions = (IList<int>)Models.CenterPivotModel.PivotTypes;
 			SoilOptions = (IList<string>)Models.SoilModel.SoilNames;
 
@@ -116,11 +99,11 @@ namespace seniorCapstone.ViewModels
 		{
 			if (true == this.areEntiresFilledOut ())
 			{
-				if (true == doesFieldNameExist ())
+				if (true == this.fieldBackend.DoesFieldNameExist (this.FieldName))
 				{
 					await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Field Name Already Exists", "Ok");
 				}
-				else if (true == doesFieldLocationExist ())
+				else if (true == this.fieldBackend.DoesFieldLocationExist (this.Latitude, this.Longitude))
 				{
 					await App.Current.MainPage.DisplayAlert ("Add Field Alert", "Field Location Already Exists", "Ok");
 				}
@@ -140,8 +123,9 @@ namespace seniorCapstone.ViewModels
 					};
 
 					// TODO call RainCat to set the WaterUsage
+					newField.WaterUsage = RainCat.WaterUsage (ref newField);
 
-					await this.fieldDataService.AddEntryAsync (newField);
+					await this.fieldBackend.AddField (newField);
 					await Application.Current.MainPage.Navigation.PopModalAsync ();
 				}
 			}
@@ -163,61 +147,6 @@ namespace seniorCapstone.ViewModels
 			popupPage.CallbackEvent += (object sender, object e) => this.getUserLocation ();
 
 			PopupNavigation.Instance.PushAsync (popupPage);
-		}
-
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
-		private async void LoadEntries ()
-		{
-			try
-			{
-				var entries = await fieldDataService.GetEntriesAsync ();
-				this.FieldEntries = new ObservableCollection<FieldTable> (entries);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine ("Loading Fields Failed");
-				Debug.WriteLine (ex.Message);
-				await Application.Current.MainPage.Navigation.PopModalAsync ();
-			}
-		}
-
-
-		/// <summary>
-		/// Query the database to check whether the field name already exists for the 
-		/// current user
-		/// </summary>
-		private bool doesFieldNameExist ()
-		{
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.FieldName == this.FieldName && field.UID == App.UserID)
-				{
-					return (true);
-				}
-			}
-
-			return (false);
-		}
-
-
-		/// <summary>
-		/// Query the database to check whether the field location already exists for the 
-		/// current user
-		/// </summary>
-		private bool doesFieldLocationExist ()
-		{
-			foreach (FieldTable field in this.FieldEntries)
-			{
-				if (field.Latitude == this.Latitude && field.Longitude == this.Longitude)
-				{
-					return (true);
-				}
-			}
-
-			return (false);
 		}
 
 

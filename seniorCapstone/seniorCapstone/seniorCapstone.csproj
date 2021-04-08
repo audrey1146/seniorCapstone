@@ -12,14 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\fieldSingleton.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Services\fieldSingleton.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Esri.ArcGISRuntime" Version="100.9.0" />
     <PackageReference Include="Esri.ArcGISRuntime.Xamarin.Forms" Version="100.9.0" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
