@@ -10,6 +10,7 @@ namespace seniorCapstone
 {
 	public partial class MainPage : ContentPage
 	{
+		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 		private const string OWM_APPID = "3ea77495368d801751fbd9266236f508";
 		private Location userLocation;
 
@@ -58,7 +59,7 @@ namespace seniorCapstone
 				if (status != PermissionStatus.Granted)
 				{
 					await App.Current.MainPage.DisplayAlert ("Weather Alert",
-						"EvenStreamin requires access to your location in order to display weather", "Ok");
+						"EvenStreamin requires access to your location to display weather", "Ok");
 					return;
 				}
 			}
@@ -84,15 +85,26 @@ namespace seniorCapstone
 				try
 				{
 					var weatherInfo = JsonConvert.DeserializeObject<WeatherInfo> (result.Response);
-					//descriptionTxt.Text = weatherInfo.weather[0].description.ToUpper ();
-					//iconImg.Source = $"w{weatherInfo.weather[0].icon}";
-					//cityTxt.Text = weatherInfo.name.ToUpper ();
+					
+					if (weatherInfo.weather[0].main == "Clear")
+					{
+						weatherframe.BackgroundColor = Color.LemonChiffon;
+					}
+					else
+					{
+						weatherframe.BackgroundColor = Color.Gainsboro;
+					}
+					
 					temperatureTxt.Text = weatherInfo.main.temp.ToString ("0");
 					humidityTxt.Text = $"{weatherInfo.main.humidity}%";
 					pressureTxt.Text = $"{weatherInfo.main.pressure} hPa";
 					windTxt.Text = $"{weatherInfo.wind.speed} mph";
 					cloudinessTxt.Text = $"{weatherInfo.clouds.all}%";
 
+					//descriptionTxt.Text = weatherInfo.weather[0].description.ToUpper ();
+					//descriptionTxt.Text = weatherInfo.weather[0].description.ToUpper ();
+					//iconImg.Source = $"w{weatherInfo.weather[0].icon}";
+					//cityTxt.Text = weatherInfo.name.ToUpper ();
 					//var dt = new DateTime ().ToUniversalTime ().AddSeconds (weatherInfo.dt);
 					//dateTxt.Text = dt.ToString ("dddd, MMM dd").ToUpper ();
 				}

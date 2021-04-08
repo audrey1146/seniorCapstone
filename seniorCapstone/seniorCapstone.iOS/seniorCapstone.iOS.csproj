@@ -188,15 +188,20 @@
     <BundleResource Include="Resources\RainCatLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\gauge.png" />
+    <BundleResource Include="Resources\WeatherHumidity.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\humidity.png" />
+    <BundleResource Include="Resources\WeatherWind.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\wind.png" />
+    <BundleResource Include="Resources\WeatherPressure.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\cloudiness.png" />
+    <BundleResource Include="Resources\WeatherClouds.png" />
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

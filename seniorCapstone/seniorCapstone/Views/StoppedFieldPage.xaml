@@ -4,7 +4,7 @@
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.StoppedFieldPage"
 			 Padding="20"
-			 Title="EvenStreamin"
+			 Title="{Binding StoppedField.FieldName}"
 			 BackgroundColor="White">
 
 	<ContentPage.BindingContext>
@@ -58,19 +58,20 @@
 					CornerRadius="10"
 					BackgroundColor="White"				
 					TextColor="Gray" 
+					FontAttributes="Bold"
 					VerticalOptions="End" 
 					HorizontalOptions="Center"
 					Command="{Binding EditFieldCommand}">
 				</Button>
 
-				<Grid>
+				<Grid RowSpacing="{OnPlatform Android='0', iOS='10'}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*" />
-						<RowDefinition Height="2*" />
+						<RowDefinition Height="3*" />
 						<RowDefinition Height="1*" />
-						<RowDefinition Height="2*" />
+						<RowDefinition Height="3*" />
 						<RowDefinition Height="1*" />
-						<RowDefinition Height="2*" />
+						<RowDefinition Height="3*" />
 					</Grid.RowDefinitions>
 
 					<Grid.ColumnDefinitions>
@@ -119,43 +120,6 @@
 						Text="{Binding StoppedField.SoilType}"
 						Style="{DynamicResource DisplayInfo}"/>
 				</Grid>
-
-				<!--<Grid 
-					RowSpacing="0"
-					HorizontalOptions="FillAndExpand">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="30"/>
-						<RowDefinition Height="40"/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="5*" />
-						<ColumnDefinition Width="5*" />
-					</Grid.ColumnDefinitions>
-
-
-					<Label Text="Latitude" TextColor="#000000" Padding="0,5,0,0" Grid.Row="0" Grid.Column="0"/>
-					<Frame 
-						Grid.Row="1" Grid.Column="0"
-						Style="{DynamicResource BorderFrames}">
-						<Label 
-							x:Name="latitude"
-							FontSize="Small"
-							Text="{Binding StoppedField.Latitude}"
-							Style="{DynamicResource AccountInfo}"/>
-					</Frame>
-
-					<Label Text="Longitude" TextColor="#000000" Padding="0,5,0,0" Grid.Row="0" Grid.Column="1"/>
-					<Frame 
-						Grid.Row="1" Grid.Column="1"
-						Style="{DynamicResource BorderFrames}">
-						<Label 
-							x:Name="longitude"
-							FontSize="Small"
-							Text="{Binding StoppedField.Longitude}"
-							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
-					</Frame>
-
-				</Grid>-->
 			</StackLayout>
 			<StackLayout
 				AbsoluteLayout.LayoutBounds="0, .9, 1, .1" 
@@ -180,6 +144,7 @@
 						CornerRadius="10"
 						BackgroundColor="#87baed"				
 						TextColor="White" 
+						FontAttributes="Bold"
 						VerticalOptions="End" 
 						HorizontalOptions="Start"
 						Command="{Binding RunPivotCommand}">
@@ -191,7 +156,8 @@
 						Text="View Map" 
 						CornerRadius="10"
 						BackgroundColor="#ccb187"				
-						TextColor="White" 
+						TextColor="White"
+						FontAttributes="Bold"
 						VerticalOptions="End" 
 						HorizontalOptions="Start"
 						Command="{Binding ViewMapCommand}">

@@ -52,8 +52,12 @@
 			</Grid.ColumnDefinitions>
 
 
-			<Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="#d9ae6a" CornerRadius="15" HasShadow="False">
-				<Grid RowSpacing="2" ColumnSpacing="2">
+			<!-- BackgroundColor="#d9ae6a"  Bisque DarkKhaki -->
+			<!--  Cloudy or Rainy:  Gainsboro -->
+			<!--  Sunny:  LemonChiffon  LightGoldenrodYellow  Moccasin-->
+			<!-- IMAGES:   https://www.flaticon.com/packs/weather-142     https://www.flaticon.com/packs/weather-214   https://www.flaticon.com/packs/weather-255  -->
+			<Frame x:Name="weatherframe" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" CornerRadius="15" HasShadow="False">
+				<Grid RowSpacing="2" ColumnSpacing="4.5">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="4*" />
 						<RowDefinition Height="6*" />
@@ -69,41 +73,41 @@
 
 					<StackLayout Grid.ColumnSpan="4" Grid.Row="0" Orientation="Vertical" Spacing="0" HorizontalOptions="CenterAndExpand">
 						<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="0">
-							<Label x:Name="temperatureTxt" TextColor="White" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
-								<Label Text="°" TextColor="White" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
+							<Label x:Name="temperatureTxt" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
+							<Label Text="°" TextColor="Black" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
 						</StackLayout>
-						<Label Text="Fahrenheit" TextColor="White" FontSize="Small" HorizontalOptions="Center"/>
+						<Label Text="Fahrenheit" TextColor="Black" FontSize="Small" HorizontalOptions="Center"/>
 					</StackLayout>
 
 					<StackLayout Grid.Column="0" Grid.Row="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-						<Image Source="humidity.png" HeightRequest="25" HorizontalOptions="Center"/>
+						<Image Source="WeatherHumidity.png" HeightRequest="30" HorizontalOptions="Center"/>
 						<StackLayout>
 							<Label x:Name="humidityTxt" Style="{DynamicResource WeatherMainPage}"/>
-								<Label Text="Humidity" TextColor="White" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
+							<Label Text="Humidity" TextColor="Black" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
 						</StackLayout>
 					</StackLayout>
 
 					<StackLayout Grid.Column="1" Grid.Row="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-						<Image Source="wind.png" HeightRequest="25" HorizontalOptions="Center"/>
+						<Image Source="WeatherWind.png" HeightRequest="30" HorizontalOptions="Center"/>
 						<StackLayout>
 							<Label x:Name="windTxt" Style="{DynamicResource WeatherMainPage}"/>
-								<Label Text="Wind" TextColor="White" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
+							<Label Text="Wind" TextColor="Black" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
 						</StackLayout>
 					</StackLayout>
 
 					<StackLayout Grid.Column="2" Grid.Row="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-						<Image Source="gauge.png" HeightRequest="25" HorizontalOptions="Center"/>
+						<Image Source="WeatherPressure.png" HeightRequest="30" HorizontalOptions="Center"/>
 						<StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
 							<Label x:Name="pressureTxt" Style="{DynamicResource WeatherMainPage}"/>
-								<Label Text="Pressure" TextColor="White" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
+							<Label Text="Pressure" TextColor="Black" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
 						</StackLayout>
 					</StackLayout>
 
 					<StackLayout Grid.Column="3" Grid.Row="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-						<Image Source="cloudiness.png" HeightRequest="25" HorizontalOptions="Center"/>
+						<Image Source="WeatherClouds.png" HeightRequest="30" HorizontalOptions="Center"/>
 						<StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
 							<Label x:Name="cloudinessTxt" Style="{DynamicResource WeatherMainPage}"/>
-							<Label Text="Cloudiness" TextColor="White" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
+							<Label Text="Cloudiness" TextColor="Black" Margin="0,-5,0,0" FontSize="Small" HorizontalOptions="Center"/>
 						</StackLayout>
 					</StackLayout>
 
@@ -138,6 +142,7 @@
 				Aspect="AspectFit"
 				Command="{Binding ChangePageCommand}" CommandParameter="AccountPage"
 				BackgroundColor="#bc9cb4" Grid.Column="1" Grid.Row="2" CornerRadius="20">
+				<!--  #bc9cb4 -->
 			</ImageButton>
 
 		</Grid>

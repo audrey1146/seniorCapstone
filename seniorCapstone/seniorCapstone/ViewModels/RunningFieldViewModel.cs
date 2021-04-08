@@ -11,6 +11,8 @@ using seniorCapstone.Models;
 using System.Diagnostics;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System;
+using System.Globalization;
 
 namespace seniorCapstone.ViewModels
 {
@@ -19,6 +21,8 @@ namespace seniorCapstone.ViewModels
 		// Private Variables
 		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 		private FieldTable runningField = null;
+		private string parsedStopTime;
+		private string parsedWaterUsage;
 
 		// Public Properties
 		public ICommand StopPivotCommand { get; set; }
@@ -31,6 +35,30 @@ namespace seniorCapstone.ViewModels
 				{
 					this.runningField = value;
 					base.OnPropertyChanged (nameof (this.RunningField));
+				}
+			}
+		}
+		public string ParsedStopTime
+		{
+			get => this.parsedStopTime;
+			set
+			{
+				if (this.parsedStopTime != value)
+				{
+					this.parsedStopTime = value;
+					base.OnPropertyChanged (nameof (this.parsedStopTime));
+				}
+			}
+		}
+		public string ParsedWaterUsage
+		{
+			get => this.parsedWaterUsage;
+			set
+			{
+				if (this.parsedWaterUsage != value)
+				{
+					this.parsedWaterUsage = value;
+					base.OnPropertyChanged (nameof (this.parsedWaterUsage));
 				}
 			}
 		}
@@ -74,6 +102,31 @@ namespace seniorCapstone.ViewModels
 				Debug.WriteLine ("Finding Current Field Failed");
 				await Application.Current.MainPage.Navigation.PopAsync ();
 			}
+
+			this.parseTime ();
+			this.parseWaterUsage ();
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void parseTime ()
+		{
+			string format = "s";
+			DateTime stopTime = DateTime.ParseExact (this.RunningField.StopTime, format, CultureInfo.InvariantCulture);
+
+			this.ParsedStopTime = String.Format ("{0:f}", stopTime);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void parseWaterUsage ()
+		{
+			double temp = Math.Round (this.RunningField.WaterUsage, 3);
+			this.ParsedWaterUsage = temp.ToString ();
 		}
 	}
 }

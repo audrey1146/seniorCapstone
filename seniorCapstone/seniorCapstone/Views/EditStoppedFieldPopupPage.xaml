@@ -25,15 +25,25 @@
 
 
 				<Entry Grid.Row="0"
+					BackgroundColor="LightGray"
+					PlaceholderColor="Gray"
+					TextColor="Black"
+					FontSize="Large"
 					x:Name="fieldname"
 					Placeholder="Field Name"/>
 
 				<Picker Grid.Row="1"
+					BackgroundColor="LightGray"
+					TextColor="Black"
+					FontSize="Large"
 					x:Name="pivotlength" 
 					Title="Select Pivot Length">
 				</Picker>
 
 				<Picker Grid.Row="2"
+					BackgroundColor="LightGray"
+					TextColor="Black"
+					FontSize="Large"
 					x:Name="soiltype" 
 					Title="Select Soil Type">
 				</Picker>
@@ -52,12 +62,14 @@
 							Margin="20,20,20,0"
 							Text="Cancel"
 							BackgroundColor="#7C2C29" 
+							TextColor="Black"
 							Clicked="CancelButton_Clicked">
 				</Button>
 				<Button Grid.Row="0" Grid.Column="1"
 							Margin="20,20,20,0"
 							Text="Submit"
 							BackgroundColor="#617C29"
+							TextColor="Black"
 							Clicked="SubmitButton_Clicked">
 				</Button>
 			</Grid>

@@ -27,6 +27,7 @@
 			Margin="30,30,30,0"
 			Text="Sync"
 			BackgroundColor="#617C29"
+			TextColor="White"
 			Clicked="SyncButton_Clicked"
 			Style="{DynamicResource LoginButtons}">
 		</Button>

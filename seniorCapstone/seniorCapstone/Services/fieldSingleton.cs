@@ -241,13 +241,21 @@ namespace seniorCapstone.Services
 			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
 			this.fieldEntries = new ObservableCollection<FieldTable> ();
 
-			this.LoadFieldEntries ();
+			this.LoadMediator ();
 		}
 
 		/// <summary>
 		/// Calls the API and loads the returned data into a member variable
 		/// </summary>
-		private async void LoadFieldEntries ()
+		private async void LoadMediator ()
+		{
+			await this.LoadFieldEntries ();
+		}
+
+		/// <summary>
+		/// Calls the API and loads the returned data into a member variable
+		/// </summary>
+		private async Task LoadFieldEntries ()
 		{
 			try
 			{

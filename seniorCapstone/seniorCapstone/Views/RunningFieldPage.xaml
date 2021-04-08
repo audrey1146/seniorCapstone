@@ -4,7 +4,7 @@
 			 xmlns:ViewModel="clr-namespace:seniorCapstone.ViewModels"
              x:Class="seniorCapstone.Views.RunningFieldPage"
 			 Padding="20"
-			 Title="EvenStreamin"
+			 Title="{Binding RunningField.FieldName}"
 			 BackgroundColor="White">
 
 	<ContentPage.BindingContext>
@@ -44,21 +44,27 @@
 			
 			<ImageButton
                 Source="Logo"
+				HeightRequest="100"
+				WidthRequest="100"
 				Style="{DynamicResource LogoImage}" />
 
 			<StackLayout 
-				AbsoluteLayout.LayoutBounds="0, 0.5, 1, 0.5" 
+				AbsoluteLayout.LayoutBounds="0, 0.5, 1, 0.6" 
 				AbsoluteLayout.LayoutFlags="All"
 				Spacing="10">
 
-				<Grid>
+				<Grid RowSpacing="{OnPlatform Android='0', iOS='10'}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*" />
-						<RowDefinition Height="2*" />
+						<RowDefinition Height="{OnPlatform Android='2.5*', iOS='3*'}" />
 						<RowDefinition Height="1*" />
-						<RowDefinition Height="2*" />
+						<RowDefinition Height="{OnPlatform Android='2.5*', iOS='3*'}" />
 						<RowDefinition Height="1*" />
-						<RowDefinition Height="2*" />
+						<RowDefinition Height="{OnPlatform Android='4*', iOS='5*'}" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="{OnPlatform Android='2*', iOS='3*'}" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="{OnPlatform Android='2*', iOS='3*'}" />
 					</Grid.RowDefinitions>
 
 					<Grid.ColumnDefinitions>
@@ -66,11 +72,11 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 
-					<Label Grid.Row="0"
+					<Label Grid.Row="0" Grid.ColumnSpan="2"
 						Text="Field Name" 
 						   FontAttributes="Italic"
 						Style="{DynamicResource DisplayInfoHeader}"/>
-					<Label Grid.Row="1"
+					<Label Grid.Row="1" Grid.ColumnSpan="2"
 						x:Name="fieldname"
 						Text="{Binding RunningField.FieldName}"
 						Style="{DynamicResource DisplayInfo}"/>
@@ -106,60 +112,29 @@
 						x:Name="soilType" Grid.Column="1"
 						Text="{Binding RunningField.SoilType}"
 						Style="{DynamicResource DisplayInfo}"/>
+
+					<Label Grid.Row="6" Grid.ColumnSpan="2"
+						Text="End of Full Rotation" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="7"
+						x:Name="endtime" Grid.ColumnSpan="2"
+						Text="{Binding ParsedStopTime}"
+						Style="{DynamicResource DisplayInfo}"/>
+
+					<Label Grid.Row="8" Grid.ColumnSpan="2"
+						Text="Estimated Water Usage" 
+						Style="{DynamicResource DisplayInfoHeader}"/>
+					<Label Grid.Row="9"
+						x:Name="waterusage" Grid.ColumnSpan="2"
+						Text="{Binding ParsedWaterUsage, StringFormat='{0} millimeters'}"
+						Style="{DynamicResource DisplayInfo}"/>
 				</Grid>
-				
-
-				<!--<Grid 
-					RowSpacing="0"
-					HorizontalOptions="FillAndExpand">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="30"/>
-						<RowDefinition Height="40"/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="5*" />
-						<ColumnDefinition Width="5*" />
-					</Grid.ColumnDefinitions>
-
-
-					<Label Text="Latitude" TextColor="#000000" Padding="0,5,0,0" Grid.Row="0" Grid.Column="0"/>
-					<Frame 
-						Grid.Row="1" Grid.Column="0"
-						Style="{DynamicResource BorderFrames}">
-						<Label 
-							x:Name="latitude"
-							FontSize="Small"
-							Text="{Binding RunningField.Latitude}"
-							Style="{DynamicResource AccountInfo}"/>
-					</Frame>
-
-					<Label Text="Longitude" TextColor="#000000" Padding="0,5,0,0" Grid.Row="0" Grid.Column="1"/>
-					<Frame 
-						Grid.Row="1" Grid.Column="1"
-						Style="{DynamicResource BorderFrames}">
-						<Label 
-							x:Name="longitude"
-							FontSize="Micro"
-							Text="122.450000000000000W"
-							Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
-					</Frame>
-
-				</Grid>-->
-
-				<!--<Label 
-					Text="Running Stats / ArgGIS info will go here" 
-					TextColor="#000000" 
-					Padding="0" >
-				</Label>
-				<Frame 
-					Style="{DynamicResource BorderFrames}">
-					<Label 
-						Style="{DynamicResource AccountInfo}" TextColor="#000000"/>
-				</Frame>-->
 			</StackLayout>
 
+
+
 			<StackLayout
-				AbsoluteLayout.LayoutBounds="0, .9, 1, .1" 
+				AbsoluteLayout.LayoutBounds="0, .95, 1, .1" 
 				AbsoluteLayout.LayoutFlags="All"
 				Spacing="5">
 				<Button
@@ -169,6 +144,7 @@
 					CornerRadius="10"
 					BackgroundColor="IndianRed"				
 					TextColor="White" 
+					FontAttributes="Bold"
 					VerticalOptions="End" 
 					HorizontalOptions="Start"
 					IsEnabled="True"
