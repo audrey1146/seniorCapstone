@@ -39,11 +39,11 @@
 
 	<ContentPage.Content>
 
-		<Grid BackgroundColor="FloralWhite" Padding="20" RowSpacing="20" ColumnSpacing="20">
+		<Grid BackgroundColor="White" Padding="20" RowSpacing="20" ColumnSpacing="20">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="3*" />
-				<RowDefinition Height="2.7*" />
-				<RowDefinition Height="2.7*" />
+				<RowDefinition Height="{OnPlatform Android='2*', iOS='2.7*'}" />
+				<RowDefinition Height="{OnPlatform Android='2*', iOS='2.7*'}"/>
 			</Grid.RowDefinitions>
 
 			<Grid.ColumnDefinitions>
@@ -54,12 +54,10 @@
 
 			<!-- BackgroundColor="#d9ae6a"  Bisque DarkKhaki -->
 			<!--  Cloudy or Rainy:  Gainsboro -->
-			<!--  Sunny:  LemonChiffon  LightGoldenrodYellow  Moccasin-->
+			<!--  Sunny: #fcee9d LemonChiffon  LightGoldenrodYellow  Moccasin-->
 			<!-- IMAGES:   https://www.flaticon.com/packs/weather-142     https://www.flaticon.com/packs/weather-214   https://www.flaticon.com/packs/weather-255  -->
 			<Frame 
 				x:Name="weatherframe"
-				
-				BackgroundColor="Gainsboro" 
 				Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" CornerRadius="15" 
 				HasShadow="False">
 				

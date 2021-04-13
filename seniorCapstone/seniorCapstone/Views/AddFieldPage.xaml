@@ -33,8 +33,8 @@
 				</ImageButton>
 			</Grid>-->
 
-			<StackLayout 
-                AbsoluteLayout.LayoutBounds="0,.5,1,.6"
+			<StackLayout   
+				AbsoluteLayout.LayoutBounds="{OnPlatform Android='0,.6,1,.6', iOS='0,.4,1,.5'}"
                 AbsoluteLayout.LayoutFlags="All"
                 Spacing="15"
                 VerticalOptions="EndAndExpand">
@@ -97,7 +97,7 @@
 						Grid.Row="0" Grid.Column="1"
 						x:Name="latitude"
 						Placeholder="Latitude"
-						FontSize="Medium"
+						FontSize="Large"
 						TextColor="Gray"
 						BackgroundColor="LightGray"
 						Text="{Binding Latitude}">
@@ -107,7 +107,7 @@
 						Grid.Row="1" Grid.Column="1"
 						x:Name="longitude"
 						Placeholder="Longitude"
-						FontSize="Medium"
+						FontSize="Large"
 						TextColor="Gray"
 						BackgroundColor="LightGray"
 						Text="{Binding Longitude}">

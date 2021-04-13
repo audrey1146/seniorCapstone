@@ -88,7 +88,9 @@ namespace seniorCapstone
 					
 					if (weatherInfo.weather[0].main == "Clear")
 					{
-						weatherframe.BackgroundColor = Color.LemonChiffon;
+						//weatherframe.BackgroundColor = Color.LemonChiffon;
+
+						weatherframe.BackgroundColor = Color.FromRgb (255, 247, 180);
 					}
 					else
 					{
