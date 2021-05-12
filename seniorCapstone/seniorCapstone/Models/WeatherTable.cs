@@ -1,4 +1,11 @@
-﻿using System;
+﻿/****************************************************************************
+ * File     WeatherTable.cs
+ * Author   Audrey Lincoln
+ * Date	    3/20/2021
+ * Purpose	Information to use the OpenWeatherMap weather API
+ ****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -48,7 +55,6 @@ namespace seniorCapstone.Models
         public int humidity { get; set; }
         public float temp_kf { get; set; }
     }
-
 
 
     public class Rain

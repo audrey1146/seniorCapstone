@@ -1,4 +1,12 @@
-﻿using System;
+﻿/****************************************************************************
+ * File			SoilModel.cs
+ * Author		Audrey Lincoln
+ * Date			3/20/2021
+ * Purpose	Assumptions of the soil that were decided 
+ *					in the Pacific University 2021 mathematics capstone 'RainCat'
+ ****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -10,7 +18,7 @@ namespace seniorCapstone.Models
 		/// <summary>
 		/// Tuple that represents table 3.10 and 3.9 (page 46/47) in the book
 		/// 'Irrigation and Drainage Engineering, P.Waller and M. Yitayew, Springer'
-		/// Item1 is 'a' constant and Item2 is the 'b' constant for each soil type
+		/// Item1 is the 'a' constant and Item2 is the 'b' constant for each soil type
 		/// </summary>
 		public static Dictionary<string, Tuple<double, double>> InfiltrationConstants = new Dictionary<string, Tuple<double, double>> ()
 		{

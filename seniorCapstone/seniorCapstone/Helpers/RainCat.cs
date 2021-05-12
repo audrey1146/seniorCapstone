@@ -1,4 +1,11 @@
-﻿using System;
+﻿/****************************************************************************
+ * File			RainCat.cs
+ * Author		Audrey Lincoln
+ * Date			3/20/2021
+ * Purpose	Helper class that gets the watering information
+ ****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using MathNet.Numerics.Integration;
@@ -9,12 +16,17 @@ namespace seniorCapstone.Helpers
 {
 	public class RainCat
 	{
-		/// <summary>
-		/// Total Run time is currently set at 24 hours from start time
-		/// in the format: "2008-03-09T16:05:07" 
-		/// </summary>
-		/// <param name="fieldTable"></param>
-		/// <returns> The time that the pivot will shut off </returns>
+
+		//**************************************************************************
+		// Funciton:		TotalRunTime
+		//
+		// Description:	Total Run time is currently set at 24 hours from start time
+		//							in the format: "2008-03-09T16:05:07"
+		//
+		// Parameters:	fieldTable	-	FieldTable object to calculate end time of
+		//
+		// Returns:			The time that the pivot will shut off
+		//**************************************************************************
 		public static string TotalRunTime (ref FieldTable fieldTable)
 		{
 			DateTime runTime = DateTime.Now.AddHours (CenterPivotModel.RevolutionTime);
@@ -22,11 +34,16 @@ namespace seniorCapstone.Helpers
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="fieldTable"></param>
-		/// <returns></returns>
+		//**************************************************************************
+		// Funciton:		WaterUsage
+		//
+		// Description:	Calculate the water usage of a specific pivot. Based on
+		//							the Pacific University 2021 mathematics capstone 'RainCat'
+		//
+		// Parameters:	fieldTable	-	FieldTable object to calculate water usage of
+		//
+		// Returns:			Total water that the pivot uses.
+		//**************************************************************************
 		public static double WaterUsage (ref FieldTable fieldTable)
 		{
 			double constA = SoilModel.InfiltrationConstants[fieldTable.SoilType].Item1;

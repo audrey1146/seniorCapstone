@@ -1,4 +1,11 @@
-﻿using SQLite;
+﻿/****************************************************************************
+ * File     FieldTable.cs
+ * Author   Audrey Lincoln
+ * Date	    9/20/2020
+ * Purpose	Information for a field entry 
+ ****************************************************************************/
+
+using SQLite;
 
 namespace seniorCapstone.Models
 {
@@ -36,17 +43,16 @@ namespace seniorCapstone.Models
         [Column ("WaterUsage")]
         public double WaterUsage { get; set; }
 
-        /* What to add to field table?
-        
-        [Column("SoilType")]
-        public string SoilType { get; set; }
-         
-        [Column("CropType")]
-        public string CropType { get; set; }
-            (Empty, ...?) 
-         
-         */
 
+		//**************************************************************************
+		// Constructor: FieldTable
+		//
+		// Description:	Sets table values to default values
+		//
+		// Parameters:	None
+		//
+		// Returns:     None
+		//**************************************************************************
         public FieldTable ()
 		{
             this.FID = string.Empty;
@@ -61,6 +67,15 @@ namespace seniorCapstone.Models
             this.WaterUsage = 0;
         }
 
+		//**************************************************************************
+		// Constructor: FieldTable
+		//
+		// Description:	Paramaterized constructor to set values equal to another
+		//
+		// Parameters:	fieldEntry  -   Object to become equal to
+		//
+		// Returns:     None
+		//**************************************************************************
         public FieldTable (ref FieldTable fieldEntry)
 		{
             this.FID = fieldEntry.FID;
@@ -75,6 +90,15 @@ namespace seniorCapstone.Models
             this.WaterUsage = fieldEntry.WaterUsage;
         }
 
+		//**************************************************************************
+		// Function:    assignTo
+		//
+		// Description:	Set values equal to another object
+		//
+		// Parameters:	fieldEntry  -   Object to become equal to
+		//
+		// Returns:     None
+		//**************************************************************************
         public void assignTo (FieldTable fieldEntry)
 		{
             this.FID = fieldEntry.FID;

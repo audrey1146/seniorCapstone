@@ -1,4 +1,11 @@
-﻿using SQLite;
+﻿/****************************************************************************
+ * File     UserTable.cs
+ * Author   Audrey Lincoln
+ * Date	    9/20/2020
+ * Purpose	Information for a user entry 
+ ****************************************************************************/
+
+using SQLite;
 using SQLiteNetExtensions.Attributes;
 
 namespace seniorCapstone.Models
@@ -28,6 +35,15 @@ namespace seniorCapstone.Models
         public string Email { get; set; }
 
 
+		//**************************************************************************
+		// Constructor: UserTable
+		//
+		// Description:	Sets table values to default values
+		//
+		// Parameters:	None
+		//
+		// Returns:     None
+		//**************************************************************************
         public UserTable ()
 		{
             this.UID = string.Empty;
@@ -38,7 +54,15 @@ namespace seniorCapstone.Models
             this.Email = string.Empty;
         }
 
-
+		//**************************************************************************
+		// Constructor: UserTable
+		//
+		// Description:	Paramaterized constructor to set values equal to another
+		//
+		// Parameters:	userEntry  -   Object to become equal to
+		//
+		// Returns:     None
+		//**************************************************************************
 		public UserTable (ref UserTable userEntry)
 		{
             this.UID = userEntry.UID;

@@ -2,7 +2,7 @@
  * File			Geolocation.cs
  * Author		Audrey Lincoln
  * Date			2/20/2021
- * Purpose		Helper class that gets the coordinates of the device
+ * Purpose	Helper class that gets the coordinates of the device
  ****************************************************************************/
 
 using System.ComponentModel;
@@ -20,7 +20,6 @@ namespace seniorCapstone.Helpers
 		private string latitude = string.Empty;
 		private string longitude = string.Empty;
 		private LocationDataSource phoneLocation = LocationDataSource.CreateDefault ();
-
 
 		public string Latitude
 		{
@@ -59,29 +58,45 @@ namespace seniorCapstone.Helpers
 			}
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	Geolocation
+		//
+		// Description:	Sets the location changed event
+		//
+		// Parameters:	None
+		//
+		// Returns:			None
+		//**************************************************************************
 		public Geolocation ()
 		{
 			this.PhoneLocation.LocationChanged += LocationDisplay_LocationChanged;
 		}
 
-		/// <summary>
-		/// Invoked when a property changes to notify the view and viewmodel
-		/// </summary>
-		/// <param name="propertyName"></param>
+		//**************************************************************************
+		// Funciton:		OnPropertyChanged
+		//
+		// Description:	Invoked when a property changes to notify the V and VM
+		//
+		// Parameters:	propertyName	-	Name of the specific property
+		//
+		// Returns:			None
+		//**************************************************************************
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
 		}
 
 
-		/// <summary>
-		/// Updates the PhoneLocation property each time the location changes
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		//**************************************************************************
+		// Funciton:		LocationDisplay_LocationChanged
+		//
+		// Description:	Updates the PhoneLocation property when the location changes
+		//
+		// Parameters:	sender	-	Name of the specific property
+		//							e				-	New location
+		//
+		// Returns:			None
+		//**************************************************************************
 		private void LocationDisplay_LocationChanged (object sender, Esri.ArcGISRuntime.Location.Location e)
 		{
 			// Return if position is null; event is called with null position when location display is turned on.
@@ -93,10 +108,15 @@ namespace seniorCapstone.Helpers
 			this.convertCoordinates (temp);
 		}
 
-
-		/// <summary>
-		/// Uses ArcGIS in order to get the location of the users phone
-		/// </summary>
+		//**************************************************************************
+		// Funciton:		getUserLocation
+		//
+		// Description:	Uses ArcGIS in order to get the location of the users phone
+		//
+		// Parameters:	None
+		//
+		// Returns:			None
+		//**************************************************************************
 		public async void getUserLocation ()
 		{
 			var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse> ();
@@ -131,14 +151,17 @@ namespace seniorCapstone.Helpers
 			}
 		}
 
-
-		/// <summary>
-		/// Convert the ArcGIS string of coordinates into two separate values
-		/// </summary>
-		/// <param name="coordLatLong"></param>
+		//**************************************************************************
+		// Funciton:		convertCoordinates
+		//
+		// Description:	Convert the ArcGIS string of coordinates into two separate values
+		//
+		// Parameters:	coordLatLong	-	Latitude and Longitude string, separated by a space
+		//
+		// Returns:			None
+		//**************************************************************************
 		private void convertCoordinates (string coordLatLong)
 		{
-			// The latitude-longitude string will contain a space separating the latitude from the longitude value
 			string[] coords = coordLatLong.Split (' ');
 			this.Latitude = coords[0];
 			this.Longitude = coords[1];
