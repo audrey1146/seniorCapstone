@@ -1,7 +1,7 @@
 ﻿/****************************************************************************
- * File			Geolocation.cs
- * Author		Audrey Lincoln
- * Date			2/20/2021
+ * File		Geolocation.cs
+ * Author	Audrey Lincoln
+ * Date		2/20/2021
  * Purpose	Helper class that gets the coordinates of the device
  ****************************************************************************/
 
@@ -65,7 +65,7 @@ namespace seniorCapstone.Helpers
 		//
 		// Parameters:	None
 		//
-		// Returns:			None
+		// Returns:		None
 		//**************************************************************************
 		public Geolocation ()
 		{
@@ -73,13 +73,13 @@ namespace seniorCapstone.Helpers
 		}
 
 		//**************************************************************************
-		// Funciton:		OnPropertyChanged
+		// Function:	OnPropertyChanged
 		//
 		// Description:	Invoked when a property changes to notify the V and VM
 		//
 		// Parameters:	propertyName	-	Name of the specific property
 		//
-		// Returns:			None
+		// Returns:		None
 		//**************************************************************************
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
@@ -88,14 +88,14 @@ namespace seniorCapstone.Helpers
 
 
 		//**************************************************************************
-		// Funciton:		LocationDisplay_LocationChanged
+		// Function:	LocationDisplay_LocationChanged
 		//
 		// Description:	Updates the PhoneLocation property when the location changes
 		//
 		// Parameters:	sender	-	Name of the specific property
-		//							e				-	New location
+		//				e		-	New location
 		//
-		// Returns:			None
+		// Returns:		None
 		//**************************************************************************
 		private void LocationDisplay_LocationChanged (object sender, Esri.ArcGISRuntime.Location.Location e)
 		{
@@ -109,13 +109,13 @@ namespace seniorCapstone.Helpers
 		}
 
 		//**************************************************************************
-		// Funciton:		getUserLocation
+		// Function:	getUserLocation
 		//
 		// Description:	Uses ArcGIS in order to get the location of the users phone
 		//
 		// Parameters:	None
 		//
-		// Returns:			None
+		// Returns:		None
 		//**************************************************************************
 		public async void getUserLocation ()
 		{
@@ -152,13 +152,13 @@ namespace seniorCapstone.Helpers
 		}
 
 		//**************************************************************************
-		// Funciton:		convertCoordinates
+		// Function:	convertCoordinates
 		//
 		// Description:	Convert the ArcGIS string of coordinates into two separate values
 		//
 		// Parameters:	coordLatLong	-	Latitude and Longitude string, separated by a space
 		//
-		// Returns:			None
+		// Returns:		None
 		//**************************************************************************
 		private void convertCoordinates (string coordLatLong)
 		{

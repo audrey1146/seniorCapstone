@@ -5,8 +5,6 @@
  * Purpose		Functions and binding for the Registration functionality
  ****************************************************************************/
 
-using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -93,21 +91,32 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Constructor that sets up the Cancel and Register commands
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	RegistrationViewModel
+		//
+		// Description:	Constructor that sets up the Cancel and Register commands
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public RegistrationViewModel ()
 		{
 			this.CancelCommand = new Command (this.CancelButton_Clicked);
 			this.RegisterCommand = new Command (this.RegisterButton_Clicked);
 		}
 
-
-		/// <summary>
-		/// When the register button is clicked this command with verify that all fields are filled
-		/// out, and that the email/username don't already exist
-		/// </summary>
+		//**************************************************************************
+		// Function:	RegisterButton_Clicked
+		//
+		// Description:	When the register button is clicked this command with 
+		//				verify that all fields are filled out, and that the 
+		//				email/username don't already exist
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void RegisterButton_Clicked ()
 		{
 			if (false == areEntiresFilledOut ())
@@ -134,33 +143,46 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Command that will pop the current page off of the stack
-		/// </summary>
+		//**************************************************************************
+		// Function:	CancelButton_Clicked
+		//
+		// Description:	Command that will pop the current page off of the stack
+		//
+		// Parameters:	None
+		//
+		// Returns:		None	
+		//**************************************************************************
 		public async void CancelButton_Clicked ()
 		{
 			await Application.Current.MainPage.Navigation.PopModalAsync ();
 		}
 
 
-		/// <summary>
-		/// Invoked when a property changes to notify the view and viewmodel
-		/// </summary>
-		/// <param name="propertyName"></param>
+		//**************************************************************************
+		// Function:	OnPropertyChanged
+		//
+		// Description:	Invoked when a property changes to notify the view and viewmodel
+		//
+		// Parameters:	propertyName	-	Name of the property changed
+		//
+		// Returns:		None
+		//**************************************************************************
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
 		}
 
 
-		/// <summary>
-		/// Verfies that the user input data for all entries
-		/// </summary>
-		/// <returns>
-		/// True if all of the entries have some text in them, otherwise false 
-		/// if any are empty or null
-		/// </returns>
+		//**************************************************************************
+		// Function:	areEntiresFilledOut
+		//
+		// Description:	Verfies that the user input data for all entries
+		//
+		// Parameters:	None
+		//
+		// Returns:		True if all of the entries have some text in them,
+		//				otherwise false if any are empty or null	
+		//**************************************************************************
 		private bool areEntiresFilledOut ()
 		{
 			return (false == string.IsNullOrEmpty (this.UserName) &&

@@ -11,10 +11,7 @@ using seniorCapstone.Helpers;
 using seniorCapstone.Services;
 using seniorCapstone.Models;
 using seniorCapstone.Views;
-using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -45,10 +42,16 @@ namespace seniorCapstone.ViewModels
 		}
 
 
-		/// <summary>
-		/// Constructor that loads the field to be displayed then sets the change page 
-		/// and run pivot commands
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	StoppedFieldViewModel
+		//
+		// Description:	Constructor that loads the field to be displayed 
+		//				then sets the change page and run pivot commands
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public StoppedFieldViewModel ()
 		{
 			this.loadStoppedFieldInfo ();
@@ -60,9 +63,15 @@ namespace seniorCapstone.ViewModels
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	ViewMapButton_Clicked
+		//
+		// Description:	Push on the ArcGIS map view
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void ViewMapButton_Clicked ()
 		{
 			await Application.Current.MainPage.Navigation.PushAsync (new ArcGISFieldMap ());
@@ -70,9 +79,15 @@ namespace seniorCapstone.ViewModels
 
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	EditFieldButton_Clicked
+		//
+		// Description:	Bring up a popup to edit the field
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public void EditFieldButton_Clicked ()
 		{
 			var popupPage = new EditStoppedFieldPopupPage ();
@@ -83,10 +98,15 @@ namespace seniorCapstone.ViewModels
 			PopupNavigation.Instance.PushAsync (popupPage);
 		}
 
-
-		/// <summary>
-		/// Update the database then pop off the current page
-		/// </summary>
+		//**************************************************************************
+		// Function:	RunPivotButton_Clicked
+		//
+		// Description:	Update the database then pop off the current page
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void RunPivotButton_Clicked ()
 		{
 			RainCat algorithmCalc = new RainCat ();
@@ -99,10 +119,15 @@ namespace seniorCapstone.ViewModels
 			await Application.Current.MainPage.Navigation.PopAsync ();
 		}
 
-
-		/// <summary>
-		/// Query the database for the selected field
-		/// </summary>
+		//**************************************************************************
+		// Function:	loadStoppedFieldInfo
+		//
+		// Description:	Query the database for the selected field
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private async void loadStoppedFieldInfo ()
 		{
 			this.StoppedField = this.fieldBackend.getSpecificField (App.FieldID);

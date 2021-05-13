@@ -1,4 +1,11 @@
-﻿using seniorCapstone.Models;
+﻿/****************************************************************************
+ * File		FieldSingleton.cs
+ * Author	Audrey Lincoln
+ * Date		3/20/2021
+ * Purpose	Singleton that has access to the field data service
+ ****************************************************************************/
+
+using seniorCapstone.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -18,10 +25,15 @@ namespace seniorCapstone.Services
 		// Public 
 		public static FieldSingleton Instance { get { return lazy.Value; } }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
+		//**************************************************************************
+		// Function:	getSpecificField
+		//
+		// Description:	Get field based off of ID
+		//
+		// Parameters:	id	-	ID to search for
+		//
+		// Returns:		null if does not exist; otherwise the field
+		//**************************************************************************
 		public FieldTable getSpecificField (string id)
 		{
 			foreach (FieldTable field in this.fieldEntries)
@@ -35,11 +47,15 @@ namespace seniorCapstone.Services
 			return (null);
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="id"></param>
+		//**************************************************************************
+		// Function:	getSpecificFieldByName
+		//
+		// Description:	Get field based off of the name and the current user
+		//
+		// Parameters:	fieldName	-	name to search for
+		//
+		// Returns:		null if does not exist; otherwise the field
+		//**************************************************************************
 		public FieldTable getSpecificFieldByName (string fieldName)
 		{
 			foreach (FieldTable field in this.fieldEntries)
@@ -54,9 +70,15 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	getAllUsersFields
+		//
+		// Description:	Get all of the fields of one user
+		//
+		// Parameters:	userID	-	ID to search for
+		//
+		// Returns:		null if does not exist; otherwise the fields
+		//**************************************************************************
 		public ObservableCollection<FieldTable> getAllUsersFields (string userID)
 		{
 			ObservableCollection<FieldTable> userFields = new ObservableCollection<FieldTable> ();
@@ -72,10 +94,15 @@ namespace seniorCapstone.Services
 			return (userFields);
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	getAllUsersStoppedFields
+		//
+		// Description:	Get all of the field names of one user that are stopped
+		//
+		// Parameters:	None
+		//
+		// Returns:		empty collection if does not exist; otherwise the field names
+		//**************************************************************************
 		public ObservableCollection<string> getAllUsersStoppedFields ()
 		{
 			ObservableCollection<string> stoppedFields = new ObservableCollection<string> ();
@@ -91,11 +118,15 @@ namespace seniorCapstone.Services
 			return (stoppedFields);
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="entry"></param>
+		//**************************************************************************
+		// Function:	AddField
+		//
+		// Description:	Add a field entry to the database
+		//
+		// Parameters:	entry	-	Entry to be added
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task AddField (FieldTable entry)
 		{
 			await this.fieldDataService.AddEntryAsync (entry);
@@ -103,10 +134,15 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="entry"></param>
+		//**************************************************************************
+		// Function:	DeleteField
+		//
+		// Description:	Delete a field entry from the database
+		//
+		// Parameters:	entry	-	Entry to be deleted
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task DeleteField (FieldTable entry)
 		{
 			await this.fieldDataService.DeleteEntryAsync (entry);
@@ -114,10 +150,15 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="entry"></param>
+		//**************************************************************************
+		// Function:	DeleteAllFieldsOfUser
+		//
+		// Description:	Delete a all field entries from the database
+		//
+		// Parameters:	userID	-	User ID to delete fields from
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task DeleteAllFieldsOfUser (string userID)
 		{
 			foreach (FieldTable field in this.fieldEntries)
@@ -130,10 +171,15 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="entry"></param>
+		//**************************************************************************
+		// Function:	UpdateField
+		//
+		// Description:	Edit a field entry from the database
+		//
+		// Parameters:	entry	-	Entry to be edited
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task UpdateField (FieldTable entry)
 		{
 			await this.fieldDataService.EditEntryAsync (entry);
@@ -141,9 +187,15 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
+		//**************************************************************************
+		// Function:	ReloadFieldEntries
+		//
+		// Description:	Calls the API and loads the returned data into a member variable
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task ReloadFieldEntries ()
 		{
 			try
@@ -158,11 +210,16 @@ namespace seniorCapstone.Services
 			}
 		}
 
-
-		/// <summary>
-		/// Query the database to check whether the field name already exists for the 
-		/// current user
-		/// </summary>
+		//**************************************************************************
+		// Function:	DoesFieldNameExist
+		//
+		// Description:	Query the database to check whether the field name 
+		//				already exists for the  current user
+		//
+		// Parameters:	FieldName	-	Name of the field to search for
+		//
+		// Returns:		True if exists, otherwise false
+		//**************************************************************************
 		public bool DoesFieldNameExist (string FieldName)
 		{
 			foreach (FieldTable field in this.fieldEntries)
@@ -176,11 +233,17 @@ namespace seniorCapstone.Services
 			return (false);
 		}
 
-
-		/// <summary>
-		/// Query the database to check whether the field location already exists for the 
-		/// current user
-		/// </summary>
+		//**************************************************************************
+		// Function:	DoesFieldLocationExist
+		//
+		// Description:	Query the database to check whether the field location  
+		//				already exists for the current user
+		//
+		// Parameters:	Lat		-	Latitude of the field
+		//				Long	-	Longitude of the field
+		//
+		// Returns:		True if exists, otherwise false
+		//**************************************************************************
 		public bool DoesFieldLocationExist (string Lat, string Long)
 		{
 			foreach (FieldTable field in this.fieldEntries)
@@ -194,10 +257,15 @@ namespace seniorCapstone.Services
 			return (false);
 		}
 
-
-		/// <summary>
-		/// If any of the pivots are past their stop time then update the database
-		/// </summary>
+		//**************************************************************************
+		// Function:	updateStoppedPivots
+		//
+		// Description:	If any of the pivots are past their stop time then update the database
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task updateStoppedPivots ()
 		{
 			/*
@@ -232,10 +300,15 @@ namespace seniorCapstone.Services
 		}
 
 
-
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	FieldSingleton
+		//
+		// Description:	Private constructor to set up access to API
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private FieldSingleton ()
 		{
 			this.fieldDataService = new FieldApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
@@ -244,17 +317,31 @@ namespace seniorCapstone.Services
 			this.LoadMediator ();
 		}
 
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
+
+		//**************************************************************************
+		// Function:	LoadMediator
+		//
+		// Description:	Calls the API and loads the returned data into a member variable
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private async void LoadMediator ()
 		{
 			await this.LoadFieldEntries ();
 		}
 
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
+
+		//**************************************************************************
+		// Function:	LoadFieldEntries
+		//
+		// Description:	Calls the API and loads the returned data into a member variable
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private async Task LoadFieldEntries ()
 		{
 			try

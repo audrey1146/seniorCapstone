@@ -5,6 +5,7 @@ using Rg.Plugins.Popup.Services;
 using seniorCapstone.Models;
 using Xamarin.Forms.Xaml;
 using seniorCapstone.Services;
+using seniorCapstone.Helpers;
 
 namespace seniorCapstone.Views
 {
@@ -19,9 +20,15 @@ namespace seniorCapstone.Views
 		FieldTable singleField;
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	EditStoppedFieldPopupPage
+		//
+		// Description:	Initialize the soil and pivot selections
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public EditStoppedFieldPopupPage ()
 		{
 			InitializeComponent ();
@@ -31,10 +38,15 @@ namespace seniorCapstone.Views
 			pivotlength.ItemsSource = (System.Collections.IList)Models.CenterPivotModel.PivotTypes;
 		}
 
-
-		/// <summary>
-		/// Get the current user data to display as place holders
-		/// </summary>
+		//**************************************************************************
+		// Function:	setPlaceholder
+		//
+		// Description:	Get the current field data to display as place holders
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private async void setPlaceholder ()
 		{
 			this.singleField = this.fieldBackend.getSpecificField (App.FieldID);
@@ -42,21 +54,20 @@ namespace seniorCapstone.Views
 			{
 				Debug.WriteLine ("Finding Current Field Failed");
 				await PopupNavigation.Instance.PopAsync (true);
-
-
-				//await Application.Current.MainPage.Navigation.PopAsync ();
-				//Debug.WriteLine ("Finding Current Field Failed");
-				//await PopupNavigation.Instance.PopAsync (true);
 			}
 		}
 
-
-		/// <summary>
-		/// When the submit button is clicked this command will check update the 
-		/// table entry according to the values they specified
-		/// </summary>
-		/// /// <param name="sender"></param>
-		/// <param name="args"></param>
+		//**************************************************************************
+		// Function:	SubmitButton_Clicked
+		//
+		// Description:	When the submit button is clicked this command will check update the 
+		//				table entry according to the values they specified
+		//
+		// Parameters:	sender	-	Object that sent the message
+		//				e		-	List View item that was tapped
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void SubmitButton_Clicked (object sender, EventArgs args)
 		{
 			FieldTable updatedField = new FieldTable (ref singleField);
@@ -100,8 +111,7 @@ namespace seniorCapstone.Views
 				// If pivot length or soil type were changed need to redo equation
 				if (-1 != pivotlength.SelectedIndex || -1 != soiltype.SelectedIndex)
 				{
-					// TODO call RainCat to set the WaterUsage
-					// updatedField.WaterUsage = RainCat.WaterUsage (ref updatedField);
+					updatedField.WaterUsage = RainCat.WaterUsage (ref updatedField);
 				}
 
 				await this.fieldBackend.UpdateField (updatedField);
@@ -112,20 +122,31 @@ namespace seniorCapstone.Views
 		}
 
 
-		/// <summary>
-		/// Pop off the popup page
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="args"></param>
+		//**************************************************************************
+		// Function:	CancelButton_Clicked
+		//
+		// Description:	Popoff the popup page
+		//
+		// Parameters:	sender	-	Object that sent the message
+		//				e		-	List View item that was tapped
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void CancelButton_Clicked (object sender, EventArgs args)
 		{
 			await PopupNavigation.Instance.PopAsync (true);
 		}
 
 
-		/// <summary>
-		/// Check that at least one field is filled
-		/// </summary>
+		//**************************************************************************
+		// Function:	areEntriesFilled
+		//
+		// Description:	Check that at least one field is filled
+		//
+		// Parameters:	None
+		//
+		// Returns:		True if filled out; otherwise false
+		//**************************************************************************
 		private bool areEntriesFilled ()
 		{
 			return (false == string.IsNullOrEmpty (fieldname.Text)

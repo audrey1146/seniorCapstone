@@ -63,11 +63,16 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Get the information for the specific field to display,
-		/// then set the change page and stop pivot commands
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	RunningFieldViewModel
+		//
+		// Description:	Get the information for the specific field to display,
+		//				then set the change page and stop pivot commands
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public RunningFieldViewModel ()
 		{
 			this.loadRunningFieldInfo ();
@@ -76,10 +81,15 @@ namespace seniorCapstone.ViewModels
 			this.StopPivotCommand = new Command (this.StopPivotButton_Clicked);
 		}
 
-
-		/// <summary>
-		/// Update the database and pop off the running page
-		/// </summary>
+		//**************************************************************************
+		// Function:	StopPivotButton_Clicked
+		//
+		// Description:	Update the database and pop off the running page
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void StopPivotButton_Clicked ()
 		{
 			FieldTable updatedField = new FieldTable (ref this.runningField);
@@ -90,10 +100,15 @@ namespace seniorCapstone.ViewModels
 			await Application.Current.MainPage.Navigation.PopAsync ();
 		}
 
-
-		/// <summary>
-		/// Queries that database for the specific field selected
-		/// </summary>
+		//**************************************************************************
+		// Function:	loadRunningFieldInfo
+		//
+		// Description:	Queries that database for the specific field selected
+		//
+		// Parameters:	None
+		//
+		// Returns:		None	
+		//**************************************************************************
 		private async void loadRunningFieldInfo ()
 		{
 			this.RunningField = this.fieldBackend.getSpecificField (App.FieldID);
@@ -108,9 +123,15 @@ namespace seniorCapstone.ViewModels
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	parseTime
+		//
+		// Description:	Parse out the time of the running pivot to display
+		//
+		// Parameters:	None
+		//
+		// Returns:		None	
+		//**************************************************************************
 		private void parseTime ()
 		{
 			string format = "s";
@@ -120,9 +141,15 @@ namespace seniorCapstone.ViewModels
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	parseWaterUsage
+		//
+		// Description:	Parse out the water usage of the running pivot to display
+		//
+		// Parameters:	None
+		//
+		// Returns:		None	
+		//**************************************************************************
 		private void parseWaterUsage ()
 		{
 			double temp = Math.Round (this.RunningField.WaterUsage, 3);

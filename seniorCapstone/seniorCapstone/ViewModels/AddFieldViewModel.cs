@@ -5,7 +5,6 @@
  * Purpose		Functions and binding for the Add Field functionality
  ****************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Services;
@@ -68,10 +67,16 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-		/// <summary>
-		/// Constructor for the AddField VM. Sets the list of 
-		/// viable pivot lengths
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	AddFieldViewModel
+		//
+		// Description:	Constructor for the AddField VM. Sets the list of 
+		//				viable pivot lengths
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public AddFieldViewModel ()
 		{
 			PivotOptions = (IList<int>)Models.CenterPivotModel.PivotTypes;
@@ -82,19 +87,29 @@ namespace seniorCapstone.ViewModels
 			this.SyncToPanelCommand = new Command (this.SyncToPanelButton_Clicked);
 		}
 
-
-		/// <summary>
-		/// Command that will pop the current page off of the stack
-		/// </summary>
+		//**************************************************************************
+		// Function:	CancelButton_Clicked
+		//
+		// Description:	Command that will pop the current page off of the stack
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void CancelButton_Clicked ()
 		{
 			await Application.Current.MainPage.Navigation.PopModalAsync ();
 		}
 
-
-		/// <summary>
-		/// Command that when pressed will attempt to add the field to the Field Table
-		/// </summary>
+		//**************************************************************************
+		// Function:	AddFieldButton_Clicked
+		//
+		// Description:	Command will attempt to add the field to the Field Table
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void AddFieldButton_Clicked ()
 		{
 			if (true == this.areEntiresFilledOut ())
@@ -122,7 +137,7 @@ namespace seniorCapstone.ViewModels
 						WaterUsage = 0
 					};
 
-					// TODO call RainCat to set the WaterUsage
+					// Calls RainCat to set the water usage
 					newField.WaterUsage = RainCat.WaterUsage (ref newField);
 
 					await this.fieldBackend.AddField (newField);
@@ -135,10 +150,15 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Creates a popup to appear, with a callback method to get the users location
-		/// </summary>
+		//**************************************************************************
+		// Function:	SyncToPanelButton_Clicked
+		//
+		// Description:	Creates a popup to appear, with a callback method to get the users location
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public void SyncToPanelButton_Clicked ()
 		{
 			var popupPage = new SyncPopupPage ();
@@ -149,14 +169,16 @@ namespace seniorCapstone.ViewModels
 			PopupNavigation.Instance.PushAsync (popupPage);
 		}
 
-
-		/// <summary>
-		/// Verfies that the user input data for all entries
-		/// </summary>
-		/// <returns>
-		/// True if all of the entries have some text in them, otherwise false 
-		/// if any are empty or null
-		/// </returns>
+		//**************************************************************************
+		// Function:	areEntiresFilledOut
+		//
+		// Description:	Verfies that the user input data for all entries
+		//
+		// Parameters:	None
+		//
+		// Returns:		True if all of the entries have some text in them, 
+		//				otherwise false  if any are empty or null
+		//**************************************************************************
 		private bool areEntiresFilledOut ()
 		{
 			return (false == string.IsNullOrEmpty (this.FieldName) &&

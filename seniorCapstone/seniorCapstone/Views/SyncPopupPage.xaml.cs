@@ -17,9 +17,15 @@ namespace seniorCapstone.Views
 			InitializeComponent ();
 		}
 
-		/// <summary>
-		/// Close the popup so that the main viewmodel can register the location
-		/// </summary>
+		//**************************************************************************
+		// Function:	SyncButton_Clicked
+		//
+		// Description:	Close the popup so that the main viewmodel can register the location
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void SyncButton_Clicked (object sender, EventArgs args)
 		{
 			await PopupNavigation.Instance.PopAsync (true);

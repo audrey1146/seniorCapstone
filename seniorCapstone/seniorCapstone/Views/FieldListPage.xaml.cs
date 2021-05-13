@@ -19,10 +19,16 @@ namespace seniorCapstone.Views
 		private List<FieldTable> RunningFields;
 		private List<FieldTable> RemainingFields;
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public FieldListPage()
+		//**************************************************************************
+		// Constructor:	FieldListPage
+		//
+		// Description:	Set the running and remaining fields to be new lists
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
+		public FieldListPage ()
 		{
 			InitializeComponent();
 
@@ -31,9 +37,16 @@ namespace seniorCapstone.Views
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	OnAppearing
+		//
+		// Description:	When the View appears reset all of the field in case
+		//				any changes were made
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		protected override async void OnAppearing ()
 		{
 			base.OnAppearing ();
@@ -71,11 +84,16 @@ namespace seniorCapstone.Views
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		//**************************************************************************
+		// Function:	OnDelete_Selected
+		//
+		// Description:	Verify the deletion of the field, and then delete if yes
+		//
+		// Parameters:	sender	-	Object that sent the message
+		//				e		-	List View item that was tapped
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void OnDelete_Selected (object sender, EventArgs e)
 		{
 			FieldTable fieldMenuItem = ((MenuItem)sender).CommandParameter as FieldTable;
@@ -93,11 +111,16 @@ namespace seniorCapstone.Views
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		//**************************************************************************
+		// Function:	OnRunningPivot_Selected
+		//
+		// Description:	Push on the page of the field that was selected
+		//
+		// Parameters:	sender	-	Object that sent the message
+		//				e		-	List View item that was tapped
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void OnRunningPivot_Selected (object sender, ItemTappedEventArgs e)
 		{
 			if (e.Item != null)
@@ -107,11 +130,16 @@ namespace seniorCapstone.Views
 			}
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		//**************************************************************************
+		// Function:	OnStoppedPivot_Selected
+		//
+		// Description:	Push on the page of the field that was selected
+		//
+		// Parameters:	sender	-	Object that sent the message
+		//				e		-	List View item that was tapped
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void OnStoppedPivot_Selected (object sender, ItemTappedEventArgs e)
 		{
 			if (e.Item != null)

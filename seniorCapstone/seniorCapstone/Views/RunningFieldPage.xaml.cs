@@ -1,7 +1,4 @@
-﻿using seniorCapstone.Models;
-using SQLite;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

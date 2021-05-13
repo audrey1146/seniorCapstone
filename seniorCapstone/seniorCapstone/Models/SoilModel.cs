@@ -2,8 +2,8 @@
  * File			SoilModel.cs
  * Author		Audrey Lincoln
  * Date			3/20/2021
- * Purpose	Assumptions of the soil that were decided 
- *					in the Pacific University 2021 mathematics capstone 'RainCat'
+ * Purpose		Assumptions of the soil that were decided 
+ *				in the Pacific University 2021 mathematics capstone 'RainCat'
  ****************************************************************************/
 
 using System;

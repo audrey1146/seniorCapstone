@@ -15,7 +15,16 @@ namespace seniorCapstone
 		public static string UserID { get; set; }
 		public static string FieldID { get; set; }
 
-		public App()
+		//**************************************************************************
+		// Constructor:	App
+		//
+		// Description:	Set up the first page
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
+		public App ()
 		{
 			InitializeComponent();
 			FieldID = string.Empty;
@@ -30,7 +39,16 @@ namespace seniorCapstone
 			}
 		}
 
-		public App(string DBPath)
+		//**************************************************************************
+		// Constructor:	App
+		//
+		// Description:	Set up the first page when using a SQLite DB
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
+		public App (string DBPath)
 		{
 			InitializeComponent();
 			FieldID = string.Empty;

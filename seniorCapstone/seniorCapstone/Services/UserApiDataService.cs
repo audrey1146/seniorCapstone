@@ -20,6 +20,15 @@ namespace seniorCapstone.Services
 		readonly Uri baseUri;
 		readonly IDictionary<string, string> headers;
 
+		//**************************************************************************
+		// Constructor:	UserApiDataService
+		//
+		// Description:	Set up for the data servicer
+		//
+		// Parameters:	paramBaseUri	-	Base URL for the API
+		//
+		// Returns:		None
+		//**************************************************************************
 		public UserApiDataService (Uri paramBaseUri)
 		{
 			baseUri = paramBaseUri;
@@ -28,6 +37,15 @@ namespace seniorCapstone.Services
 			// TODO:  Header with auth-based token
 		}
 
+		//**************************************************************************
+		// Function:	GetEntriesAsync
+		//
+		// Description:	Get all of the entries
+		//
+		// Parameters:	None
+		//
+		// Returns:		List of the user entries
+		//**************************************************************************
 		public async Task<IList<UserTable>> GetEntriesAsync ()
 		{
 			var url = new Uri (baseUri, "/api/userEntry");
@@ -36,6 +54,15 @@ namespace seniorCapstone.Services
 			return response;
 		}
 
+		//**************************************************************************
+		// Function:	AddEntryAsync
+		//
+		// Description:	Add a user entry to the database
+		//
+		// Parameters:	entry	-	Entry to be added
+		//
+		// Returns:		Response of the API
+		//**************************************************************************
 		public async Task<UserTable> AddEntryAsync (UserTable entry)
 		{
 			var url = new Uri (baseUri, "/api/userEntry");
@@ -44,6 +71,15 @@ namespace seniorCapstone.Services
 			return response;
 		}
 
+		//**************************************************************************
+		// Function:	DeleteEntryAsync
+		//
+		// Description:	Delete a user entry from the database
+		//
+		// Parameters:	entry	-	Entry to be deleted
+		//
+		// Returns:		Response of the API
+		//**************************************************************************
 		public async Task<UserTable> DeleteEntryAsync (UserTable entry)
 		{
 			var url = new Uri (baseUri, "/api/userEntry");
@@ -52,6 +88,15 @@ namespace seniorCapstone.Services
 			return response;
 		}
 
+		//**************************************************************************
+		// Function:	EditEntryAsync
+		//
+		// Description:	Edit a user entry from the database
+		//
+		// Parameters:	entry	-	Entry to be edited
+		//
+		// Returns:		Response of the API
+		//**************************************************************************
 		public async Task<UserTable> EditEntryAsync (UserTable entry)
 		{
 			var url = new Uri (baseUri, "/api/userEntry");

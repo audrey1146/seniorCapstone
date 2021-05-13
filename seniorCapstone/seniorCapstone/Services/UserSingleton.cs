@@ -1,20 +1,14 @@
 /****************************************************************************
- * File			UserApiDataService.cs
- * Author		Audrey Lincoln + 'Mastering Xamarin.Forms' Book
- * Date			4/3/2021
- * Purpose		Implementation of IUserDataService, with access  
- *				to the BaseHttpService
- * Note         Defined in Chapter 6 page 116 in the book
+ * File		UserSingleton.cs
+ * Author	Audrey Lincoln
+ * Date		3/20/2021
+ * Purpose	Singleton that has access to the user data service
  ****************************************************************************/
 
 using seniorCapstone.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace seniorCapstone.Services
@@ -30,11 +24,15 @@ namespace seniorCapstone.Services
 		// Public 
 		public static UserSingleton Instance { get { return lazy.Value; } }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="retUser"></param>
-		/// <param name="id"></param>
+		//**************************************************************************
+		// Function:	getSpecificUser
+		//
+		// Description:	Get user based off of ID
+		//
+		// Parameters:	id	-	ID to search for
+		//
+		// Returns:		null if does not exist; otherwise the user
+		//**************************************************************************
 		public UserTable getSpecificUser (string id)
 		{
 			foreach (UserTable user in this.userEntries)
@@ -49,18 +47,29 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	getAllUsers
+		//
+		// Description:	Get all of the users in the system
+		//
+		// Parameters:	None
+		//
+		// Returns:		empty collection if does not exist; otherwise all the users
+		//**************************************************************************
 		public ObservableCollection<UserTable> getAllUsers ()
 		{
 			return (this.userEntries);
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="entry"></param>
+		//**************************************************************************
+		// Function:	AddUser
+		//
+		// Description:	Add a user entry to the database
+		//
+		// Parameters:	entry	-	Entry to be added
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task AddUser (UserTable entry)
 		{
 			await this.userDataService.AddEntryAsync (entry);
@@ -68,10 +77,15 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="entry"></param>
+		//**************************************************************************
+		// Function:	DeleteUser
+		//
+		// Description:	Delete a user entry from the database
+		//
+		// Parameters:	entry	-	Entry to be deleted
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task DeleteUser (UserTable entry)
 		{
 			await this.userDataService.DeleteEntryAsync (entry);
@@ -79,10 +93,15 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="entry"></param>
+		//**************************************************************************
+		// Function:	UpdateUser
+		//
+		// Description:	Edit a user entry from the database
+		//
+		// Parameters:	entry	-	Entry to be edited
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task UpdateUser (UserTable entry)
 		{
 			await this.userDataService.EditEntryAsync (entry);
@@ -90,13 +109,17 @@ namespace seniorCapstone.Services
 		}
 
 
-		/// <summary>
-		/// Verifies whether the credentials the user input are correct by querying 
-		/// into the user table.
-		/// </summary>
-		/// <param name="UserNameEntry"></param>
-		/// <param name="PasswordEntry"></param>
-		/// <returns></returns>
+		//**************************************************************************
+		// Function:	areCredentialsCorrect
+		//
+		// Description:	Verifies whether the credentials the user input 
+		//				are correct by querying  into the user table.
+		//
+		// Parameters:	UserNameEntry	-	Attempted username
+		//				PasswordEntry	-	Attempted password
+		//
+		// Returns:		True if correct; otherwise false
+		//**************************************************************************
 		public bool areCredentialsCorrect (string UserNameEntry, string PasswordEntry)
 		{
 			int count = 0;
@@ -119,13 +142,16 @@ namespace seniorCapstone.Services
 			return (true);
 		}
 
-
-		/// <summary>
-		/// Verfies that the user input unqiue data for the Email and Username
-		/// </summary>
-		/// <returns>
-		/// True if the values are unique; otherwise false
-		/// </returns>
+		//**************************************************************************
+		// Function:	AreEntiresUnique
+		//
+		// Description:	Verfies that the user input unqiue data for the Email and Username
+		//
+		// Parameters:	UserName	-	Attempted username
+		//				Email		-	Attempted email
+		//
+		// Returns:		True if unique to the system; otherwise false
+		//**************************************************************************
 		public bool AreEntiresUnique (string UserName, string Email)
 		{
 			foreach (UserTable user in this.userEntries)
@@ -139,13 +165,15 @@ namespace seniorCapstone.Services
 			return (true);
 		}
 
-
-		/// <summary>
-		/// Verfies that the user input unqiue data for the Email and Username
-		/// </summary>
-		/// <returns>
-		/// True if the values are unique; otherwise false
-		/// </returns>
+		//**************************************************************************
+		// Function:	IsEmailUnique
+		//
+		// Description:	Verfies that the user input unqiue data for the Email
+		//
+		// Parameters:	Email		-	Attempted email
+		//
+		// Returns:		True if the values are unique; otherwise false
+		//**************************************************************************
 		public bool IsEmailUnique (string Email)
 		{
 			foreach (UserTable user in this.userEntries)
@@ -159,9 +187,15 @@ namespace seniorCapstone.Services
 			return (true);
 		}
 
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
+		//**************************************************************************
+		// Function:	ReloadAccountEntries
+		//
+		// Description:	Calls the API and loads the returned data into a member variable
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async Task ReloadAccountEntries ()
 		{
 			try
@@ -176,10 +210,15 @@ namespace seniorCapstone.Services
 			}
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	UserSingleton
+		//
+		// Description:	Private constructor to set up access to API
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private UserSingleton ()
 		{
 			this.userDataService = new UserApiDataService (new Uri ("https://evenstreaminfunctionapp.azurewebsites.net"));
@@ -188,9 +227,15 @@ namespace seniorCapstone.Services
 			this.LoadAccountEntries ();
 		}
 
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
+		//**************************************************************************
+		// Function:	LoadAccountEntries
+		//
+		// Description:	Calls the API and loads the returned data into a member variable
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private async void LoadAccountEntries ()
 		{
 			try

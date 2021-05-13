@@ -5,10 +5,7 @@
  * Purpose		Account Page of the mobile application
  ****************************************************************************/
 
-using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Services;
@@ -43,11 +40,16 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Constructor that sets the commands accessible from the Accound page, 
-		/// and loads the user information
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	AccountViewModel
+		//
+		// Description:	Constructor that sets the commands accessible from the Accound page, 
+		//				and loads the user information
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public AccountViewModel ()
 		{
 			this.loadAccountInfo ();
@@ -58,10 +60,15 @@ namespace seniorCapstone.ViewModels
 			this.EditAccountCommand = new Command (this.EditAccountButton_Clicked);
 		}
 
-
-		/// <summary>
-		/// Display a popup to edit the users account.
-		/// </summary>
+		//**************************************************************************
+		// Function:	EditAccountButton_Clicked
+		//
+		// Description:	Display a popup to edit the users account.
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void EditAccountButton_Clicked ()
 		{
 			var popupPage = new EditAccountPopupPage ();
@@ -72,10 +79,15 @@ namespace seniorCapstone.ViewModels
 			await PopupNavigation.Instance.PushAsync (popupPage);
 		}
 
-
-		/// <summary>
-		/// Verify that the use wants to log out, and then logs them out
-		/// </summary>
+		//**************************************************************************
+		// Function:	LogoutButton_Clicked
+		//
+		// Description:	Verify that the use wants to log out, and then logs them out
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void LogoutButton_Clicked ()
 		{
 			bool answer = await App.Current.MainPage.DisplayAlert ("Logging Out?",
@@ -89,11 +101,17 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Verify that the use wishes to delete their accout, then deletes all information from the 
-		/// database connected to that account and logs the use out.
-		/// </summary>
+		//**************************************************************************
+		// Function:	DeleteAccountButton_Clicked
+		//
+		// Description:	Verify that the use wishes to delete their accout, 
+		//				then deletes all information from the database connected 
+		//				to that account and logs the use out.
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void DeleteAccountButton_Clicked ()
 		{
 			bool answer = await App.Current.MainPage.DisplayAlert ("Delete Account?",
@@ -113,10 +131,15 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Read from the database and bind that information to a UserTable variable
-		/// </summary>
+		//**************************************************************************
+		// Function:	loadAccountInfo
+		//
+		// Description:	Read from the database and bind that information to a UserTable variable
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private async void loadAccountInfo ()
 		{
 			this.User = this.userBackend.getSpecificUser (App.UserID);

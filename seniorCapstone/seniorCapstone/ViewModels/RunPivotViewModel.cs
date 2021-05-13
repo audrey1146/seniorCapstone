@@ -5,15 +5,10 @@
  * Purpose		Functions and binding for the ability to run a pivot page
  ****************************************************************************/
 
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using seniorCapstone.Helpers;
 using seniorCapstone.Services;
@@ -47,11 +42,16 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Constructor that gets the viable fields, 
-		/// then sets the cancel and run pivot commands.
-		/// </summary>
+		//**************************************************************************
+		// Function:	RunPivotViewModel
+		//
+		// Description:	Constructor that gets the viable fields, 
+		//				then sets the cancel and run pivot commands.
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public RunPivotViewModel ()
 		{
 			this.GetPivots ();
@@ -60,10 +60,15 @@ namespace seniorCapstone.ViewModels
 			this.RunPivotCommand = new Command (this.RunPivotButton_Clicked);
 		}
 
-
-		/// <summary>
-		/// Gets a list of all of the non-running fields
-		/// </summary>
+		//**************************************************************************
+		// Function:	GetPivots
+		//
+		// Description:	Gets a list of all of the non-running fields
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void GetPivots ()
 		{
 			await this.fieldBackend.updateStoppedPivots ();
@@ -71,20 +76,30 @@ namespace seniorCapstone.ViewModels
 			this.FieldOptions = this.FieldOptions.OrderBy (q => q).ToList ();
 		}
 
-
-		/// <summary>
-		/// Command that will pop the current page off of the stack
-		/// </summary>
+		//**************************************************************************
+		// Function:	CancelButton_Clicked
+		//
+		// Description:	Command that will pop the current page off of the stack
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void CancelButton_Clicked ()
 		{
 			await Application.Current.MainPage.Navigation.PopModalAsync ();
 		}
 
-		
-		/// <summary>
-		/// When the run pivot button is selected, update the databse
-		/// and pop off the current page - otherwise display an alert
-		/// </summary>
+		//**************************************************************************
+		// Function:	RunPivotButton_Clicked
+		//
+		// Description:	When the run pivot button is selected, update the databse
+		//				and pop off the current page - otherwise display an alert
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void RunPivotButton_Clicked ()
 		{
 			if (true == this.AreEntiresFilledOut ())
@@ -112,24 +127,30 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// Invoked when a property changes to notify the view and viewmodel
-		/// </summary>
-		/// <param name="propertyName"></param>
+		//**************************************************************************
+		// Function:	OnPropertyChanged
+		//
+		// Description:	Invoked when a property changes to notify the view and viewmodel
+		//
+		// Parameters:	propertyName	-	Name of the property changed
+		//
+		// Returns:		None
+		//**************************************************************************
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
 		}
 
-
-		/// <summary>
-		/// Verfies that the user input data for all entries
-		/// </summary>
-		/// <returns>
-		/// True if all of the entries have some text in them, otherwise false 
-		/// if any are empty or null
-		/// </returns>
+		//**************************************************************************
+		// Function:	AreEntiresFilledOut
+		//
+		// Description:	Verfies that the user input data for all entries
+		//
+		// Parameters:	None
+		//
+		// Returns:		True if all of the entries have some text in them, otherwise false 
+		//				if any are empty or null
+		//**************************************************************************
 		private bool AreEntiresFilledOut ()
 		{
 			return (-1 != this.FieldIndex);

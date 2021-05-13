@@ -24,15 +24,18 @@ namespace seniorCapstone.Services
 	public abstract class BaseHttpService
 	{
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="url"></param>
-        /// <param name="httpMethod"></param>
-        /// <param name="headers"></param>
-        /// <param name="requestData"></param>
-        /// <returns></returns>
+        //**************************************************************************
+        // Function:	SendRequestAsync
+        //
+        // Description:	Sends requests to an API, and gets the response
+        //
+        // Parameters:	url	        -	URL to send request to
+        //              httpMethod  -   Specific HTTP request
+        //              headers     -   Headers to add to the request
+        //              requestData -   Data in the request
+        //
+        // Returns:		The response
+        //**************************************************************************
         protected async Task<T> SendRequestAsync<T> (Uri url, HttpMethod httpMethod = null, 
             IDictionary<string, string> headers = null, object requestData = null)
         {

@@ -15,9 +15,15 @@ namespace seniorCapstone.ViewModels
 	/// </summary>
 	public class MainViewModel : PageNavViewModel
 	{
-		/// <summary>
-		/// Constructor method
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	MainViewModel
+		//
+		// Description:	Sets the change page command
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public MainViewModel ()
 		{
 			base.ChangePageCommand = new Command<string>(base.ChangePage);

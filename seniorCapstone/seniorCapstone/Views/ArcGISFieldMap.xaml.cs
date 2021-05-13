@@ -15,19 +15,31 @@ namespace seniorCapstone.Views
 		private FieldSingleton fieldBackend = FieldSingleton.Instance;
 		private FieldTable currField;
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	ArcGISFieldMap
+		//
+		// Description:	Initialize the map
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public ArcGISFieldMap ()
 		{
             InitializeComponent ();
 			initMap ();
         }
 
-		/// <summary>
-		/// 
-		/// </summary>
-        private void initMap ()
+		//**************************************************************************
+		// Function:	initMap
+		//
+		// Description:	Create map from the coordinates of the field
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
+		private void initMap ()
         {
 			this.loadFieldInfo ();
 
@@ -42,10 +54,15 @@ namespace seniorCapstone.Views
 			MyMapView.Map = fieldMap;
 		}
 
-
-		/// <summary>
-		/// Calls the API and loads the returned data into a member variable
-		/// </summary>
+		//**************************************************************************
+		// Function:	loadFieldInfo
+		//
+		// Description:	Calls the API and loads the returned data into a member variable
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private async void loadFieldInfo ()
 		{
 			this.currField = this.fieldBackend.getSpecificField (App.FieldID);
@@ -57,11 +74,15 @@ namespace seniorCapstone.Views
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="coord"></param>
-		/// <returns></returns>
+		//**************************************************************************
+		// Function:	convertToDouble
+		//
+		// Description:	Converts the ArcGIS string into coordinate doubles
+		//
+		// Parameters:	coord	-	Full coordinate
+		//
+		// Returns:		The value of the coordinate
+		//**************************************************************************
 		private double convertToDouble (string coord)
 		{
 			double convertedCoord = 0;

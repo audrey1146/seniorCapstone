@@ -2,7 +2,7 @@
  * File			RainCat.cs
  * Author		Audrey Lincoln
  * Date			3/20/2021
- * Purpose	Helper class that gets the watering information
+ * Purpose		Helper class that gets the watering information
  ****************************************************************************/
 
 using System;
@@ -18,14 +18,14 @@ namespace seniorCapstone.Helpers
 	{
 
 		//**************************************************************************
-		// Funciton:		TotalRunTime
+		// Function:	TotalRunTime
 		//
 		// Description:	Total Run time is currently set at 24 hours from start time
-		//							in the format: "2008-03-09T16:05:07"
+		//				in the format: "2008-03-09T16:05:07"
 		//
 		// Parameters:	fieldTable	-	FieldTable object to calculate end time of
 		//
-		// Returns:			The time that the pivot will shut off
+		// Returns:		The time that the pivot will shut off
 		//**************************************************************************
 		public static string TotalRunTime (ref FieldTable fieldTable)
 		{
@@ -35,14 +35,14 @@ namespace seniorCapstone.Helpers
 
 
 		//**************************************************************************
-		// Funciton:		WaterUsage
+		// Function:	WaterUsage
 		//
 		// Description:	Calculate the water usage of a specific pivot. Based on
-		//							the Pacific University 2021 mathematics capstone 'RainCat'
+		//				the Pacific University 2021 mathematics capstone 'RainCat'
 		//
 		// Parameters:	fieldTable	-	FieldTable object to calculate water usage of
 		//
-		// Returns:			Total water that the pivot uses.
+		// Returns:		Total water that the pivot uses.
 		//**************************************************************************
 		public static double WaterUsage (ref FieldTable fieldTable)
 		{

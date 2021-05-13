@@ -1,15 +1,10 @@
 ﻿using Rg.Plugins.Popup.Pages;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Rg.Plugins.Popup.Services;
 using seniorCapstone.Models;
-using SQLite;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Collections.ObjectModel;
 using seniorCapstone.Services;
-using System.Threading.Tasks;
 
 namespace seniorCapstone.Views
 {
@@ -24,9 +19,15 @@ namespace seniorCapstone.Views
 		UserTable singleUser;
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	EditAccountPopupPage
+		//
+		// Description:	Initialize the place holders
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public EditAccountPopupPage ()
 		{
 			InitializeComponent ();
@@ -34,9 +35,15 @@ namespace seniorCapstone.Views
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
+		//**************************************************************************
+		// Function:	setPlaceholder
+		//
+		// Description:	Get the current user data to display as place holders
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		private async void setPlaceholders ()
 		{
 			this.singleUser = this.userBackend.getSpecificUser (App.UserID);
@@ -54,12 +61,17 @@ namespace seniorCapstone.Views
 		}
 
 
-		/// <summary>
-		/// When the submit button is clicked this command will check update the 
-		/// table entry according to the values they specified
-		/// </summary>
-		/// /// <param name="sender"></param>
-		/// <param name="args"></param>
+		//**************************************************************************
+		// Function:	SubmitButton_Clicked
+		//
+		// Description:	When the submit button is clicked this command will check update the 
+		//				table entry according to the values they specified
+		//
+		// Parameters:	sender	-	Object that sent the message
+		//				e		-	List View item that was tapped
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void SubmitButton_Clicked (object sender, EventArgs args)
 		{
 			UserTable newUser = new UserTable (ref this.singleUser);
@@ -110,20 +122,31 @@ namespace seniorCapstone.Views
 		}
 
 
-		/// <summary>
-		/// Pop off the popup page
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="args"></param>
+		//**************************************************************************
+		// Function:	CancelButton_Clicked
+		//
+		// Description:	Popoff the popup page
+		//
+		// Parameters:	sender	-	Object that sent the message
+		//				e		-	List View item that was tapped
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void CancelButton_Clicked (object sender, EventArgs args)
 		{
 			await PopupNavigation.Instance.PopAsync (true);
 		}
 
 
-		/// <summary>
-		/// Check that at least one field is filled
-		/// </summary>
+		//**************************************************************************
+		// Function:	areEntriesFilled
+		//
+		// Description:	Check that at least one field is filled
+		//
+		// Parameters:	None
+		//
+		// Returns:		True if filled out; otherwise false
+		//**************************************************************************
 		private bool areEntriesFilled ()
 		{
 			return (false == string.IsNullOrEmpty (password.Text)

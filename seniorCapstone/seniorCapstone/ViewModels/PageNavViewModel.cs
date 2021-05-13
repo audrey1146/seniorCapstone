@@ -20,11 +20,16 @@ namespace seniorCapstone.ViewModels
 		public ICommand ChangePageCommand { get; set; }
 		public event PropertyChangedEventHandler PropertyChanged;
 
-
-		/// <summary>
-		/// When the buttons are pressed, the name of the button will be passed, 
-		/// and will correspond with a view.
-		/// </summary>
+		//**************************************************************************
+		// Function:	ChangePage
+		//
+		// Description:	When the buttons are pressed, the name of the button will be passed, 
+		//				and will correspond with a view.
+		//
+		// Parameters:	PageName	-	name of the page to change to
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void ChangePage (string PageName)
 		{
 			switch (PageName)
@@ -53,10 +58,15 @@ namespace seniorCapstone.ViewModels
 		}
 
 
-		/// <summary>
-		/// Invoked when a property changes to notify the view and viewmodel
-		/// </summary>
-		/// <param name="propertyName"></param>
+		//**************************************************************************
+		// Function:	OnPropertyChanged
+		//
+		// Description:	Invoked when a property changes to notify the view and viewmodel
+		//
+		// Parameters:	propertyName	-	Name of the property changed
+		//
+		// Returns:		None
+		//**************************************************************************
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));

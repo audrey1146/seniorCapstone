@@ -14,12 +14,16 @@ namespace seniorCapstone.Services
     public class ApiCaller
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="authId"></param>
-        /// <returns></returns>
+        //**************************************************************************
+        // Function:	Get
+        //
+        // Description:	Sends a Get request to a specific API
+        //
+        // Parameters:	url	    -	Name of the specific property
+        //              authId  -   Authorization to the API
+        //
+        // Returns:		Response of the API
+        //**************************************************************************
         public static async Task<ApiResponse> Get (string url, string authId = null)
         {
             using (var client = new HttpClient ())

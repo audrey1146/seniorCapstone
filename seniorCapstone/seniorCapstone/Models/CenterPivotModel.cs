@@ -1,9 +1,9 @@
 ﻿/****************************************************************************
- * File			CenterPivotModel.cs
- * Author		Audrey Lincoln
- * Date			3/20/2021
+ * File		CenterPivotModel.cs
+ * Author	Audrey Lincoln
+ * Date		3/20/2021
  * Purpose	Assumptions of the RainCat center pivot that were decided 
- *					in the Pacific University 2021 mathematics capstone 'RainCat'
+ *			in the Pacific University 2021 mathematics capstone 'RainCat'
  ****************************************************************************/
 
 using System;

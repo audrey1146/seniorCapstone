@@ -5,16 +5,12 @@
  * Purpose		Functions and binding for the Login functionality
  ****************************************************************************/
 
-using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using seniorCapstone.Models;
 using seniorCapstone.Views;
 using seniorCapstone.Services;
 using Xamarin.Forms;
-using System.Threading.Tasks;
 
 namespace seniorCapstone.ViewModels
 {
@@ -56,20 +52,31 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-		/// <summary>
-		/// Constructor that sets up the login and registration commands
-		/// </summary>
+		//**************************************************************************
+		// Constructor:	LoginViewModel
+		//
+		// Description:	Constructor that sets up the login and registration commands
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public LoginViewModel ()
 		{
 			this.LoginCommand = new Command (this.LoginButton_Clicked);
 			this.RegistrationCommand = new Command (this.RegistrationButton_Clicked);
 		}
 
-
-		/// <summary>
-		/// When the login button is pressed, the input credntials must be checked.
-		/// If they are correct, then login as the user, else display an alert
-		/// </summary>
+		//**************************************************************************
+		// Function:	LoginButton_Clicked
+		//
+		// Description:	When the login button is pressed, the input credntials must be checked.
+		//				If they are correct, then login as the user, else display an alert
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void LoginButton_Clicked ()
 		{
 			if (false == areEntiresFilledOut ())
@@ -92,33 +99,45 @@ namespace seniorCapstone.ViewModels
 			}
 		}
 
-
-		/// <summary>
-		/// If the user wants to register an account then push on a Modal registration page
-		/// </summary>
+		//**************************************************************************
+		// Function:	RegistrationButton_Clicked
+		//
+		// Description:	If the user wants to register an account then push on a Modal registration page
+		//
+		// Parameters:	None
+		//
+		// Returns:		None
+		//**************************************************************************
 		public async void RegistrationButton_Clicked ()
 		{
 			await Application.Current.MainPage.Navigation.PushModalAsync (new RegistrationPage ());
 		}
 
 
-		/// <summary>
-		/// Invoked when a property changes to notify the view and viewmodel
-		/// </summary>
-		/// <param name="propertyName"></param>
+		//**************************************************************************
+		// Function:	OnPropertyChanged
+		//
+		// Description:	Invoked when a property changes to notify the view and viewmodel
+		//
+		// Parameters:	propertyName	-	Name of the property changed
+		//
+		// Returns:		None
+		//**************************************************************************
 		protected virtual void OnPropertyChanged ([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
 		}
 
-
-		/// <summary>
-		/// Verfies that the user input data for all entries
-		/// </summary>
-		/// <returns>
-		/// True if all of the entries have some text in them, otherwise false 
-		/// if any are empty or null
-		/// </returns>
+		//**************************************************************************
+		// Function:	
+		//
+		// Description:	Verfies that the user input data for all entries
+		//
+		// Parameters:	None
+		//
+		// Returns:		True if all of the entries have some text in them, 
+		//				otherwise false if any are empty or null
+		//**************************************************************************
 		private bool areEntiresFilledOut ()
 		{
 			return (false == string.IsNullOrEmpty (this.UserName) &&

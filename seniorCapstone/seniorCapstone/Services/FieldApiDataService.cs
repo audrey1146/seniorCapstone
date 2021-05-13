@@ -20,6 +20,15 @@ namespace seniorCapstone.Services
 		readonly Uri baseUri;
 		readonly IDictionary<string, string> headers;
 
+		//**************************************************************************
+		// Constructor:	FieldApiDataService
+		//
+		// Description:	Set up for the data servicer
+		//
+		// Parameters:	paramBaseUri	-	Base URL for the API
+		//
+		// Returns:		None
+		//**************************************************************************
 		public FieldApiDataService (Uri paramBaseUri)
 		{
 			baseUri = paramBaseUri;
@@ -28,6 +37,15 @@ namespace seniorCapstone.Services
 			// TODO:  Header with auth-based token
 		}
 
+		//**************************************************************************
+		// Function:	GetEntriesAsync
+		//
+		// Description:	Get all of the entries
+		//
+		// Parameters:	None
+		//
+		// Returns:		List of the field entries
+		//**************************************************************************
 		public async Task<IList<FieldTable>> GetEntriesAsync ()
 		{
 			var url = new Uri (baseUri, "/api/fieldEntry");
@@ -36,6 +54,15 @@ namespace seniorCapstone.Services
 			return response;
 		}
 
+		//**************************************************************************
+		// Function:	AddEntryAsync
+		//
+		// Description:	Add a field entry to the database
+		//
+		// Parameters:	entry	-	Entry to be added
+		//
+		// Returns:		Response of the API
+		//**************************************************************************
 		public async Task<FieldTable> AddEntryAsync (FieldTable entry)
 		{
 			var url = new Uri (baseUri, "/api/fieldEntry");
@@ -44,6 +71,15 @@ namespace seniorCapstone.Services
 			return response;
 		}
 
+		//**************************************************************************
+		// Function:	DeleteEntryAsync
+		//
+		// Description:	Delete a field entry from the database
+		//
+		// Parameters:	entry	-	Entry to be deleted
+		//
+		// Returns:		Response of the API
+		//**************************************************************************
 		public async Task<FieldTable> DeleteEntryAsync (FieldTable entry)
 		{
 			var url = new Uri (baseUri, "/api/fieldEntry");
@@ -52,6 +88,15 @@ namespace seniorCapstone.Services
 			return response;
 		}
 
+		//**************************************************************************
+		// Function:	EditEntryAsync
+		//
+		// Description:	Edit a field entry from the database
+		//
+		// Parameters:	entry	-	Entry to be edited
+		//
+		// Returns:		Response of the API
+		//**************************************************************************
 		public async Task<FieldTable> EditEntryAsync (FieldTable entry)
 		{
 			var url = new Uri (baseUri, "/api/fieldEntry");
